@@ -11,7 +11,7 @@ class Invoice extends CI_Controller {
 		//$this->load->model('m_access');
 		
     }
-	public function invoice(){
+	public function invoice(){		
 		$data['invoice'] = $this->m_invoice->invoice();
 		$data['view']="pages/admin/invoice/invoice";
 		//var_dump($data);
@@ -28,5 +28,12 @@ class Invoice extends CI_Controller {
 		//var_dump($data);
 		$this->load->view('index', $data);
 		
+	}
+	
+	public function update_status($id){
+		$execute = $this->m_invoice->updateInvoiceStatus($id);
+		
+		echo json_encode($execute);
+		exit;
 	}
 }

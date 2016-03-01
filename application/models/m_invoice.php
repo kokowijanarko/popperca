@@ -20,6 +20,7 @@ class M_invoice extends CI_Model
 			b.`custommer_name`,
 			a.`invoice_date`,
 			c.`status_name`,
+			c.`status_class`,
 			a.`invoice_amount`,
 			a.`invoice_number`
 		FROM `dev_invoice` a 
@@ -48,6 +49,7 @@ class M_invoice extends CI_Model
 			a.`invoice_date`,
 			c.`status_name`,
 			c.`status_id`,
+			c.`status_class`,
 			a.`invoice_amount`,
 			b.`custommer_address`,
 			a.`invoice_address`,
@@ -97,6 +99,17 @@ class M_invoice extends CI_Model
 		return $execute;	
 	}
 	
+	function updateInvoiceStatus($id){
+		$status = $_POST['id_status'];
+		
+		$query = $this->db->query("
+			UPDATE dev_invoice 
+			SET invoice_status = '".$status."'
+			WHERE invoice_id = '".$id."'
+		");
+		
+		return $query;
+	}
    
    
 }

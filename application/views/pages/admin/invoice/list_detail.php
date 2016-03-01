@@ -1,3 +1,29 @@
+<script>	
+	console.log('xxxx');	
+	function changeStatus(){
+		var cek = $('#status option:selected').val();
+		var parse = cek.split('|');
+		var data = {
+			'id_status' : parse[0]
+		};
+		var updateStatus = "<?php echo base_url('index.php/admin/invoice/update_status/'.$invoice_detail->invoice_id)?>";
+		
+		$.ajax({
+			url: updateStatus,
+			type: 'post',
+			data: data
+		}).success(function(result){
+			result = JSON.parse(result);
+			if(result == true){
+				alert('Ubah Tipe Berhasil!');
+			}else{
+				alert('Status Gagal!');
+			}
+		});
+		
+		
+	};	
+</script>
 <div class="page-header">
 	<h1>
 		LIST
@@ -81,7 +107,7 @@
 									<td>Status</td>
 									<td>:</td>
 									<td>
-										<select id="status">
+										<select id="status" onChange="changeStatus()">
 											<?php
 												foreach($status as $stat){
 													if($invoice_detail->status_id == $stat->status_id){
@@ -89,7 +115,7 @@
 													}else{
 														$cek="";
 													}
-													echo '<option val="'.$stat->status_id.'"'.$cek.'>'.$stat->status_name.'</option>';
+													echo '<option val="'.$stat->status_id.'"'.$cek.'>'.$stat->status_id.'|'.$stat->status_name.'</option>';
 												}
 												
 											?>
@@ -155,11 +181,4 @@
 		
 </div><!-- /.row -->
 
-<script>
-	var cek = $('#status option:selected').val();
-	console.log(cek);
-	console.log('xxxx');
-	
-	
-	
-</script>
+

@@ -50,6 +50,11 @@ CREATE TABLE `dev_custommer` (
   `custommer_address` text,
   `custommer_phone` char(15) DEFAULT NULL,
   `custommer_pos_code` char(15) DEFAULT NULL,
+  `custommer_type` int(11) DEFAULT '2',
+  `custommer_email` varchar(100) DEFAULT NULL,
+  `custommer_password` varchar(100) DEFAULT NULL,
+  `custommer_username` varchar(100) DEFAULT NULL,
+  `custommer_other_contact` text,
   PRIMARY KEY (`custommer_id`),
   KEY `dev_custommer_ibfk_1` (`custommer_provinsi_id`),
   KEY `dev_custommer_ibfk_2` (`custommer_kabupaten_id`),
@@ -57,11 +62,26 @@ CREATE TABLE `dev_custommer` (
   CONSTRAINT `dev_custommer_ibfk_1` FOREIGN KEY (`custommer_provinsi_id`) REFERENCES `dev_provinsi` (`IDProvinsi`),
   CONSTRAINT `dev_custommer_ibfk_2` FOREIGN KEY (`custommer_kabupaten_id`) REFERENCES `dev_kabupaten` (`IDKabupaten`),
   CONSTRAINT `dev_custommer_ibfk_3` FOREIGN KEY (`custommer_kecamatan_id`) REFERENCES `dev_kecamatan` (`IDKecamatan`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 /*Data for the table `dev_custommer` */
 
-insert  into `dev_custommer`(`custommer_id`,`custommer_name`,`custommer_provinsi_id`,`custommer_kabupaten_id`,`custommer_kecamatan_id`,`custommer_address`,`custommer_phone`,`custommer_pos_code`) values (1,'Surya Wijanarko',41863,42221,42259,'ALAMAT PERCOBAAN SAJA','123123123','63174');
+insert  into `dev_custommer`(`custommer_id`,`custommer_name`,`custommer_provinsi_id`,`custommer_kabupaten_id`,`custommer_kecamatan_id`,`custommer_address`,`custommer_phone`,`custommer_pos_code`,`custommer_type`,`custommer_email`,`custommer_password`,`custommer_username`,`custommer_other_contact`) values (1,'Surya Wijanarko',41863,42221,42259,'ALAMAT PERCOBAAN SAJA','123123123','63174',1,'surya@mail.com','21232f297a57a5a743894a0e4a801fc3','surya',NULL),(2,'Nopret',64111,65528,65554,'Jln. Jalan Sore No. 36B','123123','34234',2,'nopret@mail.com','12345','nopret',NULL);
+
+/*Table structure for table `dev_custommer_type` */
+
+DROP TABLE IF EXISTS `dev_custommer_type`;
+
+CREATE TABLE `dev_custommer_type` (
+  `custommertype_id` int(11) NOT NULL AUTO_INCREMENT,
+  `custommertype_type` varchar(200) DEFAULT NULL,
+  `custommertype_description` text,
+  PRIMARY KEY (`custommertype_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+/*Data for the table `dev_custommer_type` */
+
+insert  into `dev_custommer_type`(`custommertype_id`,`custommertype_type`,`custommertype_description`) values (1,'Reseller',NULL),(2,'buyer',NULL);
 
 /*Table structure for table `dev_file` */
 
@@ -116,7 +136,7 @@ CREATE TABLE `dev_invoice` (
 
 /*Data for the table `dev_invoice` */
 
-insert  into `dev_invoice`(`invoice_id`,`invoice_number`,`invoice_customer_id`,`invoice_provinsi_id`,`invoice_kabupaten_id`,`invoice_kecamatan_id`,`invoice_address`,`invoice_pos_code`,`invoice_date`,`invoice_amount`,`invoice_status`,`invoice_input`,`invoice_inputdate`,`invoice_update`,`invoice_updatedate`) values (1,'INV.0001/23/II/2016',1,41863,42221,42259,'Jln. Petung 22C, Papringan, Caturtunggal','12312','2016-02-23',2123123,2,NULL,'2016-02-28 22:27:34',NULL,'0000-00-00 00:00:00');
+insert  into `dev_invoice`(`invoice_id`,`invoice_number`,`invoice_customer_id`,`invoice_provinsi_id`,`invoice_kabupaten_id`,`invoice_kecamatan_id`,`invoice_address`,`invoice_pos_code`,`invoice_date`,`invoice_amount`,`invoice_status`,`invoice_input`,`invoice_inputdate`,`invoice_update`,`invoice_updatedate`) values (1,'INV.0001/23/II/2016',1,41863,42221,42259,'Jln. Petung 22C, Papringan, Caturtunggal','12312','2016-02-23',2123123,1,NULL,'2016-03-01 11:25:26',NULL,'0000-00-00 00:00:00');
 
 /*Table structure for table `dev_invoice_detail` */
 
@@ -234,12 +254,13 @@ CREATE TABLE `dev_status` (
   `status_id` int(11) NOT NULL AUTO_INCREMENT,
   `status_code` char(4) DEFAULT NULL,
   `status_name` varchar(100) DEFAULT NULL,
+  `status_class` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`status_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 /*Data for the table `dev_status` */
 
-insert  into `dev_status`(`status_id`,`status_code`,`status_name`) values (1,'ACC','ECCCEPTED'),(2,'OPS','ON PROCESS'),(3,'DLV','DELIVERED');
+insert  into `dev_status`(`status_id`,`status_code`,`status_name`,`status_class`) values (1,'ACC','Accepted','label label-success arrowed arrowed-right'),(2,'OPS','On Process','label label-warning arrowed arrowed-right'),(3,'DLV','Delivered','label label-info arrowed arrowed-right'),(4,'ABT','Abort','label label-danger arrowed arrowed-right');
 
 /*Table structure for table `dev_user` */
 
@@ -326,11 +347,11 @@ CREATE TABLE `pop_size` (
   `size_width` int(11) DEFAULT NULL COMMENT 'measure in mm',
   `size_lenght` int(11) DEFAULT NULL COMMENT 'measure in mm',
   PRIMARY KEY (`size_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 /*Data for the table `pop_size` */
 
-insert  into `pop_size`(`size_id`,`size_name`,`size_code`,`size_width`,`size_lenght`) values (1,'Small','S',100,100),(2,'Medium','M',200,200),(3,'Large','L',300,300),(4,'Extra Large','XL',400,400),(5,'Very Extra Large','XXL',500,500),(6,'Very Very Extra Large s','XXXL s',600,1600),(8,'Jumbo','JB',90,90);
+insert  into `pop_size`(`size_id`,`size_name`,`size_code`,`size_width`,`size_lenght`) values (1,'Small','S',100,100),(2,'Medium','M',200,200),(3,'Large','L',300,300),(4,'Extra Large','XL',400,400),(5,'Very Extra Large','XXL',500,500),(6,'Very Very Extra Large s','XXXL s',600,1600),(8,'Jumbo','JB',90,90),(9,'','',0,0);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

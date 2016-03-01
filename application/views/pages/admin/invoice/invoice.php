@@ -40,7 +40,7 @@
 											<td>'.$inv->custommer_name.'</td>
 											<td>'.$inv->invoice_date.'</td>
 											<td>'.$inv->invoice_amount.'</td>
-											<td>'.$inv->status_name.'</td>
+											<td><span class="'.$inv->status_class .'">'.$inv->status_name.'</span></td>
 											<td>
 												<div class="hidden-sm hidden-xs btn-group">
 													<a href="'.base_url("index.php/admin/invoice/edit/".$inv->invoice_id).'">
