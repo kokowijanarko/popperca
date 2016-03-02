@@ -34,7 +34,22 @@ class Custommer extends CI_Controller {
 		$params=$_POST;
 		
 		if(!empty($params['custommer_id'])){
-			$return = $this->m_custommer->doEdit($params);
+			$data = array(
+			'custommer_name' => $params['custommer_name'],
+			'custommer_provinsi_id'=> $params['custommer_provinsi_id'],
+			'custommer_kabupaten_id'=> $params['custommer_kabupaten_id'],
+			'custommer_kecamatan_id'=>$params['custommer_kecamatan_id'],
+			'custommer_address'=>$params['custommer_address'],
+			'custommer_phone'=>$params['custommer_phone'],
+			'custommer_pos_code'=>$params['custommer_pos_code'],
+			'custommer_type'=>$params['custommer_type'],
+			'custommer_email'=>$params['custommer_email'],
+			'custommer_password'=>$params['custommer_password'],
+			'custommer_username'=>$params['custommer_username']
+			
+			);
+			$id = $params['custommer_id'];
+			$return = $this->m_custommer->doEdit($data, $id);
 			
 		}else{
 			$return = $this->m_custommer->doAdd($params);

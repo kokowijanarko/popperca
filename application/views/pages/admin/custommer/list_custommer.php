@@ -16,6 +16,7 @@
 	}
 	function getKab(){
 		$("#custommer_kabupaten_id").empty().append('<option value="">--SELECT--</option>');
+		$("#custommer_kecamatan_id").empty().append('<option value="">--SELECT--</option>');
 		var IDProvinsi = $('#custommer_provinsi_id option:selected').val();		
 		console.log(IDProvinsi);
 		var data = {'IDProvinsi':IDProvinsi};
@@ -50,6 +51,10 @@
 	}
 	
 	function edit(id){
+		$('#dynamic-table').addClass('hidden');			
+		$('#add_form').removeClass('hidden');	
+		$('#add').addClass('hidden');	
+		$('#cancel').removeClass('hidden');
 		var url = "<?php echo base_url()?>index.php/admin/custommer/get_custommer/"+id;
 		$.ajax({
 			url: url			
@@ -58,11 +63,11 @@
 			console.log(result);
 			
 			$('#custommer_id').val(result['custommer_id']);
-			$('#custommer_name').val(result['custommer_id']);
+			$('#custommer_name').val(result['custommer_name']);
 			$('#custommer_type').val(result['custommer_type']);
 			$('#custommer_address').val(result['custommer_address']);
 			$('#custommer_provinsi_id').val(result['custommer_provinsi_id']);			
-			$('#custommer_pos_code').val(result['custommer_phone']);
+			$('#custommer_pos_code').val(result['custommer_pos_code']);
 			$('#custommer_phone').val(result['custommer_phone']);
 			$('#custommer_username').val(result['custommer_username']);
 			$('#custommer_email').val(result['custommer_email']);
@@ -78,7 +83,7 @@
 					if(result['custommer_kabupaten_id'] == resultKab[i]['IDKabupaten']){
 						var sel = "selected";
 					}else{
-						sel=""
+						sel="";
 					}
 					$("#custommer_kabupaten_id").append('<option '+sel+' value='+resultKab[i]['IDKabupaten']+'>'+resultKab[i]['Nama']+'</option>');
 				}
@@ -93,9 +98,9 @@
 						if(result['custommer_kecamatan_id'] == resultKec[i]['IDKecamatan']){
 							var sel = "selected";
 						}else{
-							sel=""
+							sel="";
 						}
-						$("#custommer_kecamatan_id").append('<option '+sel+' value='+resultKec[i]['IDKabupaten']+'>'+resultKec[i]['Nama']+'</option>');
+						$("#custommer_kecamatan_id").append('<option '+sel+' value='+resultKec[i]['IDKecamatan']+'>'+resultKec[i]['Nama']+'</option>');
 					}			
 				});		
 			});
@@ -124,7 +129,7 @@
 		<div class="row">
 			<div class="col-xs-12">
 				<a id="add" class="btn btn-app btn-purple btn-xs" onClick="add()">Add</a>
-				<a id="cancel " class="btn btn-app btn-danger btn-xs hidden" onClick="cancel()">cancel</a>
+				<a id="cancel" class="btn btn-app btn-danger btn-xs hidden" onClick="cancel()">cancel</a>
 			</div>
 			<div class="col-xs-12">
 				<!-- div.dataTables_borderWrap -->
@@ -192,26 +197,13 @@
 	</div><!-- /.col -->
 
 	<div class="col-xs-7">
-		<div class="row">
-			<?php
-				if(!isset($detail)){
-					
-					//$detail = array('productsize_id' => NULL, 'productsize_name' => NULL, 'productsize_description'=> NULL);
-					$detail = new stdclass();
-					$detail->size_id = NULL;
-					$detail->size_name = NULL;
-					$detail->size_code = NULL;
-					$detail->size_width = NULL;
-					$detail->size_lenght = NULL;
-				}
-				//var_dump($detail);
-			?>
-					<form id="add_form" class="form-horizontal" role="form" method="POST" action="<?php echo base_url('index.php/admin/custommer/do_add'); ?>">
-						<input type="hidden" name="custommer_id" id="custommer_id" value = "<?php echo $detail->size_id?>"/>
+		<div class="row">			
+					<form id="add_form" class="form-horizontal hidden" role="form" method="POST" action="<?php echo base_url('index.php/admin/custommer/do_add'); ?>">
+						<input type="hidden" name="custommer_id" id="custommer_id" />
 						<div class="form-group">
 							<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Name </label>
 							<div class="col-sm-9">
-								<input type="text" name="custommer_name" id="custommer_name" value = "<?php echo $detail->size_name?>"  placeholder="Input Your New size name Here" class="col-xs-10" required />
+								<input type="text" name="custommer_name" id="custommer_name" placeholder="Input Your New size name Here" class="col-xs-10" required />
 							</div>
 						</div>
 						<div class="form-group">
@@ -276,28 +268,28 @@
 						<div class="form-group">
 							<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Pos Code </label>
 							<div class="col-sm-9">
-								<input type="text" name="custommer_pos_code" id="custommer_pos_code" value = "<?php echo $detail->size_name?>" placeholder="Input Pose Code Number" class="col-xs-10" />
+								<input type="text" name="custommer_pos_code" id="custommer_pos_code" placeholder="Input Pose Code Number" class="col-xs-10" />
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Phone </label>
 							<div class="col-sm-9">
-								<input type="text" name="custommer_phone" id="custommer_phone" value = "<?php echo $detail->size_name?>" placeholder="Input Phone Number" class="col-xs-10" />
+								<input type="text" name="custommer_phone" id="custommer_phone" placeholder="Input Phone Number" class="col-xs-10" />
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Username </label>
 							<div class="col-sm-9">
-								<input type="text" name="custommer_username" id="custommer_username" value = "<?php echo $detail->size_name?>" placeholder="Input username" class="col-xs-10" />
+								<input type="text" name="custommer_username" id="custommer_username" placeholder="Input username" class="col-xs-10" />
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Email </label>
 							<div class="col-sm-9">
-								<input type="email" name="custommer_email" id="custommer_email" value = "<?php echo $detail->size_name?>" placeholder="Input Email" class="col-xs-10" />
+								<input type="email" name="custommer_email" id="custommer_email" placeholder="Input Email" class="col-xs-10" />
 							</div>
 						</div>
 						
@@ -306,7 +298,7 @@
 						<div class="form-group">
 							<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Password </label>
 							<div class="col-sm-9">
-								<input type="password" name="custommer_password" id="custommer_password" value = "<?php echo $detail->size_name?>" placeholder="Input Password" class="col-xs-10" onDrag="showPass()" onDragLeave="hiddePass" />
+								<input type="password" name="custommer_password" id="custommer_password" placeholder="Input Password" class="col-xs-10" onDrag="showPass()" onDragLeave="hiddePass" />
 							</div>
 						</div>
 						

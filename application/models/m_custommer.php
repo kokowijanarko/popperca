@@ -57,16 +57,10 @@ class M_custommer extends CI_Model
 		return $result;
 	}
 	
-	public function doEdit($params){
-		
-		$data = array(
-			'productgenre_name'=> $params['gen_name'],			
-			'productgenre_description'=> $params['gen_desc']			
-		);
-		//var_dump($params, $data);die;
+	public function doEdit($params, $id){
 		$result = false;
 		if(!empty($params)){
-			$this->db->update('dev_custommer', $data, array('productgenre_id' => $params['gen_id']));
+			$this->db->update('dev_custommer', $params, array('custommer_id' => $id));
 			$result = true;
 		}
 		return $result;
