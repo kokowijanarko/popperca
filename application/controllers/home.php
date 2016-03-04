@@ -13,16 +13,17 @@ class Home extends CI_Controller {
     }
 	
 	public function index(){
+		$this->load->view('user/index');
 		
+	}
+	
+	public function login(){
 		if(!isset($this->session->userdata['data'])){			
 			redirect(base_url('index.php/home/login'));
 		}else{			
 			redirect(base_url('index.php/home/home'));
 		}
-	}
-	
-	public function login(){
-		$this->load->view('pages/login');
+		
 	}
 	
 	public function home(){
