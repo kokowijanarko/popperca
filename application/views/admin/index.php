@@ -44,14 +44,14 @@
 	</head>
 
 	<body class="no-skin">
-		<?php $this->load->view('components/header');?>
+		<?php include('components/header.php');?>
 
 		<div class="main-container" id="main-container">
 			<script type="text/javascript">
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
 			</script>
 
-			<?php $this->load->view('components/menu');?>
+			<?php include('components/menu.php');?>
 
 			<div class="main-content">
 				<div class="main-content-inner">
@@ -79,13 +79,13 @@
 					</div>
 
 					<div class="page-content">
-						<?php $this->load->view('components/setting');?>
+						<?php include('components/setting.php');?>
 						<?php $this->load->view($view);?>
 					</div><!-- /.page-content -->
 				</div>
 			</div><!-- /.main-content -->
 
-			<?php $this->load->view('components/footer');?>
+			<?php include('components/footer.php');?>
 
 			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
 				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>

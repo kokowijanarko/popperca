@@ -15,8 +15,8 @@ class Genre extends CI_Controller {
 	public function list_genre(){		
 		$genre = $this->m_genre->listGenre();
 		$data['genre'] = $genre;
-		$data['view']="pages/admin/genre/list_genre";
-		$this->load->view('index', $data);
+		$data['view']="admin/pages/genre/list_genre";
+		$this->load->view('admin/index', $data);
 		//var_dump(count($genre));die;
 	}
 	
@@ -24,9 +24,9 @@ class Genre extends CI_Controller {
 		$data['sex'] = $this->m_genre->list_sex();
 		$data['genre'] = $this->m_genre->list_genre();
 		$data['size'] = $this->m_genre->list_size();
-		$data['view'] = "pages/admin/genre/add_genre";
+		$data['view'] = "admin/pages/genre/add_genre";
 		//var_dump($data);die;
-		$this->load->view('index', $data);
+		$this->load->view('admin/index', $data);
 	}
 	
 	public function do_add(){
@@ -60,7 +60,7 @@ class Genre extends CI_Controller {
 		$genre = $this->m_genre->listGenre();
 		$data['genre'] = $genre;
 		$data['detail'] = $this->m_genre->getDetailgenre($id);		
-		$data['view'] = "pages/admin/genre/list_genre";
-		$this->load->view('index', $data);
+		$data['view'] = "admin/pages/genre/list_genre";
+		$this->load->view('admin/index', $data);
 	}
 }

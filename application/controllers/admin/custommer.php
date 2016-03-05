@@ -16,18 +16,18 @@ class Custommer extends CI_Controller {
 		$data['list'] = $this->m_custommer->listCustommer();
 		$data['provinsi'] = $this->m_custommer->getProvinsi();
 		$data['type'] = $this->m_custommer->getCustommerType();
-		$data['view']="pages/admin/custommer/list_custommer";
+		$data['view']="admin/pages/custommer/list_custommer";
 		//var_dump($data);die;
-		$this->load->view('index', $data);
+		$this->load->view('admin/index', $data);
 	}
 	
 	public function add(){	
 		$data['sex'] = $this->m_custommer->list_sex();
 		$data['custommer'] = $this->m_custommer->list_custommer();
 		$data['custommer'] = $this->m_custommer->list_custommer();
-		$data['view'] = "pages/admin/custommer/add_custommer";
+		$data['view'] = "admin/pages/custommer/add_custommer";
 		//var_dump($data);die;
-		$this->load->view('index', $data);
+		$this->load->view('admin/index', $data);
 	}
 	
 	public function do_add(){
@@ -56,7 +56,7 @@ class Custommer extends CI_Controller {
 		}
 		
 		if($return == true){
-			redirect(base_url('index.php/admin/custommer/list_custommer'));
+			redirect(base_url('index.php/admin/pages/custommer/list_custommer'));
 		}else{
 			$msg = 'Add new custommer failed';
 		}
@@ -65,7 +65,7 @@ class Custommer extends CI_Controller {
 	public function do_delete($id){
 		$return = $this->m_custommer->doDelete($id);
 		if($return == true){
-			redirect(base_url('index.php/admin/custommer/list_custommer'));
+			redirect(base_url('index.php/admin/pages/custommer/list_custommer'));
 		}else{
 			$msg = 'Add new custommer failed';
 		}
@@ -75,8 +75,8 @@ class Custommer extends CI_Controller {
 		$custommer = $this->m_custommer->listCustommer();
 		$data['list'] = $custommer;
 		$data['detail'] = $this->m_custommer->getDetailcustommer($id);		
-		$data['view'] = "pages/admin/custommer/list_custommer";
-		$this->load->view('index', $data);
+		$data['view'] = "admin/pages/custommer/list_custommer";
+		$this->load->view('admin/index', $data);
 	}
 	
 	public function get_kab($id){

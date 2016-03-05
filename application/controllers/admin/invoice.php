@@ -13,9 +13,9 @@ class Invoice extends CI_Controller {
     }
 	public function invoice(){		
 		$data['invoice'] = $this->m_invoice->invoice();
-		$data['view']="pages/admin/invoice/invoice";
+		$data['view']="admin/pages/invoice/invoice";
 		//var_dump($data);
-		$this->load->view('index', $data);
+		$this->load->view('admin/index', $data);
 		
 	}
 	public function list_detail($id){
@@ -24,9 +24,9 @@ class Invoice extends CI_Controller {
 		$data['product_detail'] = $this->m_invoice->productDetail($data['invoice_detail']->invoice_id);
 		//var_dump($data);die;
 		//var_dump($data);die;
-		$data['view']="pages/admin/invoice/list_detail";
+		$data['view']="admin/pages/invoice/list_detail";
 		//var_dump($data);
-		$this->load->view('index', $data);
+		$this->load->view('admin/index', $data);
 		
 	}
 	

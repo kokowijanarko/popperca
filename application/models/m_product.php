@@ -33,6 +33,13 @@ class M_product extends CI_Model
 		$result = $query->result();
 		return $result;
 	}
+	
+	public function getImg($id){
+		$query = $this->db->get_where('pop_product_image', array('productimage_product_id'=>$id));
+		$result = $query->result();
+		return $result;
+	}
+	
 	public function getdetailProduct($id){
 		$query = $this->db->query("
 			SELECT 
@@ -68,12 +75,22 @@ class M_product extends CI_Model
 			'product_gender_id' => $params['sex']
 		);
 		//var_dump($data);die;
-		$result = false;
+		
 		if(!empty($params)){
+			//$this->db->trans_start();
 			$execute = $this->db->insert('pop_product', $data);	
-			$result = true;
+//$this->db->trans_complete();
+			$last_id  = $this->db->insert_id();
+			$result = $last_id;
 		}
 		return $result;
+	}
+	
+	public function do_addImage($params){
+		$this->db->trans_start();
+		$execute = $this->db->insert('pop_product_image', $params);	
+		$this->db->trans_complete();
+		return $execute;		
 	}
 	
 	public function do_delete($id){

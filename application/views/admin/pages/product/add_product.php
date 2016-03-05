@@ -418,7 +418,7 @@
 						<div class="row">
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
-								<form class="form-horizontal" role="form" action="<?php echo base_url('index.php/admin/product/do_add')?>" method="POST">
+								<form class="form-horizontal" action="<?php echo base_url('index.php/admin/product/do_add')?>" method="POST" enctype="multipart/form-data">
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Product Name </label>
 
@@ -485,10 +485,18 @@
 									</div>
 									
 									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Image </label>
+
+										<div class="col-sm-9">
+											<input type="file" multiple name="gambar[]"/>
+										</div>
+									</div>
+									
+									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Description </label>
 
 										<div class="col-sm-9">											
-											<textarea class="col-sm-3 control-label no-padding-right" name="description" id="textarea" placeholder="Description"></textarea>
+											<textarea class="col-xs-10 col-sm-5" name="description" id="textarea" placeholder="Description"></textarea>
 										</div>
 									</div>								
 									
