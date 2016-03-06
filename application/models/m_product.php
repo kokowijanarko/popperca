@@ -127,6 +127,8 @@ class M_product extends CI_Model
 		return $result;
 	}
 	
-	
-	
+	public function delImg($id){
+		$query = $this->db->delete('pop_product_image', array('productimage_id' => $id));
+		return $query;
+	}
 }

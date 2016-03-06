@@ -20,7 +20,7 @@ class M_home extends CI_Model
 		$result = $query->result();
 		if(!empty($result)){
 			$this->session->userdata['data'] = ($result);
-			redirect(base_url('index.php/admin/pages/home/home'));
+			redirect(base_url('index.php/admin/home/home'));
 		}else{
 			redirect(base_url('index.php/admin/pages/home/login'));
 		}		

@@ -31,8 +31,7 @@ class Invoice extends CI_Controller {
 	}
 	
 	public function update_status($id){
-		$execute = $this->m_invoice->updateInvoiceStatus($id);
-		
+		$execute = $this->m_invoice->updateInvoiceStatus($id);		
 		echo json_encode($execute);
 		exit;
 	}

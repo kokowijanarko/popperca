@@ -16,7 +16,7 @@ class Size extends CI_Controller {
 		$size = $this->m_size->listSize();
 		//var_dump($size);die;
 		$data['list'] = $size;
-		$data['view']="pages/admin/size/list_size";
+		$data['view']="admin/pages/size/list_size";
 		$this->load->view('index', $data);
 		//var_dump(count($size));die;
 	}

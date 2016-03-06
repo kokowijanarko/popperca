@@ -36,49 +36,55 @@ class Product extends CI_Controller {
 	}
 	
 	public function do_add(){
-		$params=$_POST;
+		$params=$_POST;		
+		$id = $this->m_product->do_add($params);
 		
-		$id = $this->m_product->do_add($params);	
-		//var_dump($return);die;
-		
-		
+		//var_dump($return);die;		
+		/*
 		$config['upload_path'] = './file/product_img/';
 		$config['allowed_types'] = 'gif|jpg|jpeg';
 		$config['max_size']	= '100000000';		
-		$xxx  = 0;
+		$this->load->library('upload', $config);
+		
 		foreach($_FILES['gambar'] as $key=>$val){
-            $i = 1;
-			
+            $i = 1;			
             foreach($val as $v){
 			    $field_name = 'gambar'.$i;
                 $_FILES[$field_name][$key] = $v;
                 //$_FILES[$field_name]['name'] = $params['name'].'_'.$i.'.jpg';				
-				
-                $i++;
-				
+				$i++;
 			}
-			$config['file_name']=$id.'_'.$xxx.'.jpg';
-			$this->load->library('upload', $config);
-			$xxx++;
-        }
+		}
 		unset($_FILES['gambar']);
-		//var_dump($_FILES);die;
-				
+		//var_dump($_FILES);die;				
+		*/
 		
+		foreach($_FILES['gambar'] as $key=>$val){
+            $i = 1;			
+            foreach($val as $v){
+			    $field_name = 'gambar'.$i;
+                $_FILES[$field_name][$key] = $v;               		
+				$i++;
+			}
+		}
+		unset($_FILES['gambar']);
+		//var_dump($_FILES);
 		$i=1;	
 		$image_index = 0;
 		foreach($_FILES as $key=>$val){
 			$image_data  = array(
-				'productimage_name' => $id.'_'.$image_index.'.jpg',
-				'productimage_product_id' => $id
-				
-			);
-			
-			$this->upload->do_upload($key);
+				'productimage_name' => $id.'_'.$i.'.jpg',
+				'productimage_product_id' => $id				
+			);			
+			$source =$val['tmp_name']; 
+			$name = $id.'_'.$i.'.jpg';
+			$this->process_image($source, $name);
 			$this->m_product->do_addImage($image_data);
-			$data[] = array('upload_data' => $this->upload->data());
 			
-			$image_index++;
+			//$this->upload->do_upload($key);			
+			//$data[] = array('upload_data' => $this->upload->data());
+			$i++;
+		//var_dump($source, $name);die;
 		}
 		
 		if($id !== null){
@@ -88,7 +94,11 @@ class Product extends CI_Controller {
 		}
 		
 	}
-	
+	function deleteImg($id){
+		$exec = $this->m_product->delImg($id);
+		echo json_encode ($exec);
+		exit;
+	}
 	public function do_delete($id){
 		$return = $this->m_product->do_delete($id);
 		if($return == true){
@@ -101,6 +111,7 @@ class Product extends CI_Controller {
 	public function edit($id){
 		
 		$data['detail'] = $this->m_product->getDetailProduct($id);
+		$data['img'] = $this->m_product->getImg($id);
 		$data['sex'] = $this->m_product->list_sex();
 		$data['genre'] = $this->m_product->list_genre();
 		$data['size'] = $this->m_product->list_size();
@@ -108,4 +119,39 @@ class Product extends CI_Controller {
 		$data['view'] = "admin/pages/product/edit_product";
 		$this->load->view('admin/index', $data);
 	}
+	
+	//internal function
+	function process_image($source, $name){
+	$size = getimagesize($source);
+	//var_dump($size);die;
+	if($size[0] < 5000)
+		{
+		move_uploaded_file($source,"file/product_img/" . $name);	
+		}	
+	else
+		{
+		  //identitas file asli
+		  $im_src = imagecreatefromjpeg($source);
+		  $src_width = imageSX($im_src);
+		  $src_height = imageSY($im_src);
+
+
+		  //Set ukuran gambar hasil perubahan
+		  $dst_width = 5000;
+		  $dst_height = ($dst_width/$src_width)*$src_height;
+
+		  //proses perubahan ukuran
+		  $im = imagecreatetruecolor($dst_width,$dst_height);
+		  imagecopyresampled($im, $im_src, 0, 0, 0, 0, $dst_width, $dst_height, $src_width, $src_height);
+
+		  //Simpan gambar
+		  imagejpeg($im,"file/product_img/" . $name);
+		  
+		  //Hapus gambar di memori komputer
+		  imagedestroy($im_src);
+		  imagedestroy($im);
+		}
+	}
+	
+	
 }
