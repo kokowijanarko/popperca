@@ -15,8 +15,8 @@ class Genre extends CI_Controller {
 	public function list_genre(){		
 		$genre = $this->m_genre->listGenre();
 		$data['genre'] = $genre;
-		$data['view']="admin/pages/genre/list_genre";
-		$this->load->view('admin/index', $data);
+		//$data['view']="admin/pages/genre/list_genre";
+		$this->load->view('admin/pages/genre/list_genre', $data);
 		//var_dump(count($genre));die;
 	}
 	

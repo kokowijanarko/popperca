@@ -21,8 +21,8 @@ class Product extends CI_Controller {
 		
 		
 		$data['product'] = $product;
-		$data['view']="admin/pages/product/list_product";
-		$this->load->view('admin/index', $data);
+		//$data['view']="admin/pages/product/list_product";
+		$this->load->view("admin/pages/product/list_product", $data);
 		//var_dump(count($product));die;
 	}
 	

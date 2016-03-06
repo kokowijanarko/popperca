@@ -25,8 +25,8 @@ class Home extends CI_Controller {
 	}
 	
 	public function home(){
-		$data['view'] = 'admin/pages/home_page';
-		$this->load->view('admin/index', $data);
+		//$data['view'] = 'admin/pages/home_page';
+		$this->load->view('admin/pages/home_page');
 	}
 	
 	public function validasi(){

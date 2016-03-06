@@ -13,9 +13,9 @@ class Invoice extends CI_Controller {
     }
 	public function invoice(){		
 		$data['invoice'] = $this->m_invoice->invoice();
-		$data['view']="admin/pages/invoice/invoice";
+		//$data['view']="admin/pages/invoice/invoice";
 		//var_dump($data);
-		$this->load->view('admin/index', $data);
+		$this->load->view('admin/pages/invoice/invoice', $data);
 		
 	}
 	public function list_detail($id){
