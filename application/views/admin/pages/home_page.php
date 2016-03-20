@@ -9,16 +9,16 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
 		<!-- bootstrap & fontawesome -->
-		<link rel="stylesheet" href="<?php echo base_url()?><?php echo base_url()?>assets/theme/ac_master/theme/ac_master/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="<?php echo base_url()?><?php echo base_url()?>assets/theme/ac_master/theme/ac_master/font-awesome/4.2.0/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="<?php echo base_url()?>assets/theme/ac_master/theme/ac_master/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="<?php echo base_url()?>assets/theme/ac_master/theme/ac_master/font-awesome/4.2.0/css/font-awesome.min.css" />
 
 		<!-- page specific plugin styles -->
 
 		<!-- text fonts -->
-		<link rel="stylesheet" href="<?php echo base_url()?><?php echo base_url()?>assets/theme/ac_master/theme/ac_master/fonts/fonts.googleapis.com.css" />
+		<link rel="stylesheet" href="<?php echo base_url()?>assets/theme/ac_master/theme/ac_master/fonts/fonts.googleapis.com.css" />
 
 		<!-- ace styles -->
-		<link rel="stylesheet" href="<?php echo base_url()?><?php echo base_url()?>assets/theme/ac_master/theme/ac_master/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+		<link rel="stylesheet" href="<?php echo base_url()?>assets/theme/ac_master/theme/ac_master/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
 
 		<!--[if lte IE 9]>
 			<link rel="stylesheet" href="<?php echo base_url()?>assets/theme/ac_master/css/ace-part2.min.css" class="ace-main-stylesheet" />
@@ -31,7 +31,7 @@
 		<!-- inline styles related to this page -->
 
 		<!-- ace settings handler -->
-		<script src="<?php echo base_url()?><?php echo base_url()?>assets/theme/ac_master/theme/ac_master/js/ace-extra.min.js"></script>
+		<script src="<?php echo base_url()?>assets/theme/ac_master/theme/ac_master/js/ace-extra.min.js"></script>
 
 		<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
 
@@ -189,17 +189,17 @@
 		<!--[if lte IE 8]>
 		  <script src="<?php echo base_url()?>assets/theme/ac_master/js/excanvas.min.js"></script>
 		<![endif]-->
-		<script src="<?php echo base_url()?><?php echo base_url()?>assets/theme/ac_master/theme/ac_master/js/jquery-ui.custom.min.js"></script>
-		<script src="<?php echo base_url()?><?php echo base_url()?>assets/theme/ac_master/theme/ac_master/js/jquery.ui.touch-punch.min.js"></script>
-		<script src="<?php echo base_url()?><?php echo base_url()?>assets/theme/ac_master/theme/ac_master/js/jquery.easypiechart.min.js"></script>
-		<script src="<?php echo base_url()?><?php echo base_url()?>assets/theme/ac_master/theme/ac_master/js/jquery.sparkline.min.js"></script>
-		<script src="<?php echo base_url()?><?php echo base_url()?>assets/theme/ac_master/theme/ac_master/js/jquery.flot.min.js"></script>
-		<script src="<?php echo base_url()?><?php echo base_url()?>assets/theme/ac_master/theme/ac_master/js/jquery.flot.pie.min.js"></script>
-		<script src="<?php echo base_url()?><?php echo base_url()?>assets/theme/ac_master/theme/ac_master/js/jquery.flot.resize.min.js"></script>
+		<script src="<?php echo base_url()?>assets/theme/ac_master/theme/ac_master/js/jquery-ui.custom.min.js"></script>
+		<script src="<?php echo base_url()?>assets/theme/ac_master/theme/ac_master/js/jquery.ui.touch-punch.min.js"></script>
+		<script src="<?php echo base_url()?>assets/theme/ac_master/theme/ac_master/js/jquery.easypiechart.min.js"></script>
+		<script src="<?php echo base_url()?>assets/theme/ac_master/theme/ac_master/js/jquery.sparkline.min.js"></script>
+		<script src="<?php echo base_url()?>assets/theme/ac_master/theme/ac_master/js/jquery.flot.min.js"></script>
+		<script src="<?php echo base_url()?>assets/theme/ac_master/theme/ac_master/js/jquery.flot.pie.min.js"></script>
+		<script src="<?php echo base_url()?>assets/theme/ac_master/theme/ac_master/js/jquery.flot.resize.min.js"></script>
 
 		<!-- ace scripts -->
-		<script src="<?php echo base_url()?><?php echo base_url()?>assets/theme/ac_master/theme/ac_master/js/ace-elements.min.js"></script>
-		<script src="<?php echo base_url()?><?php echo base_url()?>assets/theme/ac_master/theme/ac_master/js/ace.min.js"></script>
+		<script src="<?php echo base_url()?>assets/theme/ac_master/theme/ac_master/js/ace-elements.min.js"></script>
+		<script src="<?php echo base_url()?>assets/theme/ac_master/theme/ac_master/js/ace.min.js"></script>
 
 		<!-- inline scripts related to this page -->
 		<script type="text/javascript">

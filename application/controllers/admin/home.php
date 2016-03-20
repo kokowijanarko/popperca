@@ -25,8 +25,7 @@ class Home extends CI_Controller {
 	}
 	
 	public function home(){
-		//$data['view'] = 'admin/pages/home_page';
-		$this->load->view('admin/pages/home_page');
+		redirect(base_url('index.php/admin/product/list_product '));
 	}
 	
 	public function validasi(){

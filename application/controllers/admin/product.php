@@ -12,7 +12,7 @@ class Product extends CI_Controller {
 		
     }
 	
-	public function list_product(){		
+	function list_product(){		
 		$product = $this->m_product->list_product();
 		
 		foreach($product as $prod){
@@ -23,7 +23,6 @@ class Product extends CI_Controller {
 		$data['product'] = $product;
 		//$data['view']="admin/pages/product/list_product";
 		$this->load->view("admin/pages/product/list_product", $data);
-		//var_dump(count($product));die;
 	}
 	
 	public function add_baju(){	
@@ -31,34 +30,12 @@ class Product extends CI_Controller {
 		$data['genre'] = $this->m_product->list_genre();
 		$data['size'] = $this->m_product->list_size();
 		$data['view'] = "admin/pages/product/add_product";
-		//var_dump($data);die;
 		$this->load->view('admin/index', $data);
 	}
 	
 	public function do_add(){
 		$params=$_POST;		
-		$id = $this->m_product->do_add($params);
-		
-		//var_dump($return);die;		
-		/*
-		$config['upload_path'] = './file/product_img/';
-		$config['allowed_types'] = 'gif|jpg|jpeg';
-		$config['max_size']	= '100000000';		
-		$this->load->library('upload', $config);
-		
-		foreach($_FILES['gambar'] as $key=>$val){
-            $i = 1;			
-            foreach($val as $v){
-			    $field_name = 'gambar'.$i;
-                $_FILES[$field_name][$key] = $v;
-                //$_FILES[$field_name]['name'] = $params['name'].'_'.$i.'.jpg';				
-				$i++;
-			}
-		}
-		unset($_FILES['gambar']);
-		//var_dump($_FILES);die;				
-		*/
-		
+		$id = $this->m_product->do_add($params);		
 		foreach($_FILES['gambar'] as $key=>$val){
             $i = 1;			
             foreach($val as $v){
@@ -68,14 +45,13 @@ class Product extends CI_Controller {
 			}
 		}
 		unset($_FILES['gambar']);
-		//var_dump($_FILES);
 		$i=1;	
 		$image_index = 0;
 		foreach($_FILES as $key=>$val){
 			$image_data  = array(
 				'productimage_name' => $id.'_'.$i.'.jpg',
 				'productimage_product_id' => $id				
-			);			
+			);
 			$source =$val['tmp_name']; 
 			$name = $id.'_'.$i.'.jpg';
 			$this->process_image($source, $name);
@@ -94,11 +70,63 @@ class Product extends CI_Controller {
 		}
 		
 	}
+	
+	function do_edit(){
+		//var_dump($_FILES);
+		$return = $this->m_product->doEdit($_POST);
+		if($_FILES['gambar']['error'] == 0 OR $_FILES['gambar']['error'][0] == 0){
+			//var_dump('xxx');die;
+			foreach($_FILES['gambar'] as $key=>$val){
+				$i = 1;			
+				foreach($val as $v){
+					$field_name = 'gambar'.$i;
+					$_FILES[$field_name][$key] = $v;               		
+					$i++;
+				}
+			}
+			unset($_FILES['gambar']);
+			$id=$_POST['id'];
+			$result_img = $this->m_product->getImgLast($_POST['id']);
+			if($result_img){
+				$expl = explode(".", $result_img[0]->productimage_name, 2);
+				$expl = explode("_", $expl[0], 2);
+				$indexing = intval($expl[1])+1;
+			}else{
+				$indexing = 1;
+			}
+			$i=$indexing;	
+			$image_index = 0;
+			foreach($_FILES as $key=>$val){
+				$image_data  = array(
+					'productimage_name' => $id.'_'.$i.'.jpg',
+					'productimage_product_id' => $id				
+				);
+				$source =$val['tmp_name']; 
+				$name = $id.'_'.$i.'.jpg';
+				$this->process_image($source, $name);
+				$this->m_product->do_addImage($image_data);
+				
+				//$this->upload->do_upload($key);			
+				//$data[] = array('upload_data' => $this->upload->data());
+				$i++;
+			//var_dump($source, $name);die;
+			}
+		}
+		$this->list_product();
+		
+	}
+	
 	function deleteImg($id){
+		$result_img = $this->m_product->getImgById($id);
+		$name = $result_img[0]->productimage_name;
+		//var_dump($name);die;
+		unlink('file/product_img/'.$name);
 		$exec = $this->m_product->delImg($id);
+		unset($_FILES);
 		echo json_encode ($exec);
 		exit;
 	}
+	
 	public function do_delete($id){
 		$return = $this->m_product->do_delete($id);
 		if($return == true){
@@ -116,8 +144,9 @@ class Product extends CI_Controller {
 		$data['genre'] = $this->m_product->list_genre();
 		$data['size'] = $this->m_product->list_size();
 		//var_dump($data['detail']);die;
-		$data['view'] = "admin/pages/product/edit_product";
-		$this->load->view('admin/index', $data);
+		//$data['view'] = "admin/pages/product/edit_product";
+		//$this->load->view('admin/index', $data);
+		$this->load->view('admin/pages/product/edit_product', $data);
 	}
 	
 	//internal function

@@ -39,6 +39,20 @@ class M_product extends CI_Model
 		$result = $query->result();
 		return $result;
 	}
+	public function getImgById($id){
+		$query = $this->db->get_where('pop_product_image', array('productimage_id'=>$id));
+		$result = $query->result();
+		return $result;
+	}
+	public function getImgLast($id){
+		$query = $this->db->query("
+			SELECT MAX(productimage_name) AS productimage_name 
+			FROM pop_product_image 
+			WHERE productimage_product_id ='".$id."'
+		");
+		$result = $query->result();
+		return $result;
+	}
 	
 	public function getdetailProduct($id){
 		$query = $this->db->query("
@@ -79,7 +93,7 @@ class M_product extends CI_Model
 		if(!empty($params)){
 			//$this->db->trans_start();
 			$execute = $this->db->insert('pop_product', $data);	
-//$this->db->trans_complete();
+		//$this->db->trans_complete();
 			$last_id  = $this->db->insert_id();
 			$result = $last_id;
 		}
@@ -102,6 +116,23 @@ class M_product extends CI_Model
 		return $result;		
 	}
 	
+	public function doEdit($params){
+		$result = false;
+		$data = array(
+			'product_name'=> $params['name'],
+			'product_size_id'=> $params['size'],
+			'product_genre_id'=> $params['genre'],
+			'product_stock'=>$params['stock'],
+			'product_description' => $params['description'],
+			'product_gender_id' => $params['sex']
+		);
+		//var_dump($data);die;
+		if(!empty($data)){
+			$this->db->update('pop_product', $data, array('product_id' => $params['id']));
+			$result = true;
+		}
+		return $result;
+	}	
 	
 	public function list_genre(){
 		$query = $this->db->query("
