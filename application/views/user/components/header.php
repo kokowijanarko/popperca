@@ -112,7 +112,7 @@
 											<li><a href="about-us.html">About Us</a></li>
 											<li><a href="contact-us.html">Contact Us</a></li>
 											<li><a href="checkout.html">Checkout</a></li>
-											<li><a href="login.html">Login</a></li>
+											<li><a href="<?php echo base_url('index.php/user/login')?>">Login</a></li>
 											<li><a href="product-details.html">Product Details</a></li>
 											<li><a href="shop-grid.html">Shop Grid</a></li>
 											<li><a href="shop-list.html">Shop List</a></li>
@@ -242,7 +242,7 @@
 													<li><a href="cart.html">Shopping cart</a></li>
 													<li><a href="checkout.html">Checkout</a></li>
 													<li><a href="wishlist.html">Wishlist</a></li>
-													<li><a href="login.html">Login</a></li>
+													<li><a href="<?php echo base_url('index.php/user/login')?>">Login</a></li>
 													<li><a href="404.html">404 Error</a></li>
 												</ul>													
 											</li>
