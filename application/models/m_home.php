@@ -65,6 +65,18 @@ class M_home extends CI_Model
      return $str;  
        }  
    }  
+
+	public function load_product_img(){
+		$query = $this->db->query('select * from pop_product');
+		$result = $query->result();
+		//var_dump($result); die;
+		return $result;
+	}
 	
+	public function getImg($id){
+		$query = $this->db->query("select * from pop_product_image where productimage_product_id = '".$id."' limit 1");
+		$result = $query->result();
+		return $result;
+	}
 	
 }

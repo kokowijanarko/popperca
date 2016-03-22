@@ -20,7 +20,14 @@ class Home extends CI_Controller {
     }
 	
 	public function index(){
-		$this->load->view('user/index');
+		$data['product'] = $this->m_home->load_product_img();
+		//var_dump($data['product']);die;
+		foreach($data['product'] as $key=>$val){
+			//var_dump($val->product_id);die;
+			$data['image'][] = $this->m_home->getImg($val->product_id);				
+		}
+		//var_dump($data['image']);die;
+		$this->load->view('user/index', $data);
 		
 	}
 	

@@ -144,7 +144,7 @@
 							</div><!-- /.ace-settings-box -->
 						</div><!-- /.ace-settings-container -->
 						
-						<?php $this->load->view($view);?>
+						<?php //$this->load->view($view);?>
 						
 					</div><!-- /.page-content -->
 				</div>
