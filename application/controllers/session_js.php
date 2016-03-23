@@ -7,15 +7,19 @@ class Session_js extends CI_Controller {
         parent::__construct();
         $this->load->database();
         $this->load->helper('url');
-        $this->load->helper('session');
+        $this->load->library('session');
 		
 		
 		
     }
 	
 	public function set_session_non_member(){
-		$query = $this->db->query("SELECT MAX(cart_session_id) as cart_session_id FROM pop_cart");
-		$result = $query->row();
-		var_dump($result);die;
+		//session_destroy();
+		$sesi = $_SESSION;
+		if(isset($sesi['product_id'])){
+			$count_product_id = count($sesi['product_id']);
+			$_SESSION['product_id'][$count_product_id] = $_POST['product_id']
+			
+		}
 	}
 }

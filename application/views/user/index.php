@@ -474,27 +474,26 @@
 			jQuery(function($) {
 				$('div.add-to-cart').click(function(){
 					var content = $(this).parent();
-					var product_id = $(this).attr('id');
-					var url = '<?php echo base_url("index.php/user/cart/addToCart");?>';
-					var is_member = "<?php if(isset($this->session->userdata['user_id'])){echo $this->session->userdata['user_id'];}else{echo NULL;};?>";
-					console.log(is_member);
-					
-					//set session id for non member
-					if(is_member != ''){
-						var session_id = is_member;
-					}else{
+					var product_id = $(this).attr('id');		
+					console.log(product_id);
 						$.ajax({
 							url:"<?php echo base_url('index.php/session_js/set_session_non_member')?>",
-							type:'post'
+							type:'post',
+							data:{'product_id':product_id, 'product_count':1}
 						}).success(function(result){
 							//result = JSON.parse(result);
 							console.log('session');
 							console.log(result);
 							var session_id = result;
 						});
-					}
 					
-					var params = {
+				});
+				
+			});
+			
+			function checkout(){
+				var url = '<?php echo base_url("index.php/user/cart/addToCart");?>';
+				var params = {
 						'product_id':product_id,
 						'product_count':1,
 						'sessioin_id':session_id
@@ -508,9 +507,7 @@
 						//result = JSON.parse(result);
 						//console.log(result);
 					});
-				});
-				
-			});
+			}
 			
 			
 		</script>
