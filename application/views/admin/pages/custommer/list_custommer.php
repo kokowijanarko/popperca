@@ -203,7 +203,7 @@
 						<div class="form-group">
 							<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Name </label>
 							<div class="col-sm-9">
-								<input type="text" name="custommer_name" id="custommer_name" placeholder="Input Your New size name Here" class="col-xs-10" required />
+								<input type="text" name="custommer_name" id="custommer_name" placeholder="Input Your Name Here" class="col-xs-10" required />
 							</div>
 						</div>
 						<div class="form-group">

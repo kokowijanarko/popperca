@@ -11,11 +11,6 @@ class Home extends CI_Controller {
 		$this->load->library('authex');
 		
 		
-		if( ! $this->authex->logged_in())
-        {
-            //they are not logged in
-            redirect(base_url('index.php/user/login/'));  //for example
-        }
 		
     }
 	

@@ -1010,6 +1010,7 @@
 										</div>
 									</div>
 								</div>
+								
 								<div role="tabpanel" class="tab-pane fade" id="profile">
 									<div class="row">
 										<div class="features-curosel">
@@ -1034,7 +1035,7 @@
 																		<a href="#" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
 																	</div>
 																	<div class="compare-button">
-																		<a href="#" title="Add to Cart"><i class="icon-bag"></i></a>
+																		<a href="#" onClick="addCart()" title="Add to Cart"><i class="icon-bag"></i></a>
 																	</div>									
 																</div>
 																<div class="quickviewbtn">
@@ -1617,6 +1618,8 @@
    		<!-- main js
 		============================================ -->           
         <script src="<?php echo base_url()?>assets/theme/lavoro/js/main.js"></script>
+		
+		
     </body>
 
 </html>

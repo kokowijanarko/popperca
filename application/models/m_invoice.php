@@ -110,6 +110,13 @@ class M_invoice extends CI_Model
 		
 		return $query;
 	}
+	
+	function getLastInvNumber(){
+		$this->db->select_max('invoice_number', 'invoice_number');
+		$query = $this->db->get('dev_invoice');
+		$result = $query->row();
+		return $result;
+	}
    
    
 }

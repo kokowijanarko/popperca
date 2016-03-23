@@ -112,7 +112,14 @@
 											<li><a href="about-us.html">About Us</a></li>
 											<li><a href="contact-us.html">Contact Us</a></li>
 											<li><a href="checkout.html">Checkout</a></li>
-											<li><a href="<?php echo base_url('index.php/user/login')?>">Login</a></li>
+											<?php
+														
+														if(isset($this->session->userdata['user_id'])){
+															echo '<li><a href="'.base_url('index.php/user/login/logout').'">Logout</a></li>';
+														}else{
+															echo '<li><a href="'.base_url('index.php/user/login').'">Login</a></li>';
+														}
+													?>
 											<li><a href="product-details.html">Product Details</a></li>
 											<li><a href="shop-grid.html">Shop Grid</a></li>
 											<li><a href="shop-list.html">Shop List</a></li>
@@ -242,7 +249,14 @@
 													<li><a href="cart.html">Shopping cart</a></li>
 													<li><a href="checkout.html">Checkout</a></li>
 													<li><a href="wishlist.html">Wishlist</a></li>
-													<li><a href="<?php echo base_url('index.php/user/login')?>">Login</a></li>
+													<?php
+														
+														if(isset($this->session->userdata['user_id'])){
+															echo '<li><a href="'.base_url('index.php/user/login/logout').'">Logout</a></li>';
+														}else{
+															echo '<li><a href="'.base_url('index.php/user/login').'">Login</a></li>';
+														}
+													?>
 													<li><a href="404.html">404 Error</a></li>
 												</ul>													
 											</li>
@@ -259,7 +273,7 @@
 					<!-- top details area start -->
 					<div class="col-md-3 nopadding-left">
 						<div class="top-detail">
-							<!-- language division start -->
+							<!-- language division start 
 							<div class="disflow">
 								<div class="expand lang-all disflow">
 									<a href="#"><img src="<?php echo base_url()?>assets/theme/lavoro/img//country/en.gif" alt="">English</a>
@@ -345,12 +359,16 @@
 								<div class="expand dropps-menu">
 									<a href="#"><i class="fa fa-align-right"></i></a>
 									<ul class="restrain language">
-										<li><a href="login.html">My Account</a></li>
-										<li><a href="wishlist.html">My Wishlist</a></li>
-										<li><a href="cart.html">My Cart</a></li>
-										<li><a href="checkout.html">Checkout</a></li>
-										<li><a href="#">Testimonial</a></li>
-										<li><a href="login.html">Log In</a></li>
+										<?php
+											if(isset($this->session->userdata['user_id'])){
+												echo '<li><a href="'.base_url('index.php/user/login/logout').'">Logout</a></li>';
+												echo '<li><a href="'.base_url('index.php/user/login').'">My Account</a></li>';
+												echo '<li><a href="#">My Cart</a></li>';
+												echo '<li><a href="#">Checkout</a></li>';
+											}else{
+												echo '<li><a href="'.base_url('index.php/user/login').'">Login</a></li>';
+											}
+										?>
 									</ul>
 								</div>
 							</div>
