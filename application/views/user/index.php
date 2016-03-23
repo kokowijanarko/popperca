@@ -159,15 +159,15 @@
 														<a href="#">
 														';
 														
-											foreach ($image as $key=>$val) {
-												
-												foreach ($val as $index=>$value){
-													//var_dump($value->productimage_product_id); die;
-												if ($prod->product_id == $value->productimage_product_id){
-															echo '<img class="primary-image" src="'.base_url("file/product_img/".$value->productimage_name).'" alt="" />';
-												}
-												}
-											}
+														foreach ($image as $key=>$val) {
+															
+															foreach ($val as $index=>$value){
+																//var_dump($value->productimage_product_id); die;
+															if ($prod->product_id == $value->productimage_product_id){
+																		echo '<img class="primary-image" src="'.base_url("file/product_img/".$value->productimage_name).'" alt="" />';
+															}
+															}
+														}
 														echo '</a>
 														<div class="action-zoom">
 															<div class="add-to-cart">
@@ -179,6 +179,9 @@
 																<p style="color:white">
 																	lore ipsum dor 
 																</p>
+															</div>
+															<div class="add-to-cart" id="'.$prod->product_id.'">
+																<a  title="Add to Cart"><i class="icon-bag"></i></a>
 															</div>
 														</div>
 														<div class="price-box">
@@ -467,6 +470,50 @@
    		<!-- main js
 		============================================ -->           
         <script src="<?php echo base_url()?>assets/theme/lavoro/js/main.js"></script>
+		<script>
+			jQuery(function($) {
+				$('div.add-to-cart').click(function(){
+					var content = $(this).parent();
+					var product_id = $(this).attr('id');
+					var url = '<?php echo base_url("index.php/user/cart/addToCart");?>';
+					var is_member = "<?php if(isset($this->session->userdata['user_id'])){echo $this->session->userdata['user_id'];}else{echo NULL;};?>";
+					console.log(is_member);
+					
+					//set session id for non member
+					if(is_member != ''){
+						var session_id = is_member;
+					}else{
+						$.ajax({
+							url:"<?php echo base_url('index.php/session_js/set_session_non_member')?>",
+							type:'post'
+						}).success(function(result){
+							//result = JSON.parse(result);
+							console.log('session');
+							console.log(result);
+							var session_id = result;
+						});
+					}
+					
+					var params = {
+						'product_id':product_id,
+						'product_count':1,
+						'sessioin_id':session_id
+					};
+					
+					$.ajax({
+						url:url,
+						method:'post',
+						data:params
+					}).success(function(result){
+						//result = JSON.parse(result);
+						//console.log(result);
+					});
+				});
+				
+			});
+			
+			
+		</script>
     </body>
 
 </html>
