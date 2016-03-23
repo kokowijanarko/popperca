@@ -151,7 +151,7 @@
 										<div >
 											<?php 
 											var_dump($this->session->userdata);
-											//var_dump($_SESSION);
+											//var_dump(count($_SESSION['product_id']));
 											//var_dump($_COOKIE);
 											foreach ($product as $prod){
 												echo '
@@ -188,7 +188,7 @@
 															</div>
 														</div>
 														<div class="price-box">
-															<span class="new-price">$222.00</span>
+															<span class="new-price">Rp. '.number_format($prod->product_price, 2, ',', '.').'</span>
 														</div>
 													</div>
 													<div class="product-content">
@@ -476,6 +476,21 @@
 		<script>
 			jQuery(function($) {
 				$('span.cart-quantity').text('<?php if(isset($_SESSION['product_id'])){echo count($_SESSION['product_id']);}else{echo '';}?>');
+				
+				$('a.emty-btn').click(function(){
+					console.log('cok');
+						$.ajax({
+							url:"<?php echo base_url('index.php/session_js/empty_cart')?>",
+							type:'post'
+						}).success(function(result){
+							//result = JSON.parse(result);
+							//console.log('session');
+							
+							console.log(result);
+							location.reload();
+						});
+				});
+				
 				$('div.add-to-cart').click(function(){
 					var content = $(this).parent();
 					var product_id = $(this).attr('id');		
@@ -504,6 +519,9 @@
 						url:"<?php echo base_url('index.php/session_js/remove_cart_session')?>",
 						type:'post',
 						data:{'product_id':id}
+					}).success(function(result){
+						console.log(result);
+						location.reload();
 					});
 				});
 					

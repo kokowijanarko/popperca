@@ -310,36 +310,57 @@
 											
 										</div>
 										<div class="restrain small-cart-content">
-											<ul class="cart-list">												
+											<ul class="cart-list">	
+												
 												<?php
 													if(isset($_SESSION['product_id'])){
-														foreach($_SESSION['product_id'] as $id){
-															$query = $this->db->get_where("pop_product", array("product_id"=>$id));
-															$prod = $query->row();
-															$query = $this->db->get_where("pop_product_image", array("productimage_product_id"=>$id), 1);
-															$image_cart = $query->row();
+														if(count($_SESSION['product_id']) > 0){
 															echo '
-															<li>
-																<a class="sm-cart-product" href="product-details.html">
-																	<img src="'.base_url('file/product_img/'.$image_cart->productimage_name).'" alt="">
-																</a>
-																<div class="small-cart-detail">
-																	<a class="remove-cart-item" id="'.$id.'"><i class="fa fa-times-circle"></i></a>
-																	<a href="#" class="edit-btn"><img src="<?php echo base_url()?>assets/theme/lavoro/img/btn_edit.gif" alt="Edit Button" /></a>
-																	<a class="small-cart-name" href="product-details.html">'.$prod->product_name.'</a>
-																	<span class="quantitys"><strong>'.$_SESSION['product_count'][$id].'</strong>x<span>'.number_format($prod->product_price, 2, ',', '.').'</span></span>
-																</div>
-															</li>
+																<li>
+																	<div style="float:left">
+																	<a href="'.base_url('index.php/user/home/cart').'" class="edit-btn"><img alt="Edit Cart" /></a>
+																	</div>
+																	<div style="float:right">
+																	<a class="emty-btn"><img alt="Emty Cart" /></a>
+																	</div>
+																</li>															
 															';
-															$price[] = $prod->product_price * $_SESSION['product_count'][$id];
-														}
-														$amount = array_sum($price);
+															foreach($_SESSION['product_id'] as $id){
+																$query = $this->db->get_where("pop_product", array("product_id"=>$id));
+																$prod = $query->row();
+																$query = $this->db->get_where("pop_product_image", array("productimage_product_id"=>$id), 1);
+																$image_cart = $query->row();
+																echo '
+																<li>
+																	<a class="sm-cart-product" href="product-details.html">
+																		<img src="'.base_url('file/product_img/'.$image_cart->productimage_name).'" alt="">
+																	</a>
+																	<div class="small-cart-detail">
+																		<a class="remove-cart-item" id="'.$id.'"><i class="fa fa-times-circle"></i></a>
+																		
+																		<a class="small-cart-name" href="product-details.html">'.$prod->product_name.'</a>
+																		<span class="quantitys"><strong>'.$_SESSION['product_count'][$id].'</strong>x<span>'.number_format($prod->product_price, 2, ',', '.').'</span></span>
+																	</div>
+																</li>
+																';
+																$price[] = $prod->product_price * $_SESSION['product_count'][$id];
+															}
+															$amount = array_sum($price);
+														}else{
+															$amount =0;
+														}											
+														
+													}else{
+														$amount =0;
 													}
 												?>												
 											</ul>
 											<p class="total">Subtotal: <span class="amount"><?php echo number_format($amount, 2, ',', '.')?></span></p>
 											<p class="buttons">
-												<a href="checkout.html" class="button">Checkout</a>
+												<?php if($amount > 0){
+												echo '<a href="checkout.html" class="button">Checkout</a>';
+												}
+												?>
 											</p>
 										</div>
 									</div>

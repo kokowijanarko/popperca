@@ -353,8 +353,7 @@
 				$(".delete").click(function() {
 					var commentContainer = $(this).parent();
 					var id = $(this).attr("id");
-					var url = '<?php echo base_url("index.php/admin/product/deleteImg/'+id+'");?>';
-					
+					var url = '<?php echo base_url("index.php/admin/product/deleteImg/'+id+'");?>';					
 					$.ajax({
 						url:url,
 						method:'post'

@@ -36,6 +36,21 @@ class Session_js extends CI_Controller {
 			*/
 		}
 		
-		var_dump($_SESSION);die;
+		//var_dump($_SESSION);die;
 	}
+	public function remove_cart_session(){
+		$params = array(
+			"product_id" => $_POST['product_id'],
+			"product_count" => $_POST['product_id']
+		);
+		unset($_SESSION['product_count'][$_POST['product_id']]);
+		unset($_SESSION['product_id'][$_POST['product_id']]);
+		var_dump($_SESSION);
+	}
+	
+	public function empty_cart(){
+		unset($_SESSION['product_count']);
+		unset($_SESSION['product_id']);
+	}
+	
 }

@@ -39,6 +39,11 @@ class M_product extends CI_Model
 		$result = $query->result();
 		return $result;
 	}
+	public function getImgFirst($id){
+		$query = $this->db->get_where('pop_product_image', array('productimage_product_id'=>$id));
+		$result = $query->row();
+		return $result;
+	}
 	public function getImgById($id){
 		$query = $this->db->get_where('pop_product_image', array('productimage_id'=>$id));
 		$result = $query->result();
@@ -67,6 +72,7 @@ class M_product extends CI_Model
 				d.`gender_name`,
 				d.`gender_id`,
 				a.`product_stock`,
+				a.`product_price`,
 				a.`product_description`				
 			 FROM pop_product a
 			 JOIN `pop_size` b ON b.`size_id` = a.`product_size_id`
