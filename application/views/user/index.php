@@ -150,6 +150,9 @@
 									<div class="row">
 										<div >
 											<?php 
+											var_dump($this->session->userdata);
+											//var_dump($_SESSION);
+											//var_dump($_COOKIE);
 											foreach ($product as $prod){
 												echo '
 												<div class="col-lg-3 col-md-3">
@@ -472,6 +475,7 @@
         <script src="<?php echo base_url()?>assets/theme/lavoro/js/main.js"></script>
 		<script>
 			jQuery(function($) {
+				$('span.cart-quantity').text('<?php if(isset($_SESSION['product_id'])){echo count($_SESSION['product_id']);}else{echo '';}?>');
 				$('div.add-to-cart').click(function(){
 					var content = $(this).parent();
 					var product_id = $(this).attr('id');		
@@ -482,12 +486,27 @@
 							data:{'product_id':product_id, 'product_count':1}
 						}).success(function(result){
 							//result = JSON.parse(result);
-							console.log('session');
+							//console.log('session');
+							
 							console.log(result);
-							var session_id = result;
+							location.reload();
 						});
-					
+							//$('span.cart-quantity').text('<?php if(isset($_SESSION['product_id'])){echo count($_SESSION['product_id']);}else{echo '';}?>');
+						
 				});
+				
+				$('a.remove-cart-item').click(function(){
+					var parent = $(this).parent();
+					var id = $(this).attr('id');
+					console.log(id);
+					
+					$.ajax({
+						url:"<?php echo base_url('index.php/session_js/remove_cart_session')?>",
+						type:'post',
+						data:{'product_id':id}
+					});
+				});
+					
 				
 			});
 			

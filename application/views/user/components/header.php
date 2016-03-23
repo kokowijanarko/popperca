@@ -298,36 +298,46 @@
 							<div class="disflow">
 								<div class="circle-shopping expand">
 									<div class="shopping-carts text-right">
+										
 										<div class="cart-toggler">
 											<a href="#"><i class="icon-bag"></i></a>
-											<a href="#"><span class="cart-quantity">2</span></a>
+											<?php
+												if(isset($_SESSION['product_id'])){
+													$count_product = count($_SESSION['product_id']);
+													echo '<a id="prod-count"><span class="cart-quantity"></span></a>';
+												}
+											?>
+											
 										</div>
 										<div class="restrain small-cart-content">
-											<ul class="cart-list">
-												<li>
-													<a class="sm-cart-product" href="product-details.html">
-														<img src="<?php echo base_url('assets/theme/lavoro/img/products/sm-products/cart1.jpg')?>" alt="">
-													</a>
-													<div class="small-cart-detail">
-														<a class="remove" href="#"><i class="fa fa-times-circle"></i></a>
-														<a href="#" class="edit-btn"><img src="<?php echo base_url()?>assets/theme/lavoro/img/btn_edit.gif" alt="Edit Button" /></a>
-														<a class="small-cart-name" href="product-details.html">Voluptas nulla</a>
-														<span class="quantitys"><strong>1</strong>x<span>$75.00</span></span>
-													</div>
-												</li>
-												<li>
-													<a class="sm-cart-product" href="product-details.html">
-														<img src="<?php echo base_url()?>assets/theme/lavoro/img/products/sm-products/cart2.jpg" alt="">
-													</a>
-													<div class="small-cart-detail">
-														<a class="remove" href="#"><i class="fa fa-times-circle"></i></a>
-														<a href="#" class="edit-btn"><img src="<?php echo base_url()?>assets/theme/lavoro/img/btn_edit.gif" alt="Edit Button" /></a>
-														<a class="small-cart-name" href="product-details.html">Donec ac tempus</a>
-														<span class="quantitys"><strong>1</strong>x<span>$75.00</span></span>
-													</div>
-												</li>
+											<ul class="cart-list">												
+												<?php
+													if(isset($_SESSION['product_id'])){
+														foreach($_SESSION['product_id'] as $id){
+															$query = $this->db->get_where("pop_product", array("product_id"=>$id));
+															$prod = $query->row();
+															$query = $this->db->get_where("pop_product_image", array("productimage_product_id"=>$id), 1);
+															$image_cart = $query->row();
+															echo '
+															<li>
+																<a class="sm-cart-product" href="product-details.html">
+																	<img src="'.base_url('file/product_img/'.$image_cart->productimage_name).'" alt="">
+																</a>
+																<div class="small-cart-detail">
+																	<a class="remove-cart-item" id="'.$id.'"><i class="fa fa-times-circle"></i></a>
+																	<a href="#" class="edit-btn"><img src="<?php echo base_url()?>assets/theme/lavoro/img/btn_edit.gif" alt="Edit Button" /></a>
+																	<a class="small-cart-name" href="product-details.html">'.$prod->product_name.'</a>
+																	<span class="quantitys"><strong>'.$_SESSION['product_count'][$id].'</strong>x<span>'.number_format($prod->product_price, 2, ',', '.').'</span></span>
+																</div>
+															</li>
+															';
+															$price[] = $prod->product_price * $_SESSION['product_count'][$id];
+														}
+														$amount = array_sum($price);
+													}
+												?>												
 											</ul>
-											<p class="total">Subtotal: <span class="amount">$155.00</span></p>
+											<p class="total">Subtotal: <span class="amount"><?php echo number_format($amount, 2, ',', '.')?></span></p>
 											<p class="buttons">
 												<a href="checkout.html" class="button">Checkout</a>
 											</p>
@@ -377,6 +387,7 @@
 					<!-- top details area end -->
 				</div>
 			</div>
+			
 		</header>
 		<!-- header area end -->
 		
