@@ -62,26 +62,40 @@ class Cart extends CI_Controller {
 		$createInvoice = $this->m_invoice->ceateInvoice($params);
 	}
 	
-	function invoicenumberGenerator(){
+	private function invoicenumberGenerator(){
 		$lastInvNumber  = $this->m_invoice->getLastInvNumber();
+		//var_dump($lastInvNumber->invoice_number);
 		if(count($lastInvNumber) == 0){
 			$InvnumberStr = "0001";
 		}else{
-			$lastInvNumber_parsing = explode('/', $lastInvNumber['invoice_number'], 2);
-			$lastInvNumber_parsing = explode('.', $lastInvNumber_parsing[0], 2);
-			$invNumberInt = intval($lastInvNumber_parsing[1]);
-			$invNumberIncrease = $invNumberInt + 1;
-			if($invNumberIncrease >= 9){
+			$lastInvNumber_parsing = explode('/', $lastInvNumber->invoice_number, 2);				
+			$invNumber_date = explode('/', $lastInvNumber_parsing[1], 3);
+			$invNumber_date = date('d/m/Y', mktime(0, 0, 0, $invNumber_date[1], $invNumber_date[0], $invNumber_date[2]));
+			$now_date = date('d/m/Y');
+			
+			if($invNumber_date == $now_date){				
+				$lastInvNumber_number = explode('.', $lastInvNumber_parsing[0], 2);
+				$invNumberInt = intval($lastInvNumber_number[1]);
+				$invNumberIncrease = $invNumberInt + 1;
+				if($invNumberIncrease <= 9){
 				$InvnumberStr = '000'.$invNumberIncrease;
-			}elseif($invNumberIncrease >= 99){
-				$InvnumberStr = '00'.$invNumberIncrease;
-			}elseif($invNumberIncrease >= 999){
-				$InvnumberStr = '0'.$invNumberIncrease;
-			}elseif($invNumberIncrease >= 9999){
-				$InvnumberStr = $invNumberIncrease;
-			}
-		}
-		$newInvNumber = 'INV.'.$InvnumberStr/date('d')/date('m')/date('Y');
+				}elseif($invNumberIncrease <= 99){
+					$InvnumberStr = '00'.$invNumberIncrease;
+				}elseif($invNumberIncrease <= 999){
+					$InvnumberStr = '0'.$invNumberIncrease;
+				}elseif($invNumberIncrease <= 9999){
+					$InvnumberStr = $invNumberIncrease;
+				}
+				//var_dump($invNumberIncrease);
+			}else{
+				$InvnumberStr = "0001";
+			}			
+			//var_dump($invNumber_date);
+			//var_dump($now_date);
+			//var_dump($InvnumberStr);
+		}		
+		$newInvNumber = 'INV.'.$InvnumberStr.'/'.date('d').'/'.date('m').'/'.date('Y');
+		//var_dump($newInvNumber);die;
 		return $newInvNumber;
 	}
 }

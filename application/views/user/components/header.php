@@ -318,7 +318,7 @@
 															echo '
 																<li>
 																	<div style="float:left">
-																	<a href="'.base_url('index.php/user/home/cart').'" class="edit-btn"><img alt="Edit Cart" /></a>
+																	<a href="'.base_url('index.php/home/cart').'" class="edit-btn"><img alt="Edit Cart" /></a>
 																	</div>
 																	<div style="float:right">
 																	<a class="emty-btn"><img alt="Emty Cart" /></a>

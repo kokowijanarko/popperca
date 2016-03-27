@@ -235,6 +235,13 @@
 									</div>							
 									
 									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Price </label>
+
+										<div class="col-sm-9">
+											<input value="<?php echo $detail->product_price?>" type="text" id="form-field-1-1" name="price" placeholder="Stock" class="col-xs-10 col-sm-5" />
+										</div>
+									</div>
+									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Stock </label>
 
 										<div class="col-sm-9">

@@ -19,7 +19,13 @@ class Session_js extends CI_Controller {
 		if(isset($_POST['product_id'])){
 			$_SESSION['product_id'][$_POST['product_id']] = $_POST['product_id'];
 			if(isset($_SESSION['product_count'][$_POST['product_id']])){
-				$product_count = $_SESSION['product_count'][$_POST['product_id']] + 1;
+				if($_SESSION['product_count'][$_POST['product_id']] > 1){
+					$product_count = $_POST['product_count'];
+				}else{
+					$product_count = $_SESSION['product_count'][$_POST['product_id']] + 1;
+				}				
+				
+				//var_dump($product_count);die;
 				$_SESSION['product_count'][$_POST['product_id']] = $product_count;
 			}else{
 				$_SESSION['product_count'][$_POST['product_id']] = 1;

@@ -173,6 +173,7 @@
 						<div class="customer-login my-account">
 							<div class="form-fields">
 								<h2>Your Shopping Cart</h2>
+								
 								<table class="tableCustom">									
 									<tr>
 										<td width="25px">No</td>
@@ -193,8 +194,9 @@
 													<td>'.$no.'</td>
 													<td>'.$prod->product_name.'</td>
 													<td><img width="200px" src="'.base_url('file/product_img/'.$image[$i]->productimage_name).'" /></td>
-													<td>
-														<input type="number" id="prod_count" class="prod_count" value="'.$_SESSION['product_count'][$prod->product_id].'">
+													<td class="td_input">
+														<input type="number" min="1" id="prod_count" class="prod_count" value="'.$_SESSION['product_count'][$prod->product_id].'">
+														<input type="text" id="prod_id" class="prod_id" value="'.$_SESSION['product_id'][$prod->product_id].'">
 													</td>
 													<td class="price" id="'.$prod->product_price.'">'.$prod->product_price.'</td>
 													<td class="subtot">'.$subtot.'</td>
@@ -213,11 +215,10 @@
 											</tr>
 										';
 									?>
-									
-									
-									
-									
 								</table>
+								<p class="buttons">
+								<a class="button">Checkout</a>
+								</p>
 							</div>							
 						</div>
 					</div>
@@ -292,13 +293,7 @@
 			$('td.price').number(true, 2);
 			$('td.total').number(true, 2);
 			
-			$("input.prod_count").change(function(){
-				var subtot = $('td.subtot').text();
-				var cek = subtot.split(",");
-				console.log('xxxx');
-				console.log(subtot);
-				console.log(cek);
-			});
+			
 			
 			$('tr.prod_row').click(function(){
 				var quantity = $(this).find('input.prod_count').val();
@@ -310,7 +305,33 @@
 				console.log(quantity);
 				console.log(price);
 				console.log(subtotal);
+				
+				
 			});
+			
+			$("input.prod_count").change(function(){
+				var quantity = $('td.td_input').find('input.prod_count').val();
+				var id = $('td.td_input').find('input.prod_id').val();
+				var subtot = $('td.subtot').text();
+				var cek = subtot.split(",");
+				console.log(quantity);
+				console.log(subtot);
+				console.log(cek);
+				
+				$.ajax({
+							url:"<?php echo base_url('index.php/session_js/set_session_non_member')?>",
+							type:'post',
+							data:{'product_id':id, 'product_count':quantity}
+						}).success(function(result){
+							//result = JSON.parse(result);
+							//console.log('session');
+							
+							console.log(result);
+							location.reload();
+						});
+				
+			});
+			
 		})
 	</script>
 <!-- Mirrored from devitems.com/tf/lavoro-preview/lavoro/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 03 Mar 2016 07:01:58 GMT -->
