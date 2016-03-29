@@ -150,7 +150,7 @@
 									<div class="row">
 										<div >
 											<?php 
-											var_dump($this->session->userdata);
+											//var_dump($this->session->userdata);
 											//var_dump(count($_SESSION['product_id']));
 											//var_dump($_COOKIE);
 											foreach ($product as $prod){
@@ -159,11 +159,10 @@
 												<!-- single-product start -->												
 												<div class="single-product first-sale">
 													<div class="product-img">
-														<a href="#">
+														<a href="'.base_url('user/detail_product/detail/'.$prod->product_id).'">
 														';
 														
-														foreach ($image as $key=>$val) {
-															
+														foreach ($image as $key=>$val) {															
 															foreach ($val as $index=>$value){
 																//var_dump($value->productimage_product_id); die;
 															if ($prod->product_id == $value->productimage_product_id){
@@ -172,11 +171,6 @@
 															}
 														}
 														echo '</a>
-														<div class="action-zoom">
-															<div class="add-to-cart">
-																<a href="#" title="Quick View"><i class="fa fa-search-plus"></i></a>
-															</div>
-														</div>
 														<div class="actions">
 															<div class="action-buttons">
 																<p style="color:white">

@@ -17,7 +17,7 @@
 
         <!-- Favicon
 		============================================ -->
-		<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+		<link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url();?>assets/theme/lavoro/img/favicon.ico">
 		
 		<!-- Fonts
 		============================================ -->
@@ -217,7 +217,7 @@
 									?>
 								</table>
 								<p class="buttons">
-								<a class="button">Checkout</a>
+								<a href="<?php echo base_url('user/cart/checkout')?>" class="button">Checkout</a>
 								</p>
 							</div>							
 						</div>

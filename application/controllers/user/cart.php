@@ -62,8 +62,20 @@ class Cart extends CI_Controller {
 		);
 		$createInvoice = $this->m_invoice->ceateInvoice($params);
 		*/
+		$data['provinsi'] = $this->m_custommer->getProvinsi();
+		foreach($_SESSION['product_id'] as $prod_id){
+			$products = $this->m_product->getdetailProduct($prod_id);
+			$data['product'][] = $products;
+			$data['image'][] = $this->m_product->getImgFirst($prod_id);
+		}
+		$data['ck_login'] = 0;
+		if($this->authex->logged_in())
+        {
+            $data['ck_login'] = 1;
+        }
 		
-		$this->load->view('user/pages/checkout');
+		
+		$this->load->view('user/pages/checkout', $data);
 	}
 	
 	private function invoicenumberGenerator(){

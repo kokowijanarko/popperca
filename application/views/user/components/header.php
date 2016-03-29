@@ -358,7 +358,7 @@
 											<p class="total">Subtotal: <span class="amount"><?php echo number_format($amount, 2, ',', '.')?></span></p>
 											<p class="buttons">
 												<?php if($amount > 0){
-												echo '<a href="checkout.html" class="button">Checkout</a>';
+												echo '<a href="'.base_url('user/cart/checkout').'" class="button">Checkout</a>';
 												}
 												?>
 											</p>

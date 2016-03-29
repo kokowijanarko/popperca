@@ -34,11 +34,8 @@ class Login extends CI_Controller {
 		$login = $this->authex->login($_POST['username'], $_POST['password']);
 		//var_dump($login);die;
 		
-		if($login == true){
-			redirect(base_url('index.php'));
-		}else{
-			$this->index();
-		}
+		echo json_encode($login);
+		exit;
 	}
 	
 	public function do_register(){

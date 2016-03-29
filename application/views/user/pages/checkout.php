@@ -6,7 +6,6 @@
 <!--[if IE 9 ]>    <html lang="en" class="ie9">    <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!-->
 <html class="no-js" lang="">
-    
 <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -73,7 +72,17 @@
 		============================================ -->          
         <link rel="stylesheet" href="<?php echo base_url()?>assets/theme/lavoro/css/responsive.css">
         
+		<!-- table CSS
+		============================================ -->          
+        <link rel="stylesheet" href="<?php echo base_url();?>assets/css/style-table.css">
+        
         <script src="<?php echo base_url()?>assets/theme/lavoro/js/vendor/modernizr-2.8.3.min.js"></script>
+		
+		<style>
+			.hide{
+				visibility : hidden
+			};
+		</style>
     </head>
     <body>
         <!--[if lt IE 8]>
@@ -126,7 +135,7 @@
 										</div>
 										<div id="checkoutMethod" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 											<div class="content-info">
-												<div class="col-md-6">
+												<div class="col-md-6" id="login_form">
 													<div class="checkout-login">
 															<div class="checkTitle">
 																<h2 class="ct-design">Login</h2>
@@ -134,15 +143,30 @@
 														<p class="alrdyReg">Already registered?</p>
 														<p class="plxLogin">Please log in below:</p>
 														<div class="loginFrom">
-															<p class="plxLoginP"><span>*</span> Email Address</p>
-															<input type="text"><br>
+															<p class="plxLoginP"><span>*</span> Username</p>
+															<input type="text" name="username" id="username"  autocomplete="off"><br>
 															<p class="plxLoginP"><span>*</span> Password</p>
-															<input type="text">
+															<input type="password" name="password" id="password" autocomplete="off">
 															<p class="plxrequired"><span>*</span> Required Field</p>
 															<!--<p class="fgetpass">Forgot your password ?</p>-->
 														</div>
-														<a href="#" style="float:left" class="checkPageBtn">Login</a>
-														<a href="#" class="checkPageBtn">Register</a>
+														<a style="float:left" class="checkPageBtn" id="login">Login</a>
+														<a href="<?php echo base_url('user/login')?>" class="checkPageBtn">Register</a>
+													</div>
+												</div>
+												<div class="col-md-6 hide" id="acc_info">
+													<div class="checkTitle">
+														<div class="AcckTitle">
+															<h2 class="ct-design">Login Status</h2>
+														</div>
+														<p id="account_content">
+														<?php 
+															if(isset($this->session->userdata['user_id'])){
+																echo "Login Success";
+															}
+														?>
+														</p>
+														
 													</div>
 												</div>
 											</div>
@@ -156,11 +180,158 @@
 												</a>
 											</h4>
 										</div>
-										<div id="billingInformation" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+										<div id="billingInformation" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
 											<div class="content-info">
-												<div class="col-md-12">
-													<div>Sample Content</div>
-													<p>Nunc Facilisis Sagittis Ullamcorper. Proin Lectus Ipsum, Gravida Et Mattis Vulputate, Tristique Ut Lectus. Sed Et Lorem Nunc.</p>
+												<div class="col-md-12">	
+													<div class="col-md-6">
+													<p>
+													<h6>Buyer</h6>
+														<table>
+															<tr>
+																<td>Name</td>
+																<td>:</td>
+																<td id="buyer_name"></td>
+															</tr>
+															<tr>
+																<td>Address</td>
+																<td>:</td>
+																<td id="buyer_address"></td>
+															</tr>
+															<tr>
+																<td>Districs</td>
+																<td>:</td>
+																<td id="buyer_districs"></td>
+															</tr>
+															<tr>
+																<td>Pos Code</td>
+																<td>:</td>
+																<td id="buyer_poscode"></td>
+															</tr>
+															<tr>
+																<td>Distric</td>
+																<td>:</td>
+																<td id="buyer_distric"></td>
+															</tr>
+															<tr>
+																<td>Province</td>
+																<td>:</td>
+																<td id="buyer_province"></td>
+															</tr>
+															<tr>
+																<td>Phone</td>
+																<td>:</td>
+																<td id="buyer_phone"></td>
+															</tr>
+															
+														</table>
+													</p>
+													</div>
+													<div class="col-md-6">
+													<p>
+														<h6>Send To</h6>
+														<table>
+															<tr>
+																<td>Name</td>
+																<td>:</td>
+																<td><input type="text" class="input-text" id="reciver_name"></td>
+															</tr>
+															<tr>
+																<td>Province</td>
+																<td>:</td>
+																<td>
+																	<select name="reciver_provinsi_id" id="reciver_provinsi_id" class="col-xs-12" onchange="getKab()">
+																		<option value="" >--SELECT--</option>
+																		<?php
+																			foreach($provinsi as $prov){
+																				echo '
+																					<option value="'.$prov->IDProvinsi .'" >'.$prov->Nama.'</option>											
+																				';
+																			}
+																		?>
+																	</select>
+																</td>
+															</tr>
+															<tr>
+																<td>Distric</td>
+																<td>:</td>
+																<td>
+																	<select name="reciver_kabupaten_id" id="reciver_kabupaten_id" class="col-xs-12" onChange="getKec()">
+																		<option value="" >--SELECT--</option>
+																	</select></td>
+															</tr>
+															<tr>
+																<td>Districs</td>
+																<td>:</td>
+																<td>
+																	<select name="reciver_kecamatan_id" id="reciver_kecamatan_id" class="col-xs-12" >
+																		<option value="" >--SELECT--</option>
+																	</select>
+																</td>
+															</tr>
+															<tr>
+																<td>Pos Code</td>
+																<td>:</td>
+																<td><input type="text" class="input-text" id="reciver_poscode"></td>
+															</tr>
+															<tr>
+																<td>Address</td>
+																<td>:</td>
+																<td><textarea class="input-text" id="reciver_address"></textarea></td>
+															</tr>
+															<tr>
+																<td>Phone</td>
+																<td>:</td>
+																<td><input type="text" class="input-text" id="reciver_phone"></td>
+															</tr>
+															
+														</table>
+													</p>
+													</div>
+													<table class="tableCustom">									
+														<tr>
+															<td width="25px">No</td>
+															<td >Product</td>
+															<td width="200px">Image</td>
+															<td >Quantity</td>
+															<td >Price</td>
+															<td >Subtotal</td>
+														</tr>
+														<?php
+															$no = 1;
+															$i = 0;
+															foreach($product as $prod){
+																$subtot = $prod->product_price * $_SESSION['product_count'][$prod->product_id] ;
+																$sbttl[] =  $subtot;
+																echo '
+																	<tr class="prod_row">
+																		<td>'.$no.'</td>
+																		<td>'.$prod->product_name.'</td>
+																		<td><img width="200px" src="'.base_url('file/product_img/'.$image[$i]->productimage_name).'" /></td>
+																		<td class="td_input">
+																			'.$_SESSION['product_count'][$prod->product_id].'
+																			
+																		</td>
+																		<td class="price" id="'.$prod->product_price.'">'.$prod->product_price.'</td>
+																		<td class="subtot">'.$subtot.'</td>
+																		
+																	</tr>
+																';											
+																$no++;											
+																$i++;											
+															}
+															$amount = array_sum($sbttl);
+															
+															echo'
+																<tr>
+																	<td colspan="5" >Total</td>
+																	<td class="total">'.$amount.'</td>
+																</tr>
+															';
+														?>
+													</table>
+													<p class="buttons">
+													<a class="button">Confirm</a>
+													</p>
 												</div>
 											</div>
 										</div>
@@ -219,6 +390,7 @@
 								</div>
 							</div>	
 						</div>
+						<!--
 						<div class="col-md-3 category-checkout">
 							<h5>YOUR CHECKOUT PROGRESS</h5>
 							<ul>
@@ -228,6 +400,7 @@
 								<li><a href="#" class="link-hover">payment methor</a></li>
 							</ul>
 						</div>
+						-->
 					</div>
 					<!-- div.info-section -->	
 				</div>
@@ -238,208 +411,7 @@
 		<!-- END MAIN CONTAINER -->
 		<div class="clearfix"></div>
 		<!-- FOOTER START -->
-		<footer>
-			<!-- banner footer area start -->
-			<div class="banner-footer">
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-md-2 col-sm-2 col-xs-3 nopadding">
-							<div class="single-bannerfooter">
-								<a href="#">
-									<img src="<?php echo base_url()?>assets/theme/lavoro/img/banner/footer-1.jpg" alt="" />
-								</a>
-							</div>
-						</div>
-						<div class="col-md-2 col-sm-2 col-xs-3 nopadding">
-							<div class="single-bannerfooter">
-								<a href="#">
-									<img src="<?php echo base_url()?>assets/theme/lavoro/img/banner/footer-2.jpg" alt="" />
-								</a>
-							</div>
-						</div>
-						<div class="col-md-2 col-sm-2 col-xs-3 nopadding">
-							<div class="single-bannerfooter">
-								<a href="#">
-									<img src="<?php echo base_url()?>assets/theme/lavoro/img/banner/footer-3.jpg" alt="" />
-								</a>
-							</div>
-						</div>
-						<div class="col-md-2 col-sm-2 col-xs-3 nopadding">
-							<div class="single-bannerfooter">
-								<a href="#">
-									<img src="<?php echo base_url()?>assets/theme/lavoro/img/banner/footer-4.jpg" alt="" />
-								</a>
-							</div>
-						</div>
-						<div class="col-md-2 col-sm-2 hidden-xs nopadding">
-							<div class="single-bannerfooter">
-								<a href="#">
-									<img src="<?php echo base_url()?>assets/theme/lavoro/img/banner/footer-5.jpg" alt="" />
-								</a>
-							</div>
-						</div>
-						<div class="col-md-2 col-sm-2 hidden-xs nopadding">
-							<div class="single-bannerfooter last-single">
-								<a href="#">
-									<img src="<?php echo base_url()?>assets/theme/lavoro/img/banner/footer-6.jpg" alt="" />
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- banner footer area end -->
-			<!-- top footer area start -->
-			<div class="top-footer-area">
-				<div class="container">
-					<div class="row">
-						<div class="col-md-3 col-sm-4">
-							<div class="single-snap-footer">
-								<div class="snap-footer-title">
-									<h4>Company info</h4>
-								</div>
-								<div class="cakewalk-footer-content">
-									<p class="footer-des">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim adm.</p>
-									<a href="#" class="read-more">Read more</a>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-3 col-sm-4">
-							<div class="single-snap-footer">
-								<div class="snap-footer-title">
-									<h4>Information</h4>
-								</div>
-								<div class="cakewalk-footer-content">
-									<ul>
-										<li><a href="#">About Us</a></li>
-										<li><a href="#">Careers</a></li>
-										<li><a href="#">Delivery Information</a></li>
-										<li><a href="#">Privacy Policy</a></li>
-										<li><a href="#">Terms & Condition</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-2 col-sm-4">
-							<div class="single-snap-footer">
-								<div class="snap-footer-title">
-									<h4>Fashion Tags</h4>
-								</div>
-								<div class="cakewalk-footer-content">
-									<ul>
-										<li><a href="#">My Account</a></li>
-										<li><a href="#">Login</a></li>
-										<li><a href="#">My Cart</a></li>
-										<li><a href="#">Wishlist</a></li>
-										<li><a href="#">Checkout</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-2 hidden-sm">
-							<div class="single-snap-footer">
-								<div class="snap-footer-title">
-									<h4>Fashion Tags</h4>
-								</div>
-								<div class="cakewalk-footer-content">
-									<ul>
-										<li><a href="#">Sitemap</a></li>
-										<li><a href="#">Privacy Policy</a></li>
-										<li><a href="#">Advanced Search</a></li>
-										<li><a href="#">Affiliates</a></li>
-										<li><a href="#">Contact Us</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-2 hidden-sm">
-							<div class="single-snap-footer">
-								<div class="snap-footer-title">
-									<h4>Follow Us</h4>
-								</div>
-								<div class="cakewalk-footer-content social-footer">
-									<ul>
-										<li><a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook"></i></a><span> Facebook</span></li>
-										<li><a href="https://plus.google.com/" target="_blank"><i class="fa fa-google-plus"></i></a><span> Google Plus</span></li>
-										<li><a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter"></i></a><span> Twitter</span></li>
-										<li><a href="https://youtube.com/" target="_blank"><i class="fa fa-youtube-play"></i></a><span> Youtube</span></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>	
-			<!-- top footer area end -->
-			<!-- info footer start -->
-			<div class="info-footer">
-				<div class="container">
-					<div class="row">
-						<div class="col-md-3 col-sm-4">
-							<div class="info-fcontainer">
-								<div class="infof-icon">
-									<i class="fa fa-map-marker"></i>
-								</div>
-								<div class="infof-content">
-									<h3>Our Address</h3>
-									<p>Main Street, Banasree, Dhaka</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-3 col-sm-4">
-							<div class="info-fcontainer">
-								<div class="infof-icon">
-									<i class="fa fa-phone"></i>
-								</div>
-								<div class="infof-content">
-									<h3>Phone Support</h3>
-									<p>+88 0173 7803547</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-3 col-sm-4">
-							<div class="info-fcontainer">
-								<div class="infof-icon">
-									<i class="fa fa-envelope"></i>
-								</div>
-								<div class="infof-content">
-									<h3>Email Support</h3>
-									<p>admin@bootexperts.com</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-3 hidden-sm">
-							<div class="info-fcontainer">
-								<div class="infof-icon">
-									<i class="fa fa-clock-o"></i>
-								</div>
-								<div class="infof-content">
-									<h3>Openning Hour</h3>
-									<p>Sat - Thu : 9:00 am - 22:00 pm</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- info footer end -->
-			<!-- footer address area start -->
-			<div class="address-footer">
-				<div class="container">
-					<div class="row">
-						<div class="col-md-6 col-xs-12">
-							<address>Copyright © <a href="http://bootexperts.com/">BootExperts.</a> All Rights Reserved</address>
-						</div>
-						<div class="col-md-6 col-xs-12">
-							<div class="footer-payment pull-right">
-								<a href="#"><img src="<?php echo base_url()?>assets/theme/lavoro/img/payment.png" alt="" /></a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- footer address area end -->
-		</footer>
+		<?php $this->load->view('user/components/footer')?>
 		<!-- FOOTER END -->
 		
         <!-- JS -->
@@ -487,6 +459,118 @@
    		<!-- main js
 		============================================ -->           
         <script src="<?php echo base_url()?>assets/theme/lavoro/js/main.js"></script>
+		
+		<!-- number js
+		============================================ -->         
+        <script src="<?php echo base_url();?>assets/js/jquery.number.js"></script>        
+		
+		<script>
+			jQuery(function($) {
+				$('td.subtot').number(true, 2);
+				$('td.price').number(true, 2);
+				$('td.total').number(true, 2);		
+				
+				//console.log('a');
+				var ck_login = <?php echo $ck_login?>;
+				console.log(ck_login);
+				//if(ck_login == 1){
+				//	$('div#billingInformation').addClass('in');
+				//	$('div#checkoutMethod').removeClass('in');
+				//	console.log('x');
+				//}
+				
+				$('a#login').click(function(){
+					var username = $('#username').val();
+					var password = $('#password').val();
+					
+					console.log(username);
+					console.log(password);
+					
+					
+					$.ajax({
+						url:"<?php echo base_url('user/login/do_login')?>",
+						type:'post',
+						data:{'username':username, 'password':password}
+					}).success(function(result){
+						result = JSON.parse(result);
+						console.log(result);
+						//location.reload();
+						
+						
+						if(result == true){
+							$('#acc_info').removeClass('hide');
+							$('#login_form').addClass('hide');
+							//$('div#billingInformation').addClass('in');
+							
+							var user_id = "<?php echo isset($this->session->userdata['user_id']) ? $this->session->userdata['user_id'] : NULL ; ?>";
+							console.log(user_id);
+							$.ajax({
+								url:"<?php echo base_url()?>user/account/detail_js/"+user_id
+							}).success(function(result){
+								result=JSON.parse(result);
+								console.log(result);
+								$('td#buyer_name').text(result['account']['custommer_name']);
+								$('td#buyer_address').text(result['account']['custommer_address']);
+								$('td#buyer_province').text(result['provinsi']['Nama']);
+								$('td#buyer_distric').text(result['kabupaten']['Nama']);
+								$('td#buyer_districs').text(result['kecamatan']['Nama']);
+								$('td#buyer_poscode').text(result['account']['custommer_pos_code']);
+								$('td#buyer_phone').text(result['account']['custommer_phone']);
+								
+								$('#reciver_name').val(result['account']['custommer_name']);
+								$('#reciver_address').val(result['account']['custommer_name']);
+								$('#reciver_provinsi_id').val(result['account']['custommer_name']);
+								$('#reciver_kabupaten_id').val(result['account']['custommer_name']);
+								$('#reciver_kecamatan_id').val(result['account']['custommer_name']);
+								$('#reciver_poscode').val(result['account']['custommer_name']);
+								$('#reciver_phone').val(result['account']['custommer_name']);
+								
+							});
+							
+							
+						}
+						
+					});
+					
+				});
+			});
+			
+			function getKab(){
+				$("#reciver_kabupaten_id").empty().append('<option value="">--SELECT--</option>');
+				$("#reciver_kecamatan_id").empty().append('<option value="">--SELECT--</option>');
+				var IDProvinsi = $('#reciver_provinsi_id option:selected').val();		
+				console.log(IDProvinsi);
+				var data = {'IDProvinsi':IDProvinsi};
+				console.log(data);
+				var url = "<?php echo base_url()?>index.php/admin/custommer/get_kab/"+IDProvinsi;
+				$.ajax({
+					url: url			
+				}).success(function(result){
+					result = JSON.parse(result);
+					console.log(result);
+					for(i=0; i<result.length; i++){
+						$("#reciver_kabupaten_id").append('<option value='+result[i]['IDKabupaten']+'>'+result[i]['Nama']+'</option>');
+					}
+					
+				});
+			}
+			function getKec(){
+				$("#reciver_kecamatan_id").empty().append('<option value="">--SELECT--</option>');
+				var IDKabupaten = $('#reciver_kabupaten_id option:selected').val();
+				var url = "<?php echo base_url()?>index.php/admin/custommer/get_kec/"+IDKabupaten;
+				console.log(url);
+				$.ajax({
+					url: url			
+				}).success(function(result){
+					result = JSON.parse(result);
+					console.log(result);
+					for(i=0; i<result.length; i++){
+						$("#reciver_kecamatan_id").append('<option value='+result[i]['IDKecamatan']+'>'+result[i]['Nama']+'</option>');
+					}
+					
+				});
+			}
+		</script>
     </body>
 
 </html>

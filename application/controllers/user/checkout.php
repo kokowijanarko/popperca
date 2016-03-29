@@ -21,28 +21,7 @@ class Checkout extends CI_Controller {
             redirect(base_url('index.php/user/login/'));  //for example
         }
 		*/
-    }
-	
-	public function addToCart(){
-		$product_id = $_POST['product_id'];
-		$product_count = $_POST['product_count'];
-		if(isset($this->session->userdata['user_id'])){
-			$custommer_id  = $this->session->userdata['user_id'];
-		}else{
-			$custommer_id = NULL;
-		}
-		var_dump($product_id);die;
-		$params = array(
-			'product_id' => $product_id,
-			'product_count' => $product_count,
-			'custommer_id' => $custommer_id
-		);
-		$addCart  = $this->m_cart->addCart($params);
-		
-		echo json_encode($addCart);
-		exit;
-	}
-	
+    }	
 	public function checkout(){
 		/*
 		$product_id = $_POST['product_id'];
