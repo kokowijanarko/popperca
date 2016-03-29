@@ -518,12 +518,12 @@
 								$('td#buyer_phone').text(result['account']['custommer_phone']);
 								
 								$('#reciver_name').val(result['account']['custommer_name']);
-								$('#reciver_address').val(result['account']['custommer_name']);
-								$('#reciver_provinsi_id').val(result['account']['custommer_name']);
-								$('#reciver_kabupaten_id').val(result['account']['custommer_name']);
-								$('#reciver_kecamatan_id').val(result['account']['custommer_name']);
-								$('#reciver_poscode').val(result['account']['custommer_name']);
-								$('#reciver_phone').val(result['account']['custommer_name']);
+								$('#reciver_address').val(result['account']['custommer_address']);
+								$('#reciver_provinsi_id').val(result['provinsi']['IDProvinsi']);
+								$('#reciver_kabupaten_id').val(result['kabupaten']['IDKabupaten']);
+								$('#reciver_kecamatan_id').val(result['kecamatan']['IDKecamatan']);
+								$('#reciver_poscode').val(result['account']['custommer_pos_code']);
+								$('#reciver_phone').val(result['account']['custommer_phone']);
 								
 							});
 							
