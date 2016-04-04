@@ -117,6 +117,13 @@ class M_invoice extends CI_Model
 		$result = $query->row();
 		return $result;
 	}
+	
+	function addInvoice($params){
+		$this->db->insert('dev_invoice', $params);
+	}
+	function addInvoiceDetail($params){
+		$this->db->insert('dev_invoice_detail', $params);
+	}
    
    
 }

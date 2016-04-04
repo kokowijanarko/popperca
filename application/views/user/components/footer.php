@@ -1,5 +1,5 @@
 <footer>
-			<!-- banner footer area start -->
+			<!-- banner footer area start 
 			<div class="banner-footer">
 				<div class="container-fluid">
 					<div class="row">
@@ -53,6 +53,7 @@
 			<div class="top-footer-area">
 				<div class="container">
 					<div class="row">
+						<!--
 						<div class="col-md-3 col-sm-4">
 							<div class="single-snap-footer">
 								<div class="snap-footer-title">
@@ -112,6 +113,7 @@
 								</div>
 							</div>
 						</div>
+						-->
 						<div class="col-md-2 hidden-sm">
 							<div class="single-snap-footer">
 								<div class="snap-footer-title">
@@ -141,11 +143,12 @@
 									<i class="fa fa-map-marker"></i>
 								</div>
 								<div class="infof-content">
-									<h3>Our Address</h3>
-									<p>Main Street, Banasree, Dhaka</p>
+									<h3>Alamat</h3>
+									<p>Yogyakarta</p>
 								</div>
 							</div>
 						</div>
+						<!--
 						<div class="col-md-3 col-sm-4">
 							<div class="info-fcontainer">
 								<div class="infof-icon">
@@ -157,6 +160,7 @@
 								</div>
 							</div>
 						</div>
+						-->
 						<div class="col-md-3 col-sm-4">
 							<div class="info-fcontainer">
 								<div class="infof-icon">
@@ -164,7 +168,7 @@
 								</div>
 								<div class="infof-content">
 									<h3>Email Support</h3>
-									<p>admin@bootexperts.com</p>
+									<p>popperca@gmail.com</p>
 								</div>
 							</div>
 						</div>
@@ -183,12 +187,12 @@
 				</div>
 			</div>
 			<!-- info footer end -->
-			<!-- footer address area start -->
+			<!-- footer address area start
 			<div class="address-footer">
 				<div class="container">
 					<div class="row">
 						<div class="col-md-6 col-xs-12">
-							<address>Copyright © <a href="<?php echo base_url();?>assets/theme/lavoro/http://bootexperts.com/">BootExperts.</a> All Rights Reserved</address>
+							<address>Copyright ©  Popperca 2016</address>
 						</div>
 						<div class="col-md-6 col-xs-12">
 							<div class="footer-payment pull-right">

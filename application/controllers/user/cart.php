@@ -45,22 +45,7 @@ class Cart extends CI_Controller {
 	
 	public function checkout(){
 		/*
-		$product_id = $_POST['product_id'];
-		$product_count = $_POST['product_count'];
-		$custommer_id  = $this->session->userdata['user_id'];		
-		$InvNumb = $this->invoicenumberGenerator();
-		$params = array(
-			'product_id' => $product_id,
-			'product_count' => $product_count,
-			'custommer_id' => $custommer_id,
-			'invoice_number' => $InvNumb,
-			'kecamatan' => $_POST['kecamatan'],
-			'kabupaten' => $_POST['kabupaten'],
-			'provinsi' => $_POST['provinsi'],
-			'kode_pos' => $_POST['kode_pos'],
-			'jumlah' => $_POST['jumlah'],
-		);
-		$createInvoice = $this->m_invoice->ceateInvoice($params);
+		
 		*/
 		$data['provinsi'] = $this->m_custommer->getProvinsi();
 		foreach($_SESSION['product_id'] as $prod_id){
@@ -76,6 +61,46 @@ class Cart extends CI_Controller {
 		
 		
 		$this->load->view('user/pages/checkout', $data);
+	}
+	
+	public function genInvNumber(){
+		$product_id = $this->session->userdata['product_id'];
+		$product_count = $this->session->userdata['product_count'];
+		$custommer_id  = $this->session->userdata['user_id'];		
+		$InvNumb = $this->invoicenumberGenerator();
+		$params = array(
+			'invoice_number'=>$InvNumb,
+			'invoice_customer_id'=>$custommer_id,
+			'invoice_provinsi_id'=>$_POST['province'],
+			'invoice_kabupaten_id'=>$_POST['distric'],
+			'invoice_kecamatan_id'=>$_POST['districs'],
+			'invoice_address'=>$_POST['address'],
+			'invoice_pos_code'=>$_POST['poscode'],
+			'invoice_date'=>date('Y-m-d'),
+			'invoice_amount'=>$_POST['amount'],
+			'invoice_status'=>1,
+			'invoice_input'=>$custommer_id			
+		);
+		
+		$this->db->trans_start();
+		$createInvoice = $this->m_invoice->addInvoice($params);		
+			$inv_id = $this->db->insert_id();
+			foreach($product_id as $prod_id){
+				$product_detail = $this->m_product->getdetailProduct($prod_id);
+				$product=array(				
+					'invoicedetail_invoice_id'=>$inv_id,
+					'invoicedetail_product'=>$prod_id,
+					'invoicedetail_count'=>$product_count[$prod_id],
+					'invoicedetail_price'=>$product_detail->product_price,
+					'invoicedetail_price_total'=>$product_detail->product_price * $product_count[$prod_id]
+				); 
+				$inv_detail =  $this->m_invoice->addInvoiceDetail($product);
+			}
+		
+		$this->db->trans_complete();
+		echo json_encode($InvNumb);
+		exit;
+		
 	}
 	
 	private function invoicenumberGenerator(){

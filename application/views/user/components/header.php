@@ -5,7 +5,9 @@
 					<!-- logo start -->
 					<div class="col-md-3 text-center">
 						<div class="top-logo">
+							<!--
 							<a href="index.html"><img src="<?php echo base_url()?>assets/theme/lavoro/img//logo-2.gif" alt="" /></a>
+							-->
 						</div>
 					</div>
 					<!-- logo end -->
@@ -14,18 +16,11 @@
 						<div class="mainmenu">
 							<nav>
 								<ul>
-									<li class="expand"><a href="index.html">Home</a>
-										<ul class="restrain sub-menu">
-											<li><a href="index-2.html">Home 2</a></li>
-											<li><a href="index-3.html">Home 3</a></li>
-											<li><a href="index-4.html">Home 4</a></li>
-											<li><a href="index-5.html">Home 5</a></li>
-											<li><a href="index-6.html">Home 6</a></li>
-											<li><a href="index-7.html">Home 7</a></li>
-											<li><a href="index-8.html">Home 8</a></li>
-										</ul>									
+									<li class="expand"><a href="<?php echo base_url()?>">Home</a>
+																		
 									</li>
-									<li class="expand"><a href="shop-grid.html">Man</a>
+									<li class="expand"><a href="shop-grid.html">Popperca</a>
+										<!--
 										<div class="restrain mega-menu megamenu1">
 											<span>
 												<a class="mega-menu-title" href="shop-grid.html"> Dresses </a>
@@ -52,8 +47,10 @@
 												<img src="<?php echo base_url()?>assets/theme/lavoro/img//block_menu.jpg" alt="" />
 											</span>
 										</div>
+									-->
 									</li>
-									<li class="expand"><a href="shop-list.html">Women</a>
+									<li class="expand"><a href="shop-list.html">Latulitu</a>
+										<!--
 										<div class="restrain mega-menu megamenu2">
 											<span>
 												<a class="mega-menu-title" href="shop-grid.html">Rings</a>
@@ -84,29 +81,9 @@
 												<a href="shop-grid.html">Shapewears</a>
 											</span>
 										</div>
+										-->
 									</li>
-									<li class="expand"><a href="shop-grid.html">Shop</a>
-										<div class="restrain mega-menu megamenu4">
-											<span>
-												<a class="mega-menu-title" href="shop-list.html">Shop Pages</a>
-												<a href="shop-list.html">List View </a>
-												<a href="shop-grid.html">Grid View</a>
-												<a href="login.html">My Account</a>
-												<a href="wishlist.html">Wishlist</a>
-												<a href="cart.html">Cart </a>
-												<a href="checkout.html">Checkout </a>
-											</span>
-											<span class="block-last">
-												<a class="mega-menu-title" href="product-details.html">Product Types</a>
-												<a href="product-details.html">Simple Product</a>
-												<a href="product-details.html">Variables Product</a>
-												<a href="product-details.html">Grouped Product</a>
-												<a href="product-details.html">Downloadable</a>
-												<a href="product-details.html">Virtual Product</a>
-												<a href="product-details.html">External Product</a>
-											</span>
-										</div>
-									</li>
+									
 									<li class="expand"><a href="#">Pages</a>
 										<ul class="restrain sub-menu">
 											<li><a href="about-us.html">About Us</a></li>
@@ -120,12 +97,7 @@
 															echo '<li><a href="'.base_url('index.php/user/login').'">Login</a></li>';
 														}
 													?>
-											<li><a href="product-details.html">Product Details</a></li>
-											<li><a href="shop-grid.html">Shop Grid</a></li>
-											<li><a href="shop-list.html">Shop List</a></li>
-											<li><a href="cart.html">Shopping cart</a></li>
-											<li><a href="wishlist.html">Wishlist</a></li>
-											<li><a href="404.html">404 Error</a></li>
+											
 										</ul>									
 									</li>
 									<li class="expand"><a href="about-us.html">About</a></li>
@@ -140,7 +112,8 @@
 									<span class="mobile-menu-title">Menu</span>
 									<nav>
 										<ul>
-											<li><a href="index.html">Home</a>
+											<li><a href="<?php echo base_url()?>">Home</a>
+												<!--
 												<ul>
 													<li><a href="index-2.html">Home 2</a></li>
 													<li><a href="index-3.html">Home 3</a></li>
@@ -150,8 +123,10 @@
 													<li><a href="index-7.html">Home 7</a></li>
 													<li><a href="index-8.html">Home 8</a></li>
 												</ul>
+												-->
 											</li>
-											<li><a href="shop-grid.html">Man</a>
+											<li><a href="shop-grid.html">Popperca</a>
+												<!--
 												<ul>
 													<li><a href="shop-grid.html">Dresses</a>
 														<ul>
@@ -178,8 +153,10 @@
 														</ul>
 													</li>
 												</ul>
+											-->
 											</li>
-											<li><a href="shop-list.html">Women</a>
+											<li><a href="shop-list.html">Latulitu</a>
+											<!--
 												<ul>
 													<li><a href="shop-grid.html">Rings</a>
 														<ul>
@@ -214,41 +191,10 @@
 														</ul>
 													</li>
 												</ul>
-											</li>
-											<li><a href="shop-grid.html">Shop</a>
-												<ul>
-													<li><a href="shop-list.html">Shop Pages</a>
-														<ul>
-															<li><a href="shop-list.html">List View </a></li>
-															<li><a href="shop-grid.html">Grid View</a></li>
-															<li><a href="login.html">My Account</a></li>
-															<li><a href="wishlist.html">Wishlist</a></li>
-															<li><a href="cart.html">Cart </a></li>
-															<li><a href="checkout.html">Checkout </a></li>
-														</ul>
-													</li>
-													<li><a href="product-details.html">Product Types</a>
-														<ul>
-															<li><a href="product-details.html">Simple Product</a></li>
-															<li><a href="product-details.html">Variables Product</a></li>
-															<li><a href="product-details.html">Grouped Product</a></li>
-															<li><a href="product-details.html">Downloadable</a></li>
-															<li><a href="product-details.html">Virtual Product</a></li>
-															<li><a href="product-details.html">External Product</a></li>
-														</ul>
-													</li>
-												</ul>
+											-->
 											</li>
 											<li><a href="#">Pages</a>
 												<ul>
-													<li><a href="shop-grid.html">Shop Grid</a></li>
-													<li><a href="shop-list.html">Shop List</a></li>
-													<li><a href="product-details.html">Product Details</a></li>
-													<li><a href="contact-us.html">Contact Us</a></li>
-													<li><a href="about-us.html">About Us</a></li>
-													<li><a href="cart.html">Shopping cart</a></li>
-													<li><a href="checkout.html">Checkout</a></li>
-													<li><a href="wishlist.html">Wishlist</a></li>
 													<?php
 														
 														if(isset($this->session->userdata['user_id'])){
@@ -257,7 +203,6 @@
 															echo '<li><a href="'.base_url('index.php/user/login').'">Login</a></li>';
 														}
 													?>
-													<li><a href="404.html">404 Error</a></li>
 												</ul>													
 											</li>
 											<li><a href="about-us.html">About Us</a></li>

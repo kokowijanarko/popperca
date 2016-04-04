@@ -96,8 +96,9 @@
              <!-- slider -->
 			<div class="bend niceties preview-2">
 				<div id="ensign-nivoslider" class="slides">	
-					<img src="<?php echo base_url()?>assets/theme/lavoro/img/slider/home-5/slider5-1.jpg" alt="" title="#slider-direction-1"  />
-					<img src="<?php echo base_url()?>assets/theme/lavoro/img/slider/home-5/slider5-2.jpg" alt="" title="#slider-direction-2"  />
+					<img src="<?php echo base_url()?>file/header/alamat copy.jpg" alt="" title="#slider-direction-1"  />
+					<img src="<?php echo base_url()?>file/header/alamatlkomplit copy.jpg" alt="" title="#slider-direction-2"  />
+					
 				</div>
 				<!-- direction 1 -->
 				<div id="slider-direction-1" class="t-cn slider-direction">
@@ -105,8 +106,8 @@
 					<div class="slider-content t-lfl lft-pr s-tb slider-1">
 						<div class="title-container s-tb-c title-compress">
 							<h3 class="title2 low-f" >Collection 2016</h3>
-							<h4 class="title2" >FALL-WINTER</h4>
-							<a class="btn-title" href="#">View collection</a>
+							<h4 class="title2" >POPPERCA</h4>
+							<!--<a class="btn-title" href="#">View collection</a>-->
 						</div>
 					</div>	
 				</div>
@@ -116,8 +117,8 @@
 					<div class="slider-content t-cn s-tb slider-2">
 						<div class="title-container s-tb-c">
 							<h3 class="title2" >Collection 2016</h3>
-							<h4 class="title2" >FALL-WINTER</h4>
-							<a class="btn-title" href="#">View collection</a>
+							<h4 class="title2" >LATULITU</h4>
+							<!--<a class="btn-title" href="#">View collection</a>-->
 						</div>
 					</div>	
 				</div>
@@ -139,9 +140,9 @@
 						<div class="features-tab">
 							<!-- Nav tabs -->
 							<ul class="nav nav-tabs">
-								<li role="presentation" class="active"><a href="#home" data-toggle="tab">Bestsellers</a></li>
-								<li role="presentation"><a href="#new" data-toggle="tab">New Arrivals</a></li>
-								<li role="presentation"><a href="#profile" data-toggle="tab">Random Products</a></li>
+								<li role="presentation" class="active"><a href="#home" data-toggle="tab">Pakaian</a></li>
+								<li role="presentation"><a href="#new" data-toggle="tab">Asesoris</a></li>
+								<li role="presentation"><a href="#profile" data-toggle="tab">Bekakas</a></li>
 							</ul>
 							<!-- Tab panes -->
 							<!-- Tab panes -->
@@ -154,6 +155,7 @@
 											//var_dump(count($_SESSION['product_id']));
 											//var_dump($_COOKIE);
 											foreach ($product as $prod){
+												if($prod->product_genre_id == 1){
 												echo '
 												<div class="col-lg-3 col-md-3">
 												<!-- single-product start -->												
@@ -187,24 +189,141 @@
 													</div>
 													<div class="product-content">
 														<h2 class="product-name"><a href="#">'.$prod->product_name.'</a></h2>
-														<p>Nunc facilisis sagittis ullamcorper...</p>
+														<p> </p>
 													</div>
 												</div>
 												<!-- single-product end -->
 											</div>
 												';
-											}
 											
+												}
+											}
 											?>
 											
 											
 												
 										</div>
 									</div>
-								</div>
+								</div>						
+														
+								<div role="tabpanel" class="tab-pane fade" id="new">
+									<div class="row">
+										<div >
+											<?php 
+											//var_dump($this->session->userdata);
+											//var_dump(count($_SESSION['product_id']));
+											//var_dump($_COOKIE);
+											foreach ($product as $prod){
+												if($prod->product_genre_id == 2){
+												echo '
+												<div class="col-lg-3 col-md-3">
+												<!-- single-product start -->												
+												<div class="single-product first-sale">
+													<div class="product-img">
+														<a href="'.base_url('user/detail_product/detail/'.$prod->product_id).'">
+														';
+														
+														foreach ($image as $key=>$val) {															
+															foreach ($val as $index=>$value){
+																//var_dump($value->productimage_product_id); die;
+															if ($prod->product_id == $value->productimage_product_id){
+																		echo '<img class="primary-image" src="'.base_url("file/product_img/".$value->productimage_name).'" alt="" />';
+															}
+															}
+														}
+														echo '</a>
+														<div class="actions">
+															<div class="action-buttons">
+																<p style="color:white">
+																	lore ipsum dor 
+																</p>
+															</div>
+															<div class="add-to-cart" id="'.$prod->product_id.'">
+																<a  title="Add to Cart"><i class="icon-bag"></i></a>
+															</div>
+														</div>
+														<div class="price-box">
+															<span class="new-price">Rp. '.number_format($prod->product_price, 2, ',', '.').'</span>
+														</div>
+													</div>
+													<div class="product-content">
+														<h2 class="product-name"><a href="#">'.$prod->product_name.'</a></h2>
+														<p> </p>
+													</div>
+												</div>
+												<!-- single-product end -->
+											</div>
+												';
+											}
+											}
+											?>
+											
+											
+												
+										</div>
+									</div>
+								</div>							
 								
+								<div role="tabpanel" class="tab-pane fade" id="profile">
+									<div class="row">
+										<div>
+											<?php 
+											//var_dump($this->session->userdata);
+											//var_dump(count($_SESSION['product_id']));
+											//var_dump($_COOKIE);
+											foreach ($product as $prod){
+												if($prod->product_genre_id == 4){
+												echo '
+												<div class="col-lg-3 col-md-3">
+												<!-- single-product start -->												
+												<div class="single-product first-sale">
+													<div class="product-img">
+														<a href="'.base_url('user/detail_product/detail/'.$prod->product_id).'">
+														';
+														
+														foreach ($image as $key=>$val) {															
+															foreach ($val as $index=>$value){
+																//var_dump($value->productimage_product_id); die;
+															if ($prod->product_id == $value->productimage_product_id){
+																		echo '<img class="primary-image" src="'.base_url("file/product_img/".$value->productimage_name).'" alt="" />';
+															}
+															}
+														}
+														echo '</a>
+														<div class="actions">
+															<div class="action-buttons">
+																<p style="color:white">
+																	lore ipsum dor 
+																</p>
+															</div>
+															<div class="add-to-cart" id="'.$prod->product_id.'">
+																<a  title="Add to Cart"><i class="icon-bag"></i></a>
+															</div>
+														</div>
+														<div class="price-box">
+															<span class="new-price">Rp. '.number_format($prod->product_price, 2, ',', '.').'</span>
+														</div>
+													</div>
+													<div class="product-content">
+														<h2 class="product-name"><a href="#">'.$prod->product_name.'</a></h2>
+														<p> </p>
+													</div>
+												</div>
+												<!-- single-product end -->
+											</div>
+												';
+											}
+											}
+											?>											
+										</div>
+										
+									</div>
+								</div>							
+							
+							
 							
 							</div>
+							
 						</div>				
 					</div>
 				</div>

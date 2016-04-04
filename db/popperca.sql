@@ -69,7 +69,7 @@ CREATE TABLE `dev_custommer` (
 
 /*Data for the table `dev_custommer` */
 
-insert  into `dev_custommer`(`custommer_id`,`custommer_name`,`custommer_provinsi_id`,`custommer_kabupaten_id`,`custommer_kecamatan_id`,`custommer_address`,`custommer_phone`,`custommer_pos_code`,`custommer_type`,`custommer_email`,`custommer_password`,`custommer_username`,`custommer_other_contact`,`custommer_last_login`,`custommer_join`,`custommer_update`) values (1,'Surya Wijanarko',41863,42221,42259,'ALAMAT PERCOBAAN SAJA','123123123','63174',1,'surya@mail.com','21232f297a57a5a743894a0e4a801fc3','surya',NULL,'2016-03-21 11:34:22',NULL,NULL),(2,'Nopret',64111,65528,65554,'Jln. Jalan Sore No. 36B','123123','34234',2,'nopret@mail.com','12345','nopret',NULL,NULL,NULL,NULL),(3,'test',42385,46678,46916,'Jl. Test','213123213123','098768',2,'test@mail.com','21232f297a57a5a743894a0e4a801fc3','test',NULL,'2016-03-21 11:16:10',NULL,NULL);
+insert  into `dev_custommer`(`custommer_id`,`custommer_name`,`custommer_provinsi_id`,`custommer_kabupaten_id`,`custommer_kecamatan_id`,`custommer_address`,`custommer_phone`,`custommer_pos_code`,`custommer_type`,`custommer_email`,`custommer_password`,`custommer_username`,`custommer_other_contact`,`custommer_last_login`,`custommer_join`,`custommer_update`) values (1,'Surya Wijanarko',41863,42221,42259,'ALAMAT PERCOBAAN SAJA','123123123','63174',1,'surya@mail.com','21232f297a57a5a743894a0e4a801fc3','surya',NULL,'2016-03-29 20:03:20',NULL,NULL),(2,'Nopret',64111,65528,65554,'Jln. Jalan Sore No. 36B','123123','34234',2,'nopret@mail.com','12345','nopret',NULL,NULL,NULL,NULL),(3,'test',42385,46678,46916,'Jl. Test','213123213123','098768',2,'test@mail.com','21232f297a57a5a743894a0e4a801fc3','test',NULL,'2016-03-21 11:16:10',NULL,NULL);
 
 /*Table structure for table `dev_custommer_type` */
 
@@ -135,11 +135,11 @@ CREATE TABLE `dev_invoice` (
   `invoice_update` int(11) DEFAULT NULL,
   `invoice_updatedate` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`invoice_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 /*Data for the table `dev_invoice` */
 
-insert  into `dev_invoice`(`invoice_id`,`invoice_number`,`invoice_customer_id`,`invoice_provinsi_id`,`invoice_kabupaten_id`,`invoice_kecamatan_id`,`invoice_address`,`invoice_pos_code`,`invoice_date`,`invoice_amount`,`invoice_status`,`invoice_input`,`invoice_inputdate`,`invoice_update`,`invoice_updatedate`) values (1,'INV.0001/23/II/2016',1,41863,42221,42259,'Jln. Petung 22C, Papringan, Caturtunggal','12312','2016-02-23',2123123,3,NULL,'2016-03-05 22:39:57',NULL,'0000-00-00 00:00:00');
+insert  into `dev_invoice`(`invoice_id`,`invoice_number`,`invoice_customer_id`,`invoice_provinsi_id`,`invoice_kabupaten_id`,`invoice_kecamatan_id`,`invoice_address`,`invoice_pos_code`,`invoice_date`,`invoice_amount`,`invoice_status`,`invoice_input`,`invoice_inputdate`,`invoice_update`,`invoice_updatedate`) values (1,'INV.0001/23/02/2016',1,41863,42221,42259,'Jln. Petung 22C, Papringan, Caturtunggal','12312','2016-02-23',2123123,3,NULL,'2016-03-24 14:53:32',NULL,'0000-00-00 00:00:00'),(2,'INV.0001/29/03/2016',1,0,0,0,'ALAMAT PERCOBAAN SAJA','63174','2016-03-29',1055000,1,1,'2016-03-29 17:09:55',NULL,'0000-00-00 00:00:00'),(10,'INV.0004/29/03/2016',1,41863,41965,41974,'ALAMAT PERCOBAAN SAJA','63174','2016-03-29',1055000,1,1,'2016-03-30 00:53:18',NULL,'0000-00-00 00:00:00'),(11,'INV.0005/29/03/2016',1,41863,41965,41974,'ALAMAT PERCOBAAN SAJA','63174','2016-03-29',1055000,1,1,'2016-03-30 00:59:00',NULL,'0000-00-00 00:00:00'),(12,'INV.0006/29/03/2016',1,41863,41965,41974,'ALAMAT PERCOBAAN SAJA','63174','2016-03-29',1055000,1,1,'2016-03-30 01:01:49',NULL,'0000-00-00 00:00:00'),(13,'INV.0007/29/03/2016',1,41863,41965,41984,'ALAMAT PERCOBAAN SAJA','63174','2016-03-29',1055000,1,1,'2016-03-30 01:03:29',NULL,'0000-00-00 00:00:00'),(14,'INV.0008/29/03/2016',1,0,0,0,'','','2016-03-29',1055000,1,1,'2016-03-30 01:04:19',NULL,'0000-00-00 00:00:00');
 
 /*Table structure for table `dev_invoice_detail` */
 
@@ -155,11 +155,11 @@ CREATE TABLE `dev_invoice_detail` (
   PRIMARY KEY (`invoicedetail_id`),
   KEY `invoicedetail_invoice_id` (`invoicedetail_invoice_id`),
   KEY `invoicedetail_product` (`invoicedetail_product`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
 /*Data for the table `dev_invoice_detail` */
 
-insert  into `dev_invoice_detail`(`invoicedetail_id`,`invoicedetail_invoice_id`,`invoicedetail_product`,`invoicedetail_count`,`invoicedetail_price`,`invoicedetail_price_total`) values (1,'1',1,2,123,123),(2,'1',2,3,2,321),(3,'1',3,1,12,123),(4,'1',4,1,123,1231),(5,'1',NULL,NULL,23,3456);
+insert  into `dev_invoice_detail`(`invoicedetail_id`,`invoicedetail_invoice_id`,`invoicedetail_product`,`invoicedetail_count`,`invoicedetail_price`,`invoicedetail_price_total`) values (1,'1',1,2,123,123),(2,'1',2,3,2,321),(3,'1',3,1,12,123),(4,'1',4,1,123,1231),(5,'1',NULL,NULL,23,3456),(10,'10',2,1,905000,905000),(11,'10',1,1,150000,150000),(12,'11',2,1,905000,905000),(13,'11',1,1,150000,150000),(14,'12',2,1,905000,905000),(15,'12',1,1,150000,150000),(16,'13',2,1,905000,905000),(17,'13',1,1,150000,150000),(18,'14',2,1,905000,905000),(19,'14',1,1,150000,150000);
 
 /*Table structure for table `dev_kabupaten` */
 
@@ -331,7 +331,7 @@ CREATE TABLE `pop_genre` (
 
 /*Data for the table `pop_genre` */
 
-insert  into `pop_genre`(`productgenre_id`,`productgenre_name`,`productgenre_description`) values (1,'Baju','baju dan pakaian'),(2,'asesoris aja','asesoris dan pernak-pernik deh'),(4,'Celana Dalam','G-String Cowo');
+insert  into `pop_genre`(`productgenre_id`,`productgenre_name`,`productgenre_description`) values (1,'Pakaian','baju dan pakaian'),(2,'Asesoris','asesoris dan pernak-pernik deh'),(4,'Bekakas','Bekakas');
 
 /*Table structure for table `pop_product` */
 
@@ -353,11 +353,11 @@ CREATE TABLE `pop_product` (
   CONSTRAINT `pop_product_ibfk_1` FOREIGN KEY (`product_size_id`) REFERENCES `pop_size` (`size_id`),
   CONSTRAINT `pop_product_ibfk_2` FOREIGN KEY (`product_genre_id`) REFERENCES `pop_genre` (`productgenre_id`),
   CONSTRAINT `pop_product_ibfk_4` FOREIGN KEY (`product_gender_id`) REFERENCES `dev_sex` (`gender_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 /*Data for the table `pop_product` */
 
-insert  into `pop_product`(`product_id`,`product_name`,`product_size_id`,`product_genre_id`,`product_gender_id`,`product_price`,`product_stock`,`product_description`) values (1,'pekok banget',2,2,3,NULL,123,'ceking ajah');
+insert  into `pop_product`(`product_id`,`product_name`,`product_size_id`,`product_genre_id`,`product_gender_id`,`product_price`,`product_stock`,`product_description`) values (1,'pekok banget',2,2,3,150000,123,'ceking ajah'),(2,'xxx',3,4,3,905000,123,''),(3,'Pakaian 1',2,1,2,570000,250,'percobaan pakaian');
 
 /*Table structure for table `pop_product_image` */
 
@@ -369,11 +369,11 @@ CREATE TABLE `pop_product_image` (
   `productimage_product_id` int(11) DEFAULT NULL,
   `productimage_top` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`productimage_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=latin1;
 
 /*Data for the table `pop_product_image` */
 
-insert  into `pop_product_image`(`productimage_id`,`productimage_name`,`productimage_product_id`,`productimage_top`) values (61,'1_1.jpg',1,0),(62,'1_2.jpg',1,0);
+insert  into `pop_product_image`(`productimage_id`,`productimage_name`,`productimage_product_id`,`productimage_top`) values (61,'1_1.jpg',1,0),(62,'1_2.jpg',1,0),(63,'2_1.jpg',2,0),(64,'2_2.jpg',2,0),(65,'3_1.jpg',3,0);
 
 /*Table structure for table `pop_size` */
 

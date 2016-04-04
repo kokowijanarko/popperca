@@ -12,7 +12,7 @@ class Product extends CI_Controller {
 		
     }
 	
-	function list_product(){		
+	function list_product(){
 		$product = $this->m_product->list_product();
 		
 		foreach($product as $prod){

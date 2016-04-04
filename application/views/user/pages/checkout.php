@@ -330,7 +330,7 @@
 														?>
 													</table>
 													<p class="buttons">
-													<a class="button">Confirm</a>
+													<a class="button" id="confirm">Confirm</a>
 													</p>
 												</div>
 											</div>
@@ -381,8 +381,8 @@
 										<div id="orderReview" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
 											<div class="content-info">
 												<div class="col-md-12">
-													<div>Sample Content</div>
-													<p>Nunc Facilisis Sagittis Ullamcorper. Proin Lectus Ipsum, Gravida Et Mattis Vulputate, Tristique Ut Lectus. Sed Et Lorem Nunc.</p>
+													<div id=orderReviewContent></div>
+													<p></p>
 												</div>
 											</div>
 										</div>
@@ -509,13 +509,36 @@
 							}).success(function(result){
 								result=JSON.parse(result);
 								console.log(result);
+								
+								$.ajax({
+									url: "<?php echo base_url()?>index.php/admin/custommer/get_kab/"+result['provinsi']['IDProvinsi']		
+								}).success(function(result){
+									result = JSON.parse(result);
+									console.log(result);
+									for(i=0; i<result.length; i++){
+										$("#reciver_kabupaten_id").append('<option value='+result[i]['IDKabupaten']+'>'+result[i]['Nama']+'</option>');
+									}								
+								});
+								
+								$.ajax({
+									url: "<?php echo base_url()?>index.php/admin/custommer/get_kec/"+result['kabupaten']['IDKabupaten']			
+								}).success(function(result){
+									result = JSON.parse(result);
+									console.log(result);
+									for(i=0; i<result.length; i++){
+										$("#reciver_kecamatan_id").append('<option value='+result[i]['IDKecamatan']+'>'+result[i]['Nama']+'</option>');
+									}
+									
+								});
+								
+								
 								$('td#buyer_name').text(result['account']['custommer_name']);
 								$('td#buyer_address').text(result['account']['custommer_address']);
 								$('td#buyer_province').text(result['provinsi']['Nama']);
 								$('td#buyer_distric').text(result['kabupaten']['Nama']);
 								$('td#buyer_districs').text(result['kecamatan']['Nama']);
 								$('td#buyer_poscode').text(result['account']['custommer_pos_code']);
-								$('td#buyer_phone').text(result['account']['custommer_phone']);
+								$('td#buyer_phone').text(result['account']['custommer_phone']);								
 								
 								$('#reciver_name').val(result['account']['custommer_name']);
 								$('#reciver_address').val(result['account']['custommer_address']);
@@ -533,6 +556,47 @@
 					});
 					
 				});
+				
+				$('a#confirm').click(function(){
+					var name = $('#reciver_name').val();
+					var address = $('#reciver_address').val();
+					var province = $('#reciver_provinsi_id option:selected').val();
+					var distric = $('#reciver_kabupaten_id option:selected').val();
+					var districs = $('#reciver_kecamatan_id option:selected').val();
+					var poscode = $('#reciver_poscode').val();
+					var phone = $('#reciver_phone').val();
+					
+					console.log(name);
+					console.log(address);
+					console.log(province);
+					console.log(distric);
+					console.log(districs);
+					console.log(poscode);
+					console.log(phone);
+					
+					data = {
+						'name': name,
+						'address':address,
+						'province':province,
+						'distric':distric,
+						'districs':districs,
+						'poscode':poscode,
+						'phone':phone,
+						'amount':<?php echo $amount?>
+					};
+					$.ajax({
+						url:"<?php echo base_url('user/cart/genInvNumber')?>",
+						method:'post',
+						data:data
+					}).success(function(result){
+						//console.log(result);
+						result = JSON.parse(result);
+						$('#orderReview').addClass('in');
+						$('#orderReviewContent').text('Nomor Ivoice Anda:'+result);
+					});
+					
+				});
+				
 			});
 			
 			function getKab(){
@@ -556,11 +620,10 @@
 			}
 			function getKec(){
 				$("#reciver_kecamatan_id").empty().append('<option value="">--SELECT--</option>');
-				var IDKabupaten = $('#reciver_kabupaten_id option:selected').val();
-				var url = "<?php echo base_url()?>index.php/admin/custommer/get_kec/"+IDKabupaten;
-				console.log(url);
+				var IDKabupaten = $('#reciver_kabupaten_id option:selected').val();				
+				
 				$.ajax({
-					url: url			
+					url: "<?php echo base_url()?>index.php/admin/custommer/get_kec/"+IDKabupaten			
 				}).success(function(result){
 					result = JSON.parse(result);
 					console.log(result);
