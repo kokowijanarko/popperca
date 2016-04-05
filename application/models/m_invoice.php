@@ -125,5 +125,13 @@ class M_invoice extends CI_Model
 		$this->db->insert('dev_invoice_detail', $params);
 	}
    
+	function deleteInvoice($id){
+		$result = $this->db->query("DELETE FROM dev_invoice WHERE invoice_id='".$id."'");
+		return $result;
+	}
+	function deleteInvoiceDetail($id){
+		$result = $this->db->query("DELETE FROM dev_invoice_detail WHERE invoicedetail_invoice_id ='".$id."'");
+		return $result;
+	}
    
 }

@@ -29,6 +29,7 @@ class Home extends CI_Controller {
 	}
 	
 	public function validasi(){
+		
 		$this->m_home->login_validation($_POST);
 	}	
         

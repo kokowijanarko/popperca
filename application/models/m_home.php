@@ -22,7 +22,7 @@ class M_home extends CI_Model
 			$this->session->userdata['data'] = ($result);
 			redirect(base_url('index.php/admin/home/home'));
 		}else{
-			redirect(base_url('index.php/admin/pages/home/login'));
+			redirect(base_url('index.php/admin/home/login'));
 		}		
 		
     }

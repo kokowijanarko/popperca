@@ -130,7 +130,7 @@ class Product extends CI_Controller {
 	public function do_delete($id){
 		$return = $this->m_product->do_delete($id);
 		if($return == true){
-			redirect(base_url('index.php/admin/pages/product/list_product'));
+			redirect(base_url('index.php/admin/product/list_product'));
 		}else{
 			$msg = 'Add new product failed';
 		}

@@ -22,10 +22,9 @@ class Invoice extends CI_Controller {
 		$data['invoice_detail'] = $this->m_invoice->invoiceDetail($id);
 		$data['status'] = $this->m_invoice->getStatus();
 		$data['product_detail'] = $this->m_invoice->productDetail($data['invoice_detail']->invoice_id);
-		//var_dump($data);die;
-		//var_dump($data);die;
+		
 		$data['view']="admin/pages/invoice/list_detail";
-		//var_dump($data);
+		
 		$this->load->view('admin/index', $data);
 		
 	}
@@ -34,5 +33,15 @@ class Invoice extends CI_Controller {
 		$execute = $this->m_invoice->updateInvoiceStatus($id);		
 		echo json_encode($execute);
 		exit;
+	}
+	
+	public function do_delete($id){
+		$result = $this->m_invoice->deleteInvoice($id);
+		$result = $this->m_invoice->deleteInvoicedetail($id);
+		
+		if($result){
+			$this->invoice();
+		}
+		
 	}
 }

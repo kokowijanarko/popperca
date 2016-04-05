@@ -92,8 +92,8 @@ class M_product extends CI_Model
 			'product_genre_id'=> $params['genre'],
 			'product_stock'=>$params['stock'],
 			'product_description' => $params['description'],
-			'product_gender_id' => $params['price'],
-			'product_price' => $params['sex']
+			'product_gender_id' => $params['sex'],
+			'product_price' => $params['price']
 		);
 		//var_dump($data);die;
 		
