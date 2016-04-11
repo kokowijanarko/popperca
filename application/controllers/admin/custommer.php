@@ -32,13 +32,12 @@ class Custommer extends CI_Controller {
 	
 	public function do_add(){
 		$params=$_POST;
-		
-		if(!empty($params['custommer_id'])){
+		var_dump($params);
 			$data = array(
+			'custommer_id' => $params['custommer_id'],
 			'custommer_name' => $params['custommer_name'],
-			'custommer_provinsi_id'=> $params['custommer_provinsi_id'],
-			'custommer_kabupaten_id'=> $params['custommer_kabupaten_id'],
-			'custommer_kecamatan_id'=>$params['custommer_kecamatan_id'],
+			'custommer_province_id'=> $params['custommer_provinsi_id'],
+			'custommer_city_id'=> $params['custommer_kabupaten_id'],			
 			'custommer_address'=>$params['custommer_address'],
 			'custommer_phone'=>$params['custommer_phone'],
 			'custommer_pos_code'=>$params['custommer_pos_code'],
@@ -48,15 +47,17 @@ class Custommer extends CI_Controller {
 			'custommer_username'=>$params['custommer_username']
 			
 			);
+		if(!empty($params['custommer_id'])){
+			
 			$id = $params['custommer_id'];
 			$return = $this->m_custommer->doEdit($data, $id);
 			
 		}else{
-			$return = $this->m_custommer->doAdd($params);
+			$return = $this->m_custommer->doAdd($data);
 		}
 		
 		if($return == true){
-			redirect(base_url('index.php/admin/pages/custommer/list_custommer'));
+			redirect(base_url('index.php/admin/custommer/list_custommer'));
 		}else{
 			$msg = 'Add new custommer failed';
 		}
@@ -79,6 +80,12 @@ class Custommer extends CI_Controller {
 		$this->load->view('admin/index', $data);
 	}
 	
+	public function get_prov(){
+		$data = $this->m_custommer->getProvinsi();	
+		echo json_encode($data);
+		exit;
+		
+	}
 	public function get_kab($id){
 		$data = $this->m_custommer->getKabupaten($id);	
 		echo json_encode($data);

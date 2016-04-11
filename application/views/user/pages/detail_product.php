@@ -162,12 +162,45 @@
 									<div class="product-desc">
 										<p><?php echo $detail->product_description?></p>
 									</div>
-									<p class="availability in-stock">Availability: <span><?php if($detail->product_stock > 0){echo "In Stock";}else{echo "Out Of Stock";};?></span></p>
+									<p class="availability in-stock">
+										<span><?php //var_dump($size); ?>
+										<table>
+											<tr>
+												<th width="75px">size</th>
+												<th>stock</th>
+											</tr>
+											<?php foreach($size as $ukuran){
+												if($ukuran->productsize_stock > 0){
+													$avail = 'Available';
+												}else{
+													$avail = 'Out Of Stock';
+												}
+											?>											
+											<tr>
+												<td><?php echo $ukuran->size_code?></td>
+												<td><?php echo $avail?></td>
+												
+											</tr>
+											<?php } ?>
+										</table>
+										</span>
+									</p>
 									<div class="actions-e">
 										<div class="action-buttons-single">
 											<div class="inputx-content">
-												<label for="qty">Quantity:</label>
+												<label for="qty">Jumlah:</label>
 												<input type="number" min="1" name="qty" id="qty" maxlength="12" value="1" title="Qty" class="input-text qty">
+											</div>
+											<div class="inputx-content">
+												<label for="qty">Ukuran:</label>
+												<select style="width:75px" class="input qty" id="ukuran">
+													<option value="0">PILIH--</option>
+													<?php 
+														foreach($size as $val){
+															echo '<option value="'.$val->productsize_stock.'">'.$val->size_code.'</option>';
+														}
+													?>
+												</select>
 											</div>
 											<div class="add-to-cart">
 												<a >Add to cart</a>
@@ -192,23 +225,23 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-12">
+			<!--	<div class="col-md-12">
 					<div class="single-product-tab">
-						  <!-- Nav tabs -->
+						  <!-- Nav tabs 
 						<ul class="details-tab">
 							<li class="active"><a data-toggle="tab">Description</a></li>
 							<!--
 							<li class=""><a href="#messages" data-toggle="tab"> Review (1)</a></li>
-							-->
+							
 						</ul>
-						  <!-- Tab panes -->
+						  <!-- Tab panes 
 						<div class="tab-content">
 							<div role="tabpanel" class="tab-pane active" id="home">
 								<div class="product-tab-content">
-									<p><?php echo $detail->product_description?></p>
+									<p><?php //echo $detail->product_description?></p>
 								</div>
 							</div>
-							<!--
+							
 							<div role="tabpanel" class="tab-pane" id="messages">
 								<div class="single-post-comments col-md-6 col-md-offset-3">
 									
@@ -266,10 +299,10 @@
 									</div>						
 								</div>
 							</div>
-							-->
+							
 						</div>					
 					</div>
-				</div>
+				</div>-->
 			</div>
 		</div>
 		<!-- product-details Area end -->
@@ -343,13 +376,15 @@
 					var content = $(this).parent();
 					var product_id = '<?php echo $detail->product_id?>';	
 					var quantity = $("#qty").val();
-					console.log(product_id);
-					console.log(quantity);
-						
+					var ukuran = $("#ukuran").val();
+					
+					if(ukuran == 0){
+						alert('pilih ukuran terlebih dahulu !');
+					}else{
 						$.ajax({
 							url:"<?php echo base_url('index.php/session_js/set_session_non_member')?>",
 							type:'post',
-							data:{'product_id':product_id, 'product_count':quantity}
+							data:{'product_id':product_id, 'product_count':quantity, 'ukuran':ukuran}
 						}).success(function(result){
 							result = JSON.parse(result);
 							//console.log('session');
@@ -359,8 +394,7 @@
 								location.reload();
 							}
 						});
-							
-						
+					}
 				});
 			});
 		</script>

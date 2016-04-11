@@ -25,9 +25,10 @@ class Detail_product extends CI_Controller {
 	public function detail($id){		
 		$data['detail'] = $this->m_product->getDetailProduct($id);
 		$data['img'] = $this->m_product->getImg($id);
-		$data['sex'] = $this->m_product->list_sex();
-		$data['genre'] = $this->m_product->list_genre();
-		$data['size'] = $this->m_product->list_size();
+		//$data['sex'] = $this->m_product->list_sex();
+		//$data['genre'] = $this->m_product->list_genre();
+		$data['size'] = $this->m_product->sizeProductByIdProduct($id);
+		//$data['size'] = $this->m_product->size($id);
 		
 		$this->load->view('user/pages/detail_product', $data);
 	}	

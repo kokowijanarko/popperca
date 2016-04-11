@@ -35,9 +35,9 @@ class Account extends CI_Controller {
 		//var_dump($this->session->userdata['user_id']);die;
 		//$id = $this->session->userdata['user_id'];
 		$data['account'] = $this->m_useraccount->detail($id);		
-		$data['provinsi'] = $this->m_useraccount->getProvinsi($data['account']->custommer_provinsi_id); 
-		$data['kabupaten'] = $this->m_useraccount->getKabupaten($data['account']->custommer_kabupaten_id); 
-		$data['kecamatan'] = $this->m_useraccount->getKecamatan($data['account']->custommer_kecamatan_id); 
+		$data['provinsi'] = $this->m_useraccount->getProvinsi($data['account']->custommer_province_id); 
+		$data['kabupaten'] = $this->m_useraccount->getKabupaten($data['account']->custommer_city_id); 
+		//$data['kecamatan'] = $this->m_useraccount->getKecamatan($data['account']->custommer_kecamatan_id); 
 		//var_dump($this->db->last_query());
 		//var_dump($data);die;
 		echo json_encode($data);

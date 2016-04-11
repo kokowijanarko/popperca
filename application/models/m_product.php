@@ -18,17 +18,28 @@ class M_product extends CI_Model
 				a.`product_id`,
 				a.`product_name`,
 				c.`productgenre_name`,
-				c.`productgenre_id`,
-				b.`size_code`,
-				b.`size_id`,
-				b.`size_name`,
+				c.`productgenre_id`,				
 				d.`gender_name`,
 				a.`product_stock`,
 				a.`product_description`				
 			 FROM pop_product a
-			 JOIN `pop_size` b ON b.`size_id` = a.`product_size_id`
 			 JOIN `pop_genre` c ON c.`productgenre_id` = a.`product_genre_id`
 			 JOIN `dev_sex` d ON d.`gender_id` = a.`product_gender_id`
+		");
+		$result = $query->result();
+		return $result;
+	}
+	
+	public function prodSize($id){
+		$query = $this->db->query("
+			SELECT 
+				b.size_name,
+				b.size_code,
+				a.productsize_stock,
+				a.productsize_product_id
+			FROM pop_product_size a 
+			JOIN pop_size b ON a.productsize_size_id = b.size_id
+			WHERE a.productsize_product_id = '".$id."'
 		");
 		$result = $query->result();
 		return $result;
@@ -66,16 +77,13 @@ class M_product extends CI_Model
 				a.`product_name`,
 				c.`productgenre_name`,
 				c.`productgenre_id`,
-				b.`size_code`,
-				b.`size_id`,
-				b.`size_name`,
 				d.`gender_name`,
 				d.`gender_id`,
 				a.`product_stock`,
 				a.`product_price`,
+				a.`product_brand`,
 				a.`product_description`				
 			 FROM pop_product a
-			 JOIN `pop_size` b ON b.`size_id` = a.`product_size_id`
 			 JOIN `pop_genre` c ON c.`productgenre_id` = a.`product_genre_id`
 			 JOIN `dev_sex` d ON d.`gender_id` = a.`product_gender_id`
 			 WHERE a.`product_id`='".$id."'
@@ -87,10 +95,9 @@ class M_product extends CI_Model
 	public function do_add($params){
 		//var_dump($params);die;
 		$data = array(
-			'product_name'=> $params['name'],
-			'product_size_id'=> $params['size'],
+			'product_name'=> $params['name'],			
+			'product_brand'=>$params['brand'],
 			'product_genre_id'=> $params['genre'],
-			'product_stock'=>$params['stock'],
 			'product_description' => $params['description'],
 			'product_gender_id' => $params['sex'],
 			'product_price' => $params['price']
@@ -106,6 +113,34 @@ class M_product extends CI_Model
 		}
 		return $result;
 	}
+	
+	
+	
+	public function addSizeStock($params){
+		$data = array(
+			'productsize_product_id'=>$params['product_id'],
+			'productsize_size_id'=>$params['size_id'],
+			'productsize_stock'=>$params['stock']
+		);
+		$execute = $this->db->insert('pop_product_size', $data);
+	}
+	
+	public function doEditSize($params){
+		$data = array(
+			'productsize_size_id' => $params['size_id'],
+			'productsize_stock' => $params['stock']
+		);
+		//var_dump($data);die;
+		//$this->db->update('pop_product_size', $data, array('productsize_id' => $params['id']));
+		$this->db->query("
+			UPDATE `pop_product_size` 
+			SET 
+			`productsize_size_id` = '".$params['size_id']."', 
+			`productsize_stock` = '".$params['stock']."' 
+			WHERE `productsize_id` = '".$params['id']."'
+		");
+	}
+	
 	
 	public function do_addImage($params){
 		$this->db->trans_start();
@@ -127,9 +162,7 @@ class M_product extends CI_Model
 		$result = false;
 		$data = array(
 			'product_name'=> $params['name'],
-			'product_size_id'=> $params['size'],
 			'product_genre_id'=> $params['genre'],
-			'product_stock'=>$params['stock'],
 			'product_description' => $params['description'],
 			'product_gender_id' => $params['sex'],
 			'product_price' => $params['price']
@@ -155,6 +188,43 @@ class M_product extends CI_Model
 			SELECT * FROM pop_size
 		");
 		$result = $query->result();
+		return $result;
+	}
+	public function sizeProductByIdProduct($id){
+		$query = $this->db->query("
+			SELECT 
+				a.`productsize_stock`,
+				b.`size_name`,
+				b.`size_code`,
+				a.`productsize_size_id`,
+				a.`productsize_id`
+			FROM pop_product_size a
+			JOIN pop_size b ON b.`size_id` = a.`productsize_size_id`
+			WHERE a.`productsize_product_id` = '".$id."'			
+		");
+		$result = $query->result();
+		return $result;
+	}
+	
+	public function size(){
+		$query = $this->db->query('SELECT * FROM pop_size');
+		$result = $query->result();
+		return $result;
+	}
+	public function prodSizeById($id){
+		$query = $this->db->query('
+		SELECT 
+				a.`productsize_stock`,
+				b.`size_name`,
+				b.`size_code`,
+				a.`productsize_size_id`,
+				a.`productsize_id`
+			FROM pop_product_size a
+			JOIN pop_size b ON b.`size_id` = a.`productsize_size_id`
+			WHERE a.`productsize_id` = "'.$id.'"
+		
+		');
+		$result = $query->row();
 		return $result;
 	}
 	

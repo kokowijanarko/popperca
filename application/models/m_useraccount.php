@@ -18,12 +18,12 @@ class M_useraccount extends CI_Model
 		return $result;
     }
 	function getProvinsi($id){
-		$query = $this->db->get_where('dev_provinsi', array('IDProvinsi'=>$id));
+		$query = $this->db->get_where('ref_province', array('province_id'=>$id));
 		$result = $query->row();
 		return $result;
     }
 	function getKabupaten($id){
-		$query = $this->db->get_where('dev_kabupaten', array('IDKabupaten'=>$id));
+		$query = $this->db->get_where('ref_city', array('city_id'=>$id));
 		$result = $query->row();
 		return $result;
     }

@@ -1,7 +1,7 @@
 <script>
-	console.log('asd');
+	//console.log('asd');
 	function add(){		
-		console.log('xxx');				
+		//console.log('xxx');				
 		$('#dynamic-table').addClass('hidden');			
 		$('#add_form').removeClass('hidden');			
 		$('#add').addClass('hidden');	
@@ -28,7 +28,7 @@
 			result = JSON.parse(result);
 			console.log(result);
 			for(i=0; i<result.length; i++){
-				$("#custommer_kabupaten_id").append('<option value='+result[i]['IDKabupaten']+'>'+result[i]['Nama']+'</option>');
+				$("#custommer_kabupaten_id").append('<option value='+result[i]['city_id']+'>'+result[i]['city']+'</option>');
 			}
 			
 		});
@@ -60,32 +60,32 @@
 			url: url			
 		}).success(function(result){
 			result = JSON.parse(result);
-			console.log(result);
+			//console.log(result);
 			
 			$('#custommer_id').val(result['custommer_id']);
 			$('#custommer_name').val(result['custommer_name']);
 			$('#custommer_type').val(result['custommer_type']);
 			$('#custommer_address').val(result['custommer_address']);
-			$('#custommer_provinsi_id').val(result['custommer_provinsi_id']);			
+			$('#custommer_provinsi_id').val(result['custommer_province_id']);			
 			$('#custommer_pos_code').val(result['custommer_pos_code']);
 			$('#custommer_phone').val(result['custommer_phone']);
 			$('#custommer_username').val(result['custommer_username']);
 			$('#custommer_email').val(result['custommer_email']);
 			$('#custommer_password').val(result['custommer_password']);
 			
-			var urlKab = "<?php echo base_url()?>index.php/admin/custommer/get_kab/"+result['custommer_provinsi_id'];
+			var urlKab = "<?php echo base_url()?>index.php/admin/custommer/get_kab/"+result['custommer_province_id'];
 			$.ajax({
 				url: urlKab			
 			}).success(function(resultKab){
 				resultKab = JSON.parse(resultKab);
 				console.log(resultKab);
 				for(i=0; i<resultKab.length; i++){
-					if(result['custommer_kabupaten_id'] == resultKab[i]['IDKabupaten']){
+					if(result['custommer_city_id'] == resultKab[i]['city_id']){
 						var sel = "selected";
 					}else{
 						sel="";
 					}
-					$("#custommer_kabupaten_id").append('<option '+sel+' value='+resultKab[i]['IDKabupaten']+'>'+resultKab[i]['Nama']+'</option>');
+					$("#custommer_kabupaten_id").append('<option '+sel+' value='+resultKab[i]['city_id']+'>'+resultKab[i]['city']+'</option>');
 				}
 				
 				var urlKec = "<?php echo base_url()?>index.php/admin/custommer/get_kec/"+result['custommer_kabupaten_id'];
@@ -93,7 +93,7 @@
 					url: urlKec			
 				}).success(function(resultKec){
 					resultKec = JSON.parse(resultKec);
-					console.log(resultKec);
+					//console.log(resultKec);
 					for(i=0; i<resultKec.length; i++){
 						if(result['custommer_kecamatan_id'] == resultKec[i]['IDKecamatan']){
 							var sel = "selected";
@@ -158,7 +158,7 @@
 										<td>'. $listing->custommer_name .'</td>
 										<td>
 											<div>'. $listing->custommer_address .'</div>
-											<div>'. $listing->cus_kecamatan .' | '. $listing->custommer_pos_code.'</div>
+											<div>'. $listing->custommer_pos_code.'</div>
 											<div>'. $listing->cus_kabupaten.'</div>
 											<div>'. $listing->cus_provinsi .'</div>
 										</td>
@@ -201,13 +201,13 @@
 					<form id="add_form" class="form-horizontal hidden" role="form" method="POST" action="<?php echo base_url('index.php/admin/custommer/do_add'); ?>">
 						<input type="hidden" name="custommer_id" id="custommer_id" />
 						<div class="form-group">
-							<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Name </label>
+							<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Nama </label>
 							<div class="col-sm-9">
 								<input type="text" name="custommer_name" id="custommer_name" placeholder="Input Your Name Here" class="col-xs-10" required />
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Acount Type </label>
+							<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Tipe Akun </label>
 							<div class="col-sm-9">
 								<select name="custommer_type" id="custommer_type" class="col-xs-10" onchange="getKab()" required>
 									<option value="" >--SELECT--</option>
@@ -223,9 +223,9 @@
 						</div>
 						
 						<div class="form-group">
-							<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Address </label>
+							<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Alamat </label>
 							<div class="col-sm-9">
-								<textarea name="custommer_address" id="custommer_address" placeholder="Input address (e.g: Street, Number)" class="col-xs-10"></textarea>
+								<textarea name="custommer_address" id="custommer_address" placeholder="Alamat(Misal: No., Jalan, Desa, Kecamatan, dll)" class="col-xs-10"></textarea>
 							</div>
 						</div>
 						
@@ -237,7 +237,7 @@
 									<?php
 										foreach($provinsi as $prov){
 											echo '
-												<option value="'.$prov->IDProvinsi .'" >'.$prov->Nama.'</option>											
+												<option value="'.$prov->province_id .'" >'.$prov->province.'</option>											
 											';
 										}
 									?>
@@ -246,34 +246,23 @@
 						</div>
 						
 						<div class="form-group">
-							<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Kabupaten </label>
+							<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Kabupaten/Kota </label>
 							<div class="col-sm-9">
 								<select name="custommer_kabupaten_id" id="custommer_kabupaten_id" class="col-xs-10" onChange="getKec()">
 									<option value="" >--SELECT--</option>
 									
 								</select>
 							</div>
-						</div>
-						
+						</div>						
 						<div class="form-group">
-							<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Kecamatan </label>
-							<div class="col-sm-9">
-								<select name="custommer_kecamatan_id" id="custommer_kecamatan_id" class="col-xs-10" >
-									<option value="" >--SELECT--</option>
-									
-								</select>
-							</div>
-						</div>
-						
-						<div class="form-group">
-							<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Pos Code </label>
+							<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Kode Pos </label>
 							<div class="col-sm-9">
 								<input type="text" name="custommer_pos_code" id="custommer_pos_code" placeholder="Input Pose Code Number" class="col-xs-10" />
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Phone </label>
+							<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Hp/Telp </label>
 							<div class="col-sm-9">
 								<input type="text" name="custommer_phone" id="custommer_phone" placeholder="Input Phone Number" class="col-xs-10" />
 							</div>

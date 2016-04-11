@@ -188,29 +188,14 @@
 													<h6>Buyer</h6>
 														<table>
 															<tr>
-																<td>Name</td>
+																<td>Nama</td>
 																<td>:</td>
 																<td id="buyer_name"></td>
 															</tr>
 															<tr>
-																<td>Address</td>
+																<td>Alamat</td>
 																<td>:</td>
 																<td id="buyer_address"></td>
-															</tr>
-															<tr>
-																<td>Districs</td>
-																<td>:</td>
-																<td id="buyer_districs"></td>
-															</tr>
-															<tr>
-																<td>Pos Code</td>
-																<td>:</td>
-																<td id="buyer_poscode"></td>
-															</tr>
-															<tr>
-																<td>Distric</td>
-																<td>:</td>
-																<td id="buyer_distric"></td>
 															</tr>
 															<tr>
 																<td>Province</td>
@@ -218,7 +203,17 @@
 																<td id="buyer_province"></td>
 															</tr>
 															<tr>
-																<td>Phone</td>
+																<td>Kab/Kota</td>
+																<td>:</td>
+																<td id="buyer_distric"></td>
+															</tr>
+															<tr>
+																<td>Kode Pos</td>
+																<td>:</td>
+																<td id="buyer_poscode"></td>
+															</tr>
+															<tr>
+																<td>Hp/Telp</td>
 																<td>:</td>
 																<td id="buyer_phone"></td>
 															</tr>
@@ -228,60 +223,64 @@
 													</div>
 													<div class="col-md-6">
 													<p>
-														<h6>Send To</h6>
+														<h6>Kirim Ke:</h6>
 														<table>
 															<tr>
-																<td>Name</td>
+																<td>Nama</td>
 																<td>:</td>
 																<td><input type="text" class="input-text" id="reciver_name"></td>
 															</tr>
 															<tr>
-																<td>Province</td>
-																<td>:</td>
-																<td>
-																	<select name="reciver_provinsi_id" id="reciver_provinsi_id" class="col-xs-12" onchange="getKab()">
-																		<option value="" >--SELECT--</option>
-																		<?php
-																			foreach($provinsi as $prov){
-																				echo '
-																					<option value="'.$prov->IDProvinsi .'" >'.$prov->Nama.'</option>											
-																				';
-																			}
-																		?>
-																	</select>
-																</td>
-															</tr>
-															<tr>
-																<td>Distric</td>
-																<td>:</td>
-																<td>
-																	<select name="reciver_kabupaten_id" id="reciver_kabupaten_id" class="col-xs-12" onChange="getKec()">
-																		<option value="" >--SELECT--</option>
-																	</select></td>
-															</tr>
-															<tr>
-																<td>Districs</td>
-																<td>:</td>
-																<td>
-																	<select name="reciver_kecamatan_id" id="reciver_kecamatan_id" class="col-xs-12" >
-																		<option value="" >--SELECT--</option>
-																	</select>
-																</td>
-															</tr>
-															<tr>
-																<td>Pos Code</td>
-																<td>:</td>
-																<td><input type="text" class="input-text" id="reciver_poscode"></td>
-															</tr>
-															<tr>
-																<td>Address</td>
+																<td>Alamat</td>
 																<td>:</td>
 																<td><textarea class="input-text" id="reciver_address"></textarea></td>
 															</tr>
 															<tr>
-																<td>Phone</td>
+																<td>Provinsi</td>
+																<td>:</td>
+																<td>
+																	<select name="reciver_provinsi_id" id="reciver_provinsi_id" class="col-xs-12" onchange="getKab()">
+																		
+																	</select>
+																</td>
+															</tr>
+															<tr>
+																<td>Kab/Kota</td>
+																<td>:</td>
+																<td>
+																	<select name="reciver_kabupaten_id" id="reciver_kabupaten_id" class="col-xs-12" onChange="getKec()">
+																		
+																	</select></td>
+															</tr>															
+															<tr>
+																<td>kode Pos</td>
+																<td>:</td>
+																<td><input type="text" class="input-text" id="reciver_poscode"></td>
+															</tr>															
+															<tr>
+																<td>Hp/Telp</td>
 																<td>:</td>
 																<td><input type="text" class="input-text" id="reciver_phone"></td>
+															</tr>
+															<tr>
+																<td>Jasa Paket</td>
+																<td>:</td>
+																<td>
+																	<select id="jasa_paket">
+																		<option value="">--PILIH--</option>
+																		<option value="jne">JNE</option>
+																		<option value="tiki">TIKI</option>
+																		<option value="pos">POS</option>
+																	<select>
+																</td>
+															</tr>
+															<tr>
+																<td>Jenis Paket</td>
+																<td>:</td>
+																<td>
+																	<select id="jenis_jasa_paket">
+																	<select>
+																</td>
 															</tr>
 															
 														</table>
@@ -290,10 +289,11 @@
 													<table class="tableCustom">									
 														<tr>
 															<td width="25px">No</td>
-															<td >Product</td>
-															<td width="200px">Image</td>
-															<td >Quantity</td>
-															<td >Price</td>
+															<td >Produk</td>
+															<td width="200px">Gambar</td>
+															<td >Ukuran</td>
+															<td >jumlah</td>
+															<td >Harga</td>
 															<td >Subtotal</td>
 														</tr>
 														<?php
@@ -308,8 +308,10 @@
 																		<td>'.$prod->product_name.'</td>
 																		<td><img width="200px" src="'.base_url('file/product_img/'.$image[$i]->productimage_name).'" /></td>
 																		<td class="td_input">
-																			'.$_SESSION['product_count'][$prod->product_id].'
-																			
+																			'.$ukuran[$i]->size_code.'																			
+																		</td>
+																		<td class="td_input">
+																			'.$_SESSION['product_count'][$prod->product_id].'																			
 																		</td>
 																		<td class="price" id="'.$prod->product_price.'">'.$prod->product_price.'</td>
 																		<td class="subtot">'.$subtot.'</td>
@@ -323,11 +325,16 @@
 															
 															echo'
 																<tr>
+																	<td colspan="5" >Ongkos Kirim - <label id="nama_kurir"><label></td> 
+																	<td class="ongkir"></td>
+																</tr>
+																<tr>
 																	<td colspan="5" >Total</td>
 																	<td class="total">'.$amount.'</td>
 																</tr>
 															';
 														?>
+														
 													</table>
 													<p class="buttons">
 													<a class="button" id="confirm">Confirm</a>
@@ -511,40 +518,61 @@
 								console.log(result);
 								
 								$.ajax({
-									url: "<?php echo base_url()?>index.php/admin/custommer/get_kab/"+result['provinsi']['IDProvinsi']		
-								}).success(function(result){
-									result = JSON.parse(result);
-									console.log(result);
-									for(i=0; i<result.length; i++){
-										$("#reciver_kabupaten_id").append('<option value='+result[i]['IDKabupaten']+'>'+result[i]['Nama']+'</option>');
-									}								
-								});
-								
-								$.ajax({
-									url: "<?php echo base_url()?>index.php/admin/custommer/get_kec/"+result['kabupaten']['IDKabupaten']			
-								}).success(function(result){
-									result = JSON.parse(result);
-									console.log(result);
-									for(i=0; i<result.length; i++){
-										$("#reciver_kecamatan_id").append('<option value='+result[i]['IDKecamatan']+'>'+result[i]['Nama']+'</option>');
-									}
+									url: "<?php echo base_url()?>index.php/admin/custommer/get_prov/"	
+								}).success(function(resultProv){
+									resultProv = JSON.parse(resultProv);
+									console.log(resultProv);
+									$("#reciver_provinsi_id").append('<option value="">--PILIH--</option>');
+									for(i=0; i<resultProv.length; i++){
+										//console.log(result['provinsi']['province_id']);
+										console.log(resultProv[i]['province_id']);
+										if(result['provinsi']['province_id'] == resultProv[i]['province_id']){
+											var select = 'selected';
+										}else{
+											select = '';
+										}
+										console.log(select);
+										$("#reciver_provinsi_id").append('<option '+select+' value='+resultProv[i]['province_id']+'>'+resultProv[i]['province']+'</option>');
+									}									
+									$.ajax({
+									url: "<?php echo base_url()?>index.php/admin/custommer/get_kab/"+result['provinsi']['province_id']		
+									}).success(function(resultKab){
+										resultKab = JSON.parse(resultKab);
+										console.log(resultKab);
+										$("#reciver_kabupaten_id").append('<option value="">--PILIH--</option>');
+										for(i=0; i<resultKab.length; i++){
+											//console.log(result['provinsi']['city_id']);
+											console.log(resultKab[i]['city_id']);
+											if(result['kabupaten']['city'] == resultKab[i]['city']){
+												var select = 'selected';
+											}else{
+												select = '';
+											}
+											console.log(select);
+											$("#reciver_kabupaten_id").append('<option '+select+' value='+resultKab[i]['city_id']+'>'+resultKab[i]['city']+'</option>');
+										}								
+									});
+
+									
 									
 								});
 								
 								
+								
+								
 								$('td#buyer_name').text(result['account']['custommer_name']);
 								$('td#buyer_address').text(result['account']['custommer_address']);
-								$('td#buyer_province').text(result['provinsi']['Nama']);
-								$('td#buyer_distric').text(result['kabupaten']['Nama']);
-								$('td#buyer_districs').text(result['kecamatan']['Nama']);
+								$('td#buyer_province').text(result['provinsi']['province']);
+								$('td#buyer_distric').text(result['kabupaten']['city']);
+								//$('td#buyer_districs').text(result['kecamatan']['Nama']);
 								$('td#buyer_poscode').text(result['account']['custommer_pos_code']);
 								$('td#buyer_phone').text(result['account']['custommer_phone']);								
 								
 								$('#reciver_name').val(result['account']['custommer_name']);
 								$('#reciver_address').val(result['account']['custommer_address']);
-								$('#reciver_provinsi_id').val(result['provinsi']['IDProvinsi']);
-								$('#reciver_kabupaten_id').val(result['kabupaten']['IDKabupaten']);
-								$('#reciver_kecamatan_id').val(result['kecamatan']['IDKecamatan']);
+								$('#reciver_provinsi_id').val(result['provinsi']['province']);
+								$('#reciver_kabupaten_id').val(result['kabupaten']['city']);
+								//$('#reciver_kecamatan_id').val(result['kecamatan']['IDKecamatan']);
 								$('#reciver_poscode').val(result['account']['custommer_pos_code']);
 								$('#reciver_phone').val(result['account']['custommer_phone']);
 								
@@ -554,6 +582,8 @@
 						}
 						
 					});
+					
+					
 					
 				});
 				
@@ -597,23 +627,64 @@
 					
 				});
 				
+				$('#jasa_paket').change(function(){
+					console.log('jasa paket');
+					var courier = $('#jasa_paket').val();
+					var province_id = $("#reciver_provinsi_id").val();
+					var city_id = $("#reciver_kabupaten_id").val();
+					var weight = 2;
+					console.log(courier);
+					console.log(province_id);
+					console.log(city_id);
+					$.ajax({
+						url:'<?php echo base_url('courier_cost/ongkir')?>',
+						method: 'post',
+						data:{
+							'city_id':city_id,
+							'courier':courier,
+							'weight':weight
+						}
+					}).success(function(result){
+						result = JSON.parse(result);
+						console.log(result);
+						$("#jenis_jasa_paket").append('<option value="">--PILIH--</option>');
+						for(i=0; i<result.length; i++){
+							$("#jenis_jasa_paket").append('<option value='+result[i]['cost'][0]['value']+'>'+result[i]['service']+'-'+result[i]['description']+'</option>');
+						}
+						
+					});
+					
+					$('#jenis_jasa_paket').change(function(){
+						var jenis  = $('#jenis_jasa_paket option:selected').text();
+						var harga  = $('#jenis_jasa_paket').val();
+						
+						$('#nama_kurir').text(jenis);
+						$('#ongkir').text(harga);
+						console.log('asd');
+						console.log(jenis);
+						console.log(harga);
+					});
+					
+				});
+				
 			});
+			
 			
 			function getKab(){
 				$("#reciver_kabupaten_id").empty().append('<option value="">--SELECT--</option>');
 				$("#reciver_kecamatan_id").empty().append('<option value="">--SELECT--</option>');
-				var IDProvinsi = $('#reciver_provinsi_id option:selected').val();		
-				console.log(IDProvinsi);
-				var data = {'IDProvinsi':IDProvinsi};
+				var province_id = $('#reciver_provinsi_id option:selected').val();		
+				console.log(province_id);
+				var data = {'province_id':province_id};
 				console.log(data);
-				var url = "<?php echo base_url()?>index.php/admin/custommer/get_kab/"+IDProvinsi;
+				var url = "<?php echo base_url()?>index.php/admin/custommer/get_kab/"+province_id;
 				$.ajax({
 					url: url			
 				}).success(function(result){
 					result = JSON.parse(result);
 					console.log(result);
 					for(i=0; i<result.length; i++){
-						$("#reciver_kabupaten_id").append('<option value='+result[i]['IDKabupaten']+'>'+result[i]['Nama']+'</option>');
+						$("#reciver_kabupaten_id").append('<option value='+result[i]['city_id']+'>'+result[i]['city']+'</option>');
 					}
 					
 				});

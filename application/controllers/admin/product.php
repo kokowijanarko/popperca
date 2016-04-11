@@ -14,13 +14,14 @@ class Product extends CI_Controller {
 	
 	function list_product(){
 		$product = $this->m_product->list_product();
-		
 		foreach($product as $prod){
-			$data['img'][$prod->product_id] = $this->m_product->getImg($prod->product_id);
+			//$data['img'][$prod->product_id] = $this->m_product->getImg($prod->product_id);
+			$data['size'][$prod->product_id] = $this->m_product->prodSize($prod->product_id);
 		}
 		
 		
 		$data['product'] = $product;
+		//var_dump($data);
 		//$data['view']="admin/pages/product/list_product";
 		$this->load->view("admin/pages/product/list_product", $data);
 	}
@@ -35,7 +36,18 @@ class Product extends CI_Controller {
 	
 	public function do_add(){
 		$params=$_POST;		
-		$id = $this->m_product->do_add($params);		
+		//var_dump($params);die;
+		$id = $this->m_product->do_add($params);	
+		$i=0;
+		foreach($params['size'] as $size){
+			$size_par = array(
+				'product_id'=>$id,
+				'size_id'=>$size,
+				'stock'=>$params['stock'][$i]
+			);
+			$this->m_product->addSizeStock($size_par);
+			$i++;
+		}
 		foreach($_FILES['gambar'] as $key=>$val){
             $i = 1;			
             foreach($val as $v){
@@ -72,8 +84,21 @@ class Product extends CI_Controller {
 	}
 	
 	function do_edit(){
-		//var_dump($_FILES);
+		//var_dump($_POST);
 		$return = $this->m_product->doEdit($_POST);
+		$i=0;
+		foreach($_POST['size_id'] as $size){
+			$par = array(
+				'size_id'=>$_POST['size'][$i],
+				'stock'=>$_POST['stock'][$i],
+				'id'=>$size
+			);
+			//var_dump($par);die;
+			$return = $this->m_product->doEditSize($par);
+			$i++;
+		}
+		$return = $this->m_product->doEditSize($_POST);
+		
 		if($_FILES['gambar']['error'] == 0 OR $_FILES['gambar']['error'][0] == 0){
 			//var_dump('xxx');die;
 			foreach($_FILES['gambar'] as $key=>$val){
@@ -112,7 +137,7 @@ class Product extends CI_Controller {
 			//var_dump($source, $name);die;
 			}
 		}
-		$this->list_product();
+		redirect(base_url('admin/product/list_product'));
 		
 	}
 	
@@ -142,7 +167,7 @@ class Product extends CI_Controller {
 		$data['img'] = $this->m_product->getImg($id);
 		$data['sex'] = $this->m_product->list_sex();
 		$data['genre'] = $this->m_product->list_genre();
-		$data['size'] = $this->m_product->list_size();
+		$data['size'] = $this->m_product->sizeProductByIdProduct($id);
 		//var_dump($data['detail']);die;
 		//$data['view'] = "admin/pages/product/edit_product";
 		//$this->load->view('admin/index', $data);

@@ -169,6 +169,35 @@
 											<input value="<?php echo $detail->product_name ?>"type="text" id="form-field-1" name="name" placeholder="Nama" class="col-xs-10 col-sm-5" />
 										</div>
 									</div>
+									
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Brand </label>
+
+										<div class="col-sm-9">
+										
+											<select class="chosen-select ol-xs-10 col-sm-5" id="form-field-select-3" name="brand" data-placeholder="Choose a State...">
+												<option value="">--pilih--</option>
+												<?php
+													$pilihan = array(
+													array('id'=>1, 'brand'=>'Popperca'),
+													array('id'=>2, 'brand'=>'latulitu'),
+													array('id'=>3, 'brand'=>'Obbie'),
+													);
+													//var_dump($pilihan);
+													
+													foreach($pilihan as $pil){
+														if($pil['id'] == $detail->product_brand){
+															$sel = 'selected';
+														}else{
+															$sel='';
+														}
+														echo '<option value="'.$pil['id'].'"'.$sel.'>'.$pil['brand'].'</option>';
+													}
+												?>
+											</select>
+										</div>
+									</div>
+									
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Genre </label>
 
@@ -192,25 +221,28 @@
 									</div>
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Size </label>
-
 										<div class="col-sm-9">
-											<select class="chosen-select ol-xs-10 col-sm-5" id="form-field-select-3" name="size" data-placeholder="Choose a State...">
-												<option value="">--pilih--</option>
+											<table>
 												<?php
+													$no=1;
 													foreach($size as $ukuran){
-														if($detail->size_id == $ukuran->size_id){
-															$select = "selected";
-														}else{
-															$select="";
-														}
-														echo"<option value='". $ukuran->size_id ."'".$select.">". $ukuran->size_code ." - ".$ukuran->size_name."</option>";
+														echo '
+															<tr>
+																<td width="100px">'.$ukuran->size_code ." - ".$ukuran->size_name.'</td>
+																<td>
+																	<input name="stock[]" type="number" min="1" id="size" value="'.$ukuran->productsize_stock.'" size="15px">																
+																	<input name="size[]" type="hidden" id="size" value="'.$ukuran->productsize_size_id.'" size="15px">																
+																	<input name="size_id[]" type="hidden"  id="size" value="'.$ukuran->productsize_id.'" size="15px">																
+																</td>
+															</tr>														
+														';
+														
+														$no++;
 													}
-												?>												
-											</select>
+												?>
+											</table>
 										</div>
 									</div>
-									
-									
 									
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> sex </label>
@@ -240,15 +272,7 @@
 										<div class="col-sm-9">
 											<input value="<?php echo $detail->product_price?>" type="text" id="form-field-1-1" name="price" placeholder="Stock" class="col-xs-10 col-sm-5" />
 										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Stock </label>
-
-										<div class="col-sm-9">
-											<input value="<?php echo $detail->product_stock?>" type="text" id="form-field-1-1" name="stock" placeholder="Stock" class="col-xs-10 col-sm-5" />
-										</div>
-									</div>
-									
+									</div>									
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Description </label>
 

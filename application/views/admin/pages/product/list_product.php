@@ -193,9 +193,11 @@
 												</thead>
 												<tbody>							
 														<?php
+															//var_dump($size);
 															$i=0;
 															$no=1;
 															foreach($product as $prod){
+																
 																echo '
 																<tr>
 																<td class="center">
@@ -205,11 +207,22 @@
 																	</label>
 																</td>
 																<td>'.$no.'</td>
-																<td>'. $product[$i]->product_name .'</td>
-																<td>'. $product[$i]->size_code .'</td>
+																<td>'. $product[$i]->product_name .'</td><td>';
+																//var_dump($size);															
+																foreach($size[$prod->product_id] as $key => $value){
+																	//foreach($ukuran as $value){
+																		//var_dump($value);
+																		echo $value->size_code.' - '.$value->productsize_stock.'</br>';	
+																		$stok[] = $value->productsize_stock;
+																	//}
+																	
+																}
+																$stoks = array_sum($stok);
+																echo'
+																</td>
 																<td>'. $product[$i]->productgenre_name .'</td>
 																<td>'. $product[$i]->gender_name .'</td>
-																<td>'. $product[$i]->product_stock .'</td>
+																<td>'. $stoks .'</td>
 																<td>'. $product[$i]->product_description .'</td>
 																<td>
 																	<div class="hidden-sm hidden-xs btn-group">

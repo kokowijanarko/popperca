@@ -51,6 +51,7 @@ class Cart extends CI_Controller {
 		foreach($_SESSION['product_id'] as $prod_id){
 			$products = $this->m_product->getdetailProduct($prod_id);
 			$data['product'][] = $products;
+			$data['ukuran'][] = $this->m_product->prodSizeById($_SESSION['ukuran'][$prod_id]);
 			$data['image'][] = $this->m_product->getImgFirst($prod_id);
 		}
 		$data['ck_login'] = 0;

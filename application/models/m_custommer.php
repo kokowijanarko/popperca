@@ -14,25 +14,22 @@ class M_custommer extends CI_Model
 	
 	public function listCustommer(){
 		$query = $this->db->query("
-			SELECT 
+			SELECT
 				a.`custommer_id`,
 				a.`custommer_name`,
-				a.`custommer_provinsi_id`,
-				a.`custommer_kabupaten_id`,
-				a.`custommer_kecamatan_id`,
+				a.`custommer_province_id`,
+				a.`custommer_city_id`,
 				a.`custommer_address`,
 				a.`custommer_phone`,
 				a.`custommer_pos_code`,
 				a.`custommer_type`,
 				b.`custommertype_type`,
-				c.`Nama` AS cus_provinsi,
-				d.`Nama` AS cus_kabupaten,
-				e.`Nama` AS cus_kecamatan
+				c.`province` AS cus_provinsi,
+				d.`city` AS cus_kabupaten
 			FROM dev_custommer a 
 			JOIN `dev_custommer_type` b ON b.`custommertype_id` = a.`custommer_type`
-			JOIN `dev_provinsi` c ON c.`IDProvinsi` = a.`custommer_provinsi_id`
-			JOIN `dev_kabupaten` d ON d.`IDKabupaten` = a.`custommer_kabupaten_id`
-			JOIN `dev_kecamatan` e ON e.`IDKecamatan` = a.`custommer_kecamatan_id`
+			JOIN `ref_province` c ON c.`province_id` = a.`custommer_province_id`
+			JOIN `ref_city` d ON d.`city_id` = a.`custommer_city_id`
 		");
 		$result = $query->result();
 		return $result;
@@ -77,16 +74,17 @@ class M_custommer extends CI_Model
 	}
 	
 	public function getProvinsi(){
-		$query = $this->db->get('dev_provinsi');
+		$query = $this->db->get('ref_province');
 		$result = $query->result();
 		return $result;
 	}
 	
 	public function getKabupaten($id){
-		$query = $this->db->get_where('dev_kabupaten', array('IDProvinsi'=>$id));
+		$query = $this->db->get_where('ref_city', array('province_id'=>$id));
 		$result = $query->result();
 		return $result;
 	}
+	
 	
 	public function getKecamatan($id){
 		$query = $this->db->get_where('dev_kecamatan', array('IDKabupaten'=>$id));

@@ -427,6 +427,19 @@
 										</div>
 									</div>
 									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Brand </label>
+
+										<div class="col-sm-9">
+											<select class="chosen-select ol-xs-10 col-sm-5" id="form-field-select-3" name="brand" data-placeholder="Choose a State...">
+												<option value="">--pilih--</option>
+												<option value="1">Poperca</option>
+												<option value="2">Latulitu</option>
+												<option value="3">Obbie</option>
+																						
+											</select>
+										</div>
+									</div>
+									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Genre </label>
 
 										<div class="col-sm-9">
@@ -444,19 +457,46 @@
 									</div>
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Size </label>
+										<div class="col-sm-9">
+											<table>
+												<?php
+													$no=1;
+													foreach($size as $ukuran){
+														echo '
+															<tr>
+																<td width="100px">'.$ukuran->size_code ." - ".$ukuran->size_name.'</td>
+																<td>
+																	<input name="stock[]" type="number" min="1" id="size" size="15px">																
+																	<input name="size[]" type="hidden" min="1" id="size" value="'.$ukuran->size_id.'" size="15px">																
+																</td>
+															</tr>														
+														';
+														
+														$no++;
+													}
+												?>
+											</table>
+											
+											
+											
+										</div>
+									</div>
+									<!---
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Size </label>
 
 										<div class="col-sm-9">
 											<select class="chosen-select ol-xs-10 col-sm-5" id="form-field-select-3" name="size" data-placeholder="Choose a State...">
 												<option value="">--pilih--</option>
 												<?php
-													foreach($size as $ukuran){
-														echo"<option value='". $ukuran->size_id ."'>". $ukuran->size_code ." - ".$ukuran->size_name."</option>";
-													}
+												//	foreach($size as $ukuran){
+												//		echo"<option value='". $ukuran->size_id ."'>". $ukuran->size_code ." - ".$ukuran->size_name."</option>";
+												//	}
 												?>												
 											</select>
 										</div>
 									</div>
-									
+									-->
 									
 									
 									<div class="form-group">
@@ -481,14 +521,6 @@
 
 										<div class="col-sm-9">
 											<input type="text" id="form-field-1-1" name="price" placeholder="price" class="col-xs-10 col-sm-5" />
-										</div>
-									</div>
-									
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Stock </label>
-
-										<div class="col-sm-9">
-											<input type="text" id="form-field-1-1" name="stock" placeholder="Stock" class="col-xs-10 col-sm-5" />
 										</div>
 									</div>
 									
