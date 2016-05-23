@@ -299,6 +299,7 @@
 														<?php
 															$no = 1;
 															$i = 0;
+															var_dump($ukuran);
 															foreach($product as $prod){
 																$subtot = $prod->product_price * $_SESSION['product_count'][$prod->product_id] ;
 																$sbttl[] =  $subtot;
@@ -325,11 +326,11 @@
 															
 															echo'
 																<tr>
-																	<td colspan="5" >Ongkos Kirim - <label id="nama_kurir"><label></td> 
+																	<td colspan="6" ><span id="nama_kurir"></span> - <label id="jenis_paket"><label></td> 
 																	<td class="ongkir"></td>
 																</tr>
 																<tr>
-																	<td colspan="5" >Total</td>
+																	<td colspan="6" >Total</td>
 																	<td class="total">'.$amount.'</td>
 																</tr>
 															';
@@ -592,15 +593,20 @@
 					var address = $('#reciver_address').val();
 					var province = $('#reciver_provinsi_id option:selected').val();
 					var distric = $('#reciver_kabupaten_id option:selected').val();
-					var districs = $('#reciver_kecamatan_id option:selected').val();
+					//var districs = $('#reciver_kecamatan_id option:selected').val();
 					var poscode = $('#reciver_poscode').val();
 					var phone = $('#reciver_phone').val();
+					var jenis  = $('#jenis_jasa_paket option:selected').text();
+					var harga  = $('#jenis_jasa_paket').val();
+					var jasa_paket  = $('#jasa_paket option:selected').text();
+					var amount  = parseInt('<?php echo $amount?>');
+					var amount_total  = amount + parseInt(harga);
 					
 					console.log(name);
 					console.log(address);
 					console.log(province);
 					console.log(distric);
-					console.log(districs);
+					//console.log(districs);
 					console.log(poscode);
 					console.log(phone);
 					
@@ -609,17 +615,20 @@
 						'address':address,
 						'province':province,
 						'distric':distric,
-						'districs':districs,
 						'poscode':poscode,
 						'phone':phone,
-						'amount':<?php echo $amount?>
+						'amount':amount ,
+						'amount_total':amount_total,
+						'jenis_paket':jenis,
+						'jasa_paket':jasa_paket,
+						'harga':harga
 					};
 					$.ajax({
 						url:"<?php echo base_url('user/cart/genInvNumber')?>",
 						method:'post',
 						data:data
 					}).success(function(result){
-						//console.log(result);
+						console.log(result);
 						result = JSON.parse(result);
 						$('#orderReview').addClass('in');
 						$('#orderReviewContent').text('Nomor Ivoice Anda:'+result);
@@ -657,9 +666,14 @@
 					$('#jenis_jasa_paket').change(function(){
 						var jenis  = $('#jenis_jasa_paket option:selected').text();
 						var harga  = $('#jenis_jasa_paket').val();
+						var jasa_paket  = $('#jasa_paket option:selected').text();
+						var amount  = parseInt('<?php echo $amount?>');
+						var amount_total  = amount + parseInt(harga);
 						
-						$('#nama_kurir').text(jenis);
-						$('#ongkir').text(harga);
+						$('#nama_kurir').text(jasa_paket);
+						$('#jenis_paket').text(jenis);
+						$('.ongkir').text(harga);
+						$('.total').text(amount_total);
 						console.log('asd');
 						console.log(jenis);
 						console.log(harga);

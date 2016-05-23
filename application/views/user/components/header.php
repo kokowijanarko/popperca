@@ -193,6 +193,7 @@
 												</ul>
 											-->
 											</li>
+											</li>
 											<li><a href="#">Pages</a>
 												<ul>
 													<?php
@@ -314,18 +315,23 @@
 							<!-- addcart top start -->
 							<!-- search divition start -->
 							<div class="disflow">
+								
 								<div class="header-search expand">
 									<div class="search-icon fa fa-search"></div>
 									<div class="product-search restrain">
 										<div class="container nopadding-right">
+											<!--
 											<form action="http://devitems.com/tf/lavoro-preview/lavoro/index.html" id="searchform" method="get">
+												
 												<div class="input-group">
 													<input type="text" class="form-control" maxlength="128" placeholder="Search product...">
 													<span class="input-group-btn">
 														<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
 													</span>
 												</div>
+												
 											</form>
+											-->
 										</div>
 									</div>
 								</div>

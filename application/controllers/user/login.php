@@ -33,22 +33,39 @@ class Login extends CI_Controller {
 		//var_dump($_POST);
 		$login = $this->authex->login($_POST['username'], $_POST['password']);
 		//var_dump($login);die;
+		if($login){
+			redirect(base_url());
+		}else{
+			$data['type'] = $this->m_custommer->getCustommerType();
+			$data['provinsi'] = $this->m_custommer->getProvinsi();
+			$data['message'] = 'Login Gagal, Cek Password dan Username';
+			//var_dump($data);die;
+			$this->load->view('user/pages/login', $data);
+		}
 		
-		echo json_encode($login);
-		exit;
 	}
 	
 	public function do_register(){
 		//var_dump($_POST);
-		unset($_POST['custommer_password_confirm']);
-		$register = $this->m_userlogin->doAdd($_POST);
-		//var_dump($register);die;
-		$data['message'] = "Registration Success, Please Login to continue";
-		$data['type'] = $this->m_custommer->getCustommerType();
-		$data['provinsi'] = $this->m_custommer->getProvinsi();
-		if($register == true){
-			$this->load->view('user/pages/login', $data);
-		}
+		
+		
+		if($_POST['custommer_password_confirm'] == $_POST['custommer_password']){
+			$_POST['custommer_password'] = md5($_POST['custommer_password_confirm']);
+			$_POST['custommer_province_id'] = $_POST['custommer_provinsi_id'];
+			$_POST['custommer_city_id'] = $_POST['custommer_kabupaten_id'];
+			unset($_POST['custommer_password_confirm']);
+			unset($_POST['custommer_provinsi_id']);
+			unset($_POST['custommer_kabupaten_id']);
+			$register = $this->m_userlogin->doAdd($_POST);
+			//var_dump($register);die;
+			$data['message'] = "Registrasi Berhasil, Silakan Login untuk melajutkan";
+			$data['type'] = $this->m_custommer->getCustommerType();
+			$data['provinsi'] = $this->m_custommer->getProvinsi();
+			if($register == true){
+				$this->load->view('user/pages/login', $data);
+			}			
+		}		
+		
 	}
 	
 	public function get_kab($id){

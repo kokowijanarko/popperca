@@ -65,6 +65,7 @@ class Cart extends CI_Controller {
 	}
 	
 	public function genInvNumber(){
+		
 		$product_id = $this->session->userdata['product_id'];
 		$product_count = $this->session->userdata['product_count'];
 		$custommer_id  = $this->session->userdata['user_id'];		
@@ -74,11 +75,13 @@ class Cart extends CI_Controller {
 			'invoice_customer_id'=>$custommer_id,
 			'invoice_provinsi_id'=>$_POST['province'],
 			'invoice_kabupaten_id'=>$_POST['distric'],
-			'invoice_kecamatan_id'=>$_POST['districs'],
+			//'invoice_kecamatan_id'=>$_POST['districs'],
 			'invoice_address'=>$_POST['address'],
 			'invoice_pos_code'=>$_POST['poscode'],
 			'invoice_date'=>date('Y-m-d'),
-			'invoice_amount'=>$_POST['amount'],
+			'invoice_courier'=>$_POST['jasa_paket'],
+			'invoice_courier_pakage'=>$_POST['jenis_paket'],
+			'invoice_courier_amount'=>$_POST['harga'],
 			'invoice_status'=>1,
 			'invoice_input'=>$custommer_id			
 		);
@@ -99,6 +102,7 @@ class Cart extends CI_Controller {
 			}
 		
 		$this->db->trans_complete();
+		
 		echo json_encode($InvNumb);
 		exit;
 		

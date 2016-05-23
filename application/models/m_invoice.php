@@ -43,9 +43,8 @@ class M_invoice extends CI_Model
 			b.`custommer_pos_code`,
 			a.`invoice_address`,
 			a.`invoice_pos_code`,
-			f.`Nama` AS inv_kecamatan,
-			e.`Nama` AS inv_kabupaten,
-			d.`Nama` AS inv_provinsi,
+			e.`city` AS inv_kabupaten,
+			d.`province` AS inv_provinsi,
 			a.`invoice_date`,
 			c.`status_name`,
 			c.`status_id`,
@@ -53,18 +52,15 @@ class M_invoice extends CI_Model
 			a.`invoice_amount`,
 			b.`custommer_address`,
 			a.`invoice_address`,
-			g.`Nama` AS cus_provinsi,
-			h.`Nama` AS cus_kabupaten,
-			i.`Nama` AS cus_kecamatan				
+			g.`province` AS cus_provinsi,
+			h.`city` AS cus_kabupaten				
 		FROM `dev_invoice` a 
 		JOIN `dev_custommer` b ON b.`custommer_id` = a.`invoice_customer_id`
 		JOIN `dev_status` c ON c.`status_id` = a.`invoice_status`
-		JOIN `dev_provinsi` d ON d.`IDProvinsi` = a.`invoice_provinsi_id`
-		JOIN `dev_kabupaten` e ON e.`IDKabupaten` = a.`invoice_kabupaten_id`
-		JOIN `dev_kecamatan` f ON f.`IDKecamatan` = a.`invoice_kecamatan_id`
-		JOIN `dev_provinsi` g ON g.`IDProvinsi` = b.`custommer_provinsi_id`
-		JOIN `dev_kabupaten` h ON h.`IDKabupaten` = b.`custommer_kabupaten_id`
-		JOIN `dev_kecamatan` i ON i.`IDKecamatan` = b.`custommer_kecamatan_id`		
+		JOIN `ref_province` d ON d.`province_id` = a.`invoice_provinsi_id`
+		JOIN `ref_city` e ON e.`city_id` = a.`invoice_kabupaten_id`
+		JOIN `ref_province` g ON g.`province_id` = b.`custommer_province_id`
+		JOIN `ref_city` h ON h.`city_id` = b.`custommer_city_id`		
 		WHERE a.`invoice_id` = '".$id."'
 		");
 		$result = $query->row();

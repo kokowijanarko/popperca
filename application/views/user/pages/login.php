@@ -79,7 +79,7 @@
 			//$('input').setAttribute('autocomplete', 'off');
 			function getKab(){
 				$("#custommer_kabupaten_id").empty().append('<option value="">--SELECT--</option>');
-				$("#custommer_kecamatan_id").empty().append('<option value="">--SELECT--</option>');
+				//$("#custommer_kecamatan_id").empty().append('<option value="">--SELECT--</option>');
 				var IDProvinsi = $('#custommer_provinsi_id option:selected').val();		
 				console.log(IDProvinsi);
 				var data = {'IDProvinsi':IDProvinsi};
@@ -91,7 +91,7 @@
 					result = JSON.parse(result);
 					console.log(result);
 					for(i=0; i<result.length; i++){
-						$("#custommer_kabupaten_id").append('<option value='+result[i]['IDKabupaten']+'>'+result[i]['Nama']+'</option>');
+						$("#custommer_kabupaten_id").append('<option value='+result[i]['city_id']+'>'+result[i]['city']+'</option>');
 					}
 					
 				});
@@ -158,11 +158,7 @@
 		<div class="customer-login-area">
 			<div class="container">
 				<div class="row">
-				<?php
-					if(isset($message)){
-						echo $message;
-					}					
-				?>
+				
 				</div>
 				<div class="row">
 					<div class="col-md-6 col-xs-12">
@@ -183,6 +179,13 @@
 									<div class="actions-log">
 										<input type="submit" class="button" name="login" value="Login">
 									</div>
+									<p>
+									<?php
+										if(isset($message)){
+											echo $message;
+										}					
+									?>
+									</p>
 									<!--
 									<p class="lost_password"> <a href="#">Lost your password?</a></p>
 									<label for="rememberme" class="inline"> 
@@ -195,64 +198,47 @@
 					<div class="col-md-6 col-xs-12">
 						<div class="customer-register my-account">
 							<form method="post" class="register" action="<?php echo base_url('index.php/user/login/do_register')?>">
+								<input name="custommer_type" value="2" type="hidden">
 								<div class="form-fields">
 									<h2>Register</h2>
 									<p class="form-row form-row-wide">
-										<label for="reg_email">Full Name <span class="required">*</span></label>
+										<label for="reg_email">Nama Lengkap <span class="required">*</span></label>
 										<input type="text" class="input-text" name="custommer_name" value="" required>
 									</p>
 									<p class="form-row form-row-wide">
 										<label for="reg_email">Username<span class="required">*</span></label>
 										<input type="text" class="input-text" name="custommer_username" value="" required>
-									</p>
+									</p>									
 									<p class="form-row form-row-wide">
-										<label for="reg_email">Account Type<span class="required">*</span></label>
-										<select name="custommer_type" id="custommer_type" class="col-xs-12" onchange="getKab()" required>
-											<option value="" >--SELECT--</option>
-											<?php
-												foreach($type as $tp){
-													echo '
-														<option value="'.$tp->custommertype_id .'" >'.$tp->custommertype_type.'</option>											
-													';
-												}
-											?>
-										</select>
-									</p>
-									<p class="form-row form-row-wide">
-										<label for="reg_email">Address<span class="required">*</span></label>
+										<label for="reg_email">Alamat<span class="required">*</span></label>
 										<input type="text" class="input-text" name="custommer_address" id="custommer_address" value="">
 									</p>
 									<p class="form-row form-row-wide">
-										<label for="reg_email">Province<span class="required">*</span></label>
+										<label for="reg_email">Provinsi<span class="required">*</span></label>
 										<select name="custommer_provinsi_id" id="custommer_provinsi_id" class="col-xs-12" onchange="getKab()">
 											<option value="" >--SELECT--</option>
 											<?php
 												foreach($provinsi as $prov){
 													echo '
-														<option value="'.$prov->IDProvinsi .'" >'.$prov->Nama.'</option>											
+														<option value="'.$prov->province_id .'" >'.$prov->province.'</option>											
 													';
 												}
 											?>
 										</select>
 									</p></br>
 									<p class="form-row form-row-wide">
-										<label for="reg_email">District<span class="required">*</span></label>
+										<label for="reg_email">Kota / Kabupaten<span class="required">*</span></label>
 										<select name="custommer_kabupaten_id" id="custommer_kabupaten_id" class="col-xs-12" onChange="getKec()">
 											<option value="" >--SELECT--</option>
 										</select>
 									</p>
+									
 									<p class="form-row form-row-wide">
-										<label for="reg_email">Districts <span class="required">*</span></label>
-										<select name="custommer_kecamatan_id" id="custommer_kecamatan_id" class="col-xs-12" >
-											<option value="" >--SELECT--</option>
-										</select>
-									</p>
-									<p class="form-row form-row-wide">
-										<label for="reg_email">Pos Code <span class="required">*</span></label>
+										<label for="reg_email">Kode Pos<span class="required">*</span></label>
 										<input type="number" class="input-text" name="custommer_pos_code" id="custommer_pos_code" value="" required>
 									</p>
 									<p class="form-row form-row-wide">
-										<label for="reg_email">Phone<span class="required">*</span></label>
+										<label for="reg_email">Telp./Hp<span class="required">*</span></label>
 										<input type="text" class="input-text" name="custommer_phone" id="custommer_phone_number" value="" required>
 									</p>
 									<p class="form-row form-row-wide">
@@ -266,12 +252,11 @@
 									<p class="form-row form-row-wide">
 										<label for="reg_password">Confirm Password <span class="required">*</span></label>
 										<input type="password" class="input-text" name="custommer_password_confirm" id="custommer_password_confirm" required>
-									</p>
-									
+									</p>									
 								</div>
 								<div class="form-action">
 									<div class="actions-log">
-										<input type="submit" class="button">
+										<input type="submit" value="Submit" class="button">
 									</div>
 								</div>
 							</form>

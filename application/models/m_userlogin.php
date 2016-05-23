@@ -12,7 +12,7 @@ class M_userlogin extends CI_Model
         $this->load->library('session');
     }
 
-	public function doAdd($params){		
+	public function doAdd($params){	
 		$result = false;
 		if(!empty($params)){
 			$this->db->trans_start();

@@ -77,6 +77,7 @@
         <script src="<?php echo base_url()?>assets/theme/lavoro/js/vendor/modernizr-2.8.3.min.js"></script>
     </head>
     <body class="s-prodct">
+		
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
@@ -85,6 +86,7 @@
 		<!-- header area start -->
 		
 		<?php
+			//var_dump($_SESSION);die;
 			$this->load->view('user/components/header');
 		?>
 		<br/>
@@ -377,21 +379,22 @@
 					var product_id = '<?php echo $detail->product_id?>';	
 					var quantity = $("#qty").val();
 					var ukuran = $("#ukuran").val();
-					
+					var data = {'product_id':product_id, 'product_count':quantity, 'ukuran':ukuran};
+					console.log(data);
 					if(ukuran == 0){
 						alert('pilih ukuran terlebih dahulu !');
 					}else{
 						$.ajax({
 							url:"<?php echo base_url('index.php/session_js/set_session_non_member')?>",
 							type:'post',
-							data:{'product_id':product_id, 'product_count':quantity, 'ukuran':ukuran}
+							data:data
 						}).success(function(result){
 							result = JSON.parse(result);
 							//console.log('session');
 							
 							console.log(result);
 							if(result == true){
-								location.reload();
+								//location.reload();
 							}
 						});
 					}
