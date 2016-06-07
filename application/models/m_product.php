@@ -82,7 +82,8 @@ class M_product extends CI_Model
 				a.`product_stock`,
 				a.`product_price`,
 				a.`product_brand`,
-				a.`product_description`				
+				a.`product_description`,
+				a.`product_is_show`
 			 FROM pop_product a
 			 JOIN `pop_genre` c ON c.`productgenre_id` = a.`product_genre_id`
 			 JOIN `dev_sex` d ON d.`gender_id` = a.`product_gender_id`
@@ -100,7 +101,8 @@ class M_product extends CI_Model
 			'product_genre_id'=> $params['genre'],
 			'product_description' => $params['description'],
 			'product_gender_id' => $params['sex'],
-			'product_price' => $params['price']
+			'product_price' => $params['price'],
+			'product_is_show' => $params['show']
 		);
 		//var_dump($data);die;
 		
@@ -165,7 +167,8 @@ class M_product extends CI_Model
 			'product_genre_id'=> $params['genre'],
 			'product_description' => $params['description'],
 			'product_gender_id' => $params['sex'],
-			'product_price' => $params['price']
+			'product_price' => $params['price'],
+			'product_is_show' => $params['show']
 		);
 		//var_dump($data);die;
 		if(!empty($data)){
@@ -235,6 +238,7 @@ class M_product extends CI_Model
 		$result = $query->result();
 		return $result;
 	}
+	
 	
 	public function delImg($id){
 		$query = $this->db->delete('pop_product_image', array('productimage_id' => $id));

@@ -230,9 +230,9 @@
 															<tr>
 																<td width="100px">'.$ukuran->size_code ." - ".$ukuran->size_name.'</td>
 																<td>
-																	<input name="stock[]" type="number" min="1" id="size" value="'.$ukuran->productsize_stock.'" size="15px">																
-																	<input name="size[]" type="hidden" id="size" value="'.$ukuran->productsize_size_id.'" size="15px">																
-																	<input name="size_id[]" type="hidden"  id="size" value="'.$ukuran->productsize_id.'" size="15px">																
+																	<input name="stock[]" type="number" min="0" id="size" value="'.$ukuran->productsize_stock.'" size="15px">																
+																	<input name="size[]" type="hidden" min="0" id="size" value="'.$ukuran->productsize_size_id.'" size="15px">																
+																	<input name="size_id[]" type="hidden" min="0" id="size" value="'.$ukuran->productsize_id.'" size="15px">																
 																</td>
 															</tr>														
 														';
@@ -272,7 +272,40 @@
 										<div class="col-sm-9">
 											<input value="<?php echo $detail->product_price?>" type="text" id="form-field-1-1" name="price" placeholder="Stock" class="col-xs-10 col-sm-5" />
 										</div>
-									</div>									
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Show </label>
+										<?php // var_dump($detail->product_is_show);die(); ?>
+										<div class="col-sm-9">
+											<select class="chosen-select ol-xs-10 col-sm-5" id="form-field-select-3" name="show" data-placeholder="">
+												<option value="">--pilih--</option>
+												<?php
+												
+													$i=0;
+													$show = array(
+														'0'=>array(
+																'id'=>'1',
+																'nama'=>'Ya'															
+															),
+														'1'=>array(
+																'id'=>'0',
+																'nama'=>'Tidak'															
+															)
+													);
+													foreach($show as $shown){
+														if($detail->product_is_show == $shown['id']){
+															$select = "selected";
+														}else{
+															$select="";
+														}
+														echo "<option value='". $shown['id'] ."'".$select.">". $shown['nama'] ."</option>";														
+														$i++;
+													}
+												?>		
+																						
+											</select>
+										</div>
+									</div>
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Description </label>
 

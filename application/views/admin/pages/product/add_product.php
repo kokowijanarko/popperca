@@ -467,8 +467,8 @@
 															<tr>
 																<td width="100px">'.$ukuran->size_code ." - ".$ukuran->size_name.'</td>
 																<td>
-																	<input name="stock[]" type="number" min="1" id="size" size="15px">																
-																	<input name="size[]" type="hidden" min="1" id="size" value="'.$ukuran->size_id.'" size="15px">																
+																	<input name="stock[]" type="number" min="0" id="size" size="15px">																
+																	<input name="size[]" type="hidden" min="0" id="size" value="'.$ukuran->size_id.'" size="15px">																
 																</td>
 															</tr>														
 														';
@@ -532,7 +532,18 @@
 											<input type="file" multiple name="gambar[]"/>
 										</div>
 									</div>
-									
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Show </label>
+
+										<div class="col-sm-9">
+											<select class="chosen-select ol-xs-10 col-sm-5" id="form-field-select-3" name="show" data-placeholder="">
+												<option value="">--pilih--</option>
+												<option value="0">Tidak</option>
+												<option value="1">Ya</option>
+																						
+											</select>
+										</div>
+									</div>
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Description </label>
 

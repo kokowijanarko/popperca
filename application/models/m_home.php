@@ -67,7 +67,7 @@ class M_home extends CI_Model
    }  
 
 	public function load_product_img(){
-		$query = $this->db->query('select * from pop_product');
+		$query = $this->db->query('select * from pop_product where product_is_show ="1"');
 		$result = $query->result();
 		//var_dump($result); die;
 		return $result;
