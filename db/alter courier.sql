@@ -1,0 +1,1 @@
+ALTER TABLE `popperca`.`dev_invoice` ADD COLUMN `invoice_courier` VARCHAR(100) NULL AFTER `invoice_amount`, ADD COLUMN `invoice_courier_pakage` VARCHAR(100) NULL AFTER `invoice_courier`, ADD COLUMN `invoice_courier_amount` INT NULL AFTER `invoice_courier_pakage`; 
