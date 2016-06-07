@@ -303,9 +303,9 @@
 											</ul>
 											<p class="total">Subtotal: <span class="amount"><?php echo number_format($amount, 2, ',', '.')?></span></p>
 											<p class="buttons">
-												<?php if($amount > 0){
-												echo '<a href="'.base_url('user/cart/checkout').'" class="button">Checkout</a>';
-												}
+												<?php //if($amount > 0){
+												echo '<a href="'.base_url('user/cart/checkout/'.$this->session->userdata('user_id')).'" class="button">Checkout</a>';
+												//}
 												?>
 											</p>
 										</div>

@@ -87,7 +87,9 @@
 		
 		<?php
 			//var_dump($_SESSION);die;
+			//var_dump($this->session->userdata());die;
 			$this->load->view('user/components/header');
+			
 		?>
 		<br/>
 		<br/>
@@ -199,14 +201,27 @@
 													<option value="0">PILIH--</option>
 													<?php 
 														foreach($size as $val){
-															echo '<option value="'.$val->productsize_stock.'">'.$val->size_code.'</option>';
+															echo '<option value="'.$val->productsize_id.'">'.$val->size_code.'</option>';
 														}
 													?>
 												</select>
 											</div>
-											<div class="add-to-cart">
-												<a >Add to cart</a>
-											</div>
+											<?php
+												if(!is_null($this->session->userdata('user_id'))){
+													echo '
+														<div class="add-to-cart" id="add-to-cart">
+															<a >Add to cart</a>
+														</div>
+													';
+												}else{
+													echo'
+														<div class="add-to-cart">
+															<a href="'.site_url('user/login').'">Login to Shoping</a>
+														</div>
+													';
+												}
+											?>
+											
 											<!--
 											<div class="add-to-links">
 												<div class="add-to-wishlist">
@@ -374,27 +389,27 @@
 					
 				});
 				
-				$('div.add-to-cart').click(function(){
+				$('#add-to-cart').click(function(){
+					//console.log('asd');
 					var content = $(this).parent();
 					var product_id = '<?php echo $detail->product_id?>';	
 					var quantity = $("#qty").val();
 					var ukuran = $("#ukuran").val();
 					var data = {'product_id':product_id, 'product_count':quantity, 'ukuran':ukuran};
-					console.log(data);
+					//console.log(data);
 					if(ukuran == 0){
 						alert('pilih ukuran terlebih dahulu !');
 					}else{
 						$.ajax({
-							url:"<?php echo base_url('index.php/session_js/set_session_non_member')?>",
+							url:"<?php echo site_url('user/cart/addToCart')?>",
 							type:'post',
 							data:data
 						}).success(function(result){
 							result = JSON.parse(result);
-							//console.log('session');
-							
 							console.log(result);
 							if(result == true){
 								//location.reload();
+								alert('Berhasil Menambahkan ke Keranjang Belanja');
 							}
 						});
 					}

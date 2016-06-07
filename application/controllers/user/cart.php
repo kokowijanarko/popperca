@@ -5,13 +5,13 @@ class Cart extends CI_Controller {
 	public function __construct()
     {
         parent::__construct();
-        $this->load->database();
         $this->load->helper('url');
 		$this->load->model('m_userlogin');
 		$this->load->model('m_useraccount');
 		$this->load->model('m_custommer');
 		$this->load->model('m_product');
 		$this->load->model('m_invoice');
+		$this->load->model('m_cart');
 		$this->load->library('authex');
 		
 		/*
@@ -24,43 +24,57 @@ class Cart extends CI_Controller {
     }
 	
 	public function addToCart(){
+		//var_dump($_POST);die;
 		$product_id = $_POST['product_id'];
 		$product_count = $_POST['product_count'];
+		$size_id = $_POST['ukuran'];
 		if(isset($this->session->userdata['user_id'])){
 			$custommer_id  = $this->session->userdata['user_id'];
 		}else{
 			$custommer_id = NULL;
 		}
-		var_dump($product_id);die;
+		//var_dump($custommer_id);die;
 		$params = array(
-			'product_id' => $product_id,
-			'product_count' => $product_count,
-			'custommer_id' => $custommer_id
+			'cart_product_id' => $product_id,
+			'cart_product_count' => $product_count,
+			'cart_status'=> 1, 
+			'cart_custommer_id' => $custommer_id,
+			'cart_size_id'=>$size_id
 		);
-		$addCart  = $this->m_cart->addCart($params);
-		
+		//var_dump($params);die;
+		$addCart  = $this->M_cart->doAdd($params);
+		//var_dump($this->db->last_query());die;
+		//var_dump($addCart);die;
 		echo json_encode($addCart);
 		exit;
 	}
 	
-	public function checkout(){
-		/*
+	// public function checkout(){
+		// /*
 		
-		*/
+		// */
+		// $data['provinsi'] = $this->m_custommer->getProvinsi();
+		// foreach($_SESSION['product_id'] as $prod_id){
+			// $products = $this->m_product->getdetailProduct($prod_id);
+			// $data['product'][] = $products;
+			// $data['ukuran'][] = $this->m_product->prodSizeById($_SESSION['ukuran'][$prod_id]);
+			// $data['image'][] = $this->m_product->getImgFirst($prod_id);
+		// }
+		// $data['ck_login'] = 0;
+		// if($this->authex->logged_in())
+        // {
+            // $data['ck_login'] = 1;
+        // }
+		
+		
+		// $this->load->view('user/pages/checkout', $data);
+	// }
+	
+	public function checkout($id){
 		$data['provinsi'] = $this->m_custommer->getProvinsi();
-		foreach($_SESSION['product_id'] as $prod_id){
-			$products = $this->m_product->getdetailProduct($prod_id);
-			$data['product'][] = $products;
-			$data['ukuran'][] = $this->m_product->prodSizeById($_SESSION['ukuran'][$prod_id]);
-			$data['image'][] = $this->m_product->getImgFirst($prod_id);
-		}
-		$data['ck_login'] = 0;
-		if($this->authex->logged_in())
-        {
-            $data['ck_login'] = 1;
-        }
-		
-		
+		$data['customer'] = $this->m_custommer->getCustomerdetailById($id);
+		$data['cart'] = $this->m_cart->getUserCart($id);
+		//var_dump($data['cart']);die;
 		$this->load->view('user/pages/checkout', $data);
 	}
 	

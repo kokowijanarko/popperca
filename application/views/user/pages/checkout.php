@@ -126,57 +126,10 @@
 							<div class="col-md-9 check-out-blok">
 								<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 									<div class="panel checkout-accordion">
-										<div class="panel-heading" role="tab" id="headingOne">
-											<h4 class="panel-title">
-												<a data-toggle="collapse" data-parent="#accordion" href="#checkoutMethod" aria-expanded="true" aria-controls="checkoutMethod">
-													<span>1</span> Check Account
-												</a>
-											</h4>
-										</div>
-										<div id="checkoutMethod" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-											<div class="content-info">
-												<div class="col-md-6" id="login_form">
-													<div class="checkout-login">
-															<div class="checkTitle">
-																<h2 class="ct-design">Login</h2>
-															</div>
-														<p class="alrdyReg">Already registered?</p>
-														<p class="plxLogin">Please log in below:</p>
-														<div class="loginFrom">
-															<p class="plxLoginP"><span>*</span> Username</p>
-															<input type="text" name="username" id="username"  autocomplete="off"><br>
-															<p class="plxLoginP"><span>*</span> Password</p>
-															<input type="password" name="password" id="password" autocomplete="off">
-															<p class="plxrequired"><span>*</span> Required Field</p>
-															<!--<p class="fgetpass">Forgot your password ?</p>-->
-														</div>
-														<a style="float:left" class="checkPageBtn" id="login">Login</a>
-														<a href="<?php echo base_url('user/login')?>" class="checkPageBtn">Register</a>
-													</div>
-												</div>
-												<div class="col-md-6 hide" id="acc_info">
-													<div class="checkTitle">
-														<div class="AcckTitle">
-															<h2 class="ct-design">Login Status</h2>
-														</div>
-														<p id="account_content">
-														<?php 
-															if(isset($this->session->userdata['user_id'])){
-																echo "Login Success";
-															}
-														?>
-														</p>
-														
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="panel checkout-accordion">
 										<div class="panel-heading" role="tab" id="headingTwo">
 											<h4 class="panel-title">
 												<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#billingInformation" aria-expanded="false" aria-controls="billingInformation">
-													<span>2</span> Billing Information
+													<span> </span> Informasi Keranjang Belanja
 												</a>
 											</h4>
 										</div>
@@ -190,32 +143,37 @@
 															<tr>
 																<td>Nama</td>
 																<td>:</td>
-																<td id="buyer_name"></td>
+																<td id="buyer_name"><?php echo $customer->custommer_name?></td>
 															</tr>
 															<tr>
 																<td>Alamat</td>
 																<td>:</td>
-																<td id="buyer_address"></td>
+																<td id="buyer_address"><?php echo $customer->custommer_address?></td>
 															</tr>
 															<tr>
 																<td>Province</td>
 																<td>:</td>
-																<td id="buyer_province"></td>
+																<td id="buyer_province"><?php echo $customer->province?></td>
 															</tr>
 															<tr>
 																<td>Kab/Kota</td>
 																<td>:</td>
-																<td id="buyer_distric"></td>
+																<td id="buyer_distric"><?php echo $customer->city?></td>
 															</tr>
 															<tr>
 																<td>Kode Pos</td>
 																<td>:</td>
-																<td id="buyer_poscode"></td>
+																<td id="buyer_poscode"><?php echo $customer->pos_code?></td>
 															</tr>
 															<tr>
 																<td>Hp/Telp</td>
 																<td>:</td>
-																<td id="buyer_phone"></td>
+																<td id="buyer_phone"><?php echo $customer->custommer_phone?></td>
+															</tr>
+															<tr>
+																<td>Email</td>
+																<td>:</td>
+																<td id="buyer_phone"><?php echo $customer->custommer_email?></td>
 															</tr>
 															
 														</table>
@@ -228,19 +186,30 @@
 															<tr>
 																<td>Nama</td>
 																<td>:</td>
-																<td><input type="text" class="input-text" id="reciver_name"></td>
+																<td><input type="text" class="input-text" id="reciver_name" value="<?php echo $customer->custommer_name?>"></td>
 															</tr>
 															<tr>
 																<td>Alamat</td>
 																<td>:</td>
-																<td><textarea class="input-text" id="reciver_address"></textarea></td>
+																<td><textarea class="input-text" id="reciver_address" ><?php echo $customer->custommer_address?></textarea></td>
 															</tr>
 															<tr>
+																
 																<td>Provinsi</td>
 																<td>:</td>
 																<td>
 																	<select name="reciver_provinsi_id" id="reciver_provinsi_id" class="col-xs-12" onchange="getKab()">
-																		
+																		<option value="">--PILIH--</option>
+																		<?php
+																			foreach($provinsi as $prov){
+																				if($prov->province_id == $customer->custommer_province_id){
+																					$sel="selected";
+																				}else{
+																					$sel="";
+																				}
+																				echo'<option value="'.$prov->province_id.'" '.$sel.'>'.$prov->province.'</option>';
+																			}
+																		?>
 																	</select>
 																</td>
 															</tr>
@@ -249,18 +218,18 @@
 																<td>:</td>
 																<td>
 																	<select name="reciver_kabupaten_id" id="reciver_kabupaten_id" class="col-xs-12" onChange="getKec()">
-																		
+																	
 																	</select></td>
 															</tr>															
 															<tr>
 																<td>kode Pos</td>
 																<td>:</td>
-																<td><input type="text" class="input-text" id="reciver_poscode"></td>
+																<td><input type="text" class="input-text" id="reciver_poscode" value="<?php echo $customer->pos_code?>"></td>
 															</tr>															
 															<tr>
 																<td>Hp/Telp</td>
 																<td>:</td>
-																<td><input type="text" class="input-text" id="reciver_phone"></td>
+																<td><input type="text" class="input-text" id="reciver_phone" value="<?php echo $customer->custommer_phone?>"> </td>
 															</tr>
 															<tr>
 																<td>Jasa Paket</td>
@@ -299,29 +268,48 @@
 														<?php
 															$no = 1;
 															$i = 0;
-															var_dump($ukuran);
-															foreach($product as $prod){
-																$subtot = $prod->product_price * $_SESSION['product_count'][$prod->product_id] ;
+															//var_dump($ukuran);
+															foreach($cart as $crt){
+																$subtot = $crt->product_price  * $crt->cart_product_count;
 																$sbttl[] =  $subtot;
+																
 																echo '
-																	<tr class="prod_row">
+																	<tr>
 																		<td>'.$no.'</td>
-																		<td>'.$prod->product_name.'</td>
-																		<td><img width="200px" src="'.base_url('file/product_img/'.$image[$i]->productimage_name).'" /></td>
-																		<td class="td_input">
-																			'.$ukuran[$i]->size_code.'																			
-																		</td>
-																		<td class="td_input">
-																			'.$_SESSION['product_count'][$prod->product_id].'																			
-																		</td>
-																		<td class="price" id="'.$prod->product_price.'">'.$prod->product_price.'</td>
+																		<td>'.$crt->product_name.'</td>
+																		<td><img width="200px" src="'.base_url('file/product_img/'.$crt->product_image).'" /></td>
+																		<td>'.$crt->size_code.'-'.$crt->size_name.'</td>
+																		<td>'.$crt->cart_product_count.'</td>
+																		<td class="price">'.$crt->product_price.'</td>
 																		<td class="subtot">'.$subtot.'</td>
-																		
 																	</tr>
-																';											
-																$no++;											
-																$i++;											
+																
+																';
+																$no++;	
 															}
+															
+															// foreach($ as $prod){
+																// $subtot = $prod->product_price * $_SESSION['product_count'][$prod->product_id] ;
+																// $sbttl[] =  $subtot;
+																// echo '
+																	// <tr class="prod_row">
+																		// <td>'.$no.'</td>
+																		// <td>'.$prod->product_name.'</td>
+																		// <td><img width="200px" src="'.base_url('file/product_img/'.$image[$i]->productimage_name).'" /></td>
+																		// <td class="td_input">
+																			// '.$ukuran[$i]->size_code.'																			
+																		// </td>
+																		// <td class="td_input">
+																			// '.$_SESSION['product_count'][$prod->product_id].'																			
+																		// </td>
+																		// <td class="price" id="'.$prod->product_price.'">'.$prod->product_price.'</td>
+																		// <td class="subtot">'.$subtot.'</td>
+																		
+																	// </tr>
+																// ';											
+																// $no++;											
+																// $i++;											
+															// }
 															$amount = array_sum($sbttl);
 															
 															echo'
@@ -477,116 +465,7 @@
 				$('td.subtot').number(true, 2);
 				$('td.price').number(true, 2);
 				$('td.total').number(true, 2);		
-				
-				//console.log('a');
-				var ck_login = <?php echo $ck_login?>;
-				console.log(ck_login);
-				//if(ck_login == 1){
-				//	$('div#billingInformation').addClass('in');
-				//	$('div#checkoutMethod').removeClass('in');
-				//	console.log('x');
-				//}
-				
-				$('a#login').click(function(){
-					var username = $('#username').val();
-					var password = $('#password').val();
-					
-					console.log(username);
-					console.log(password);
-					
-					
-					$.ajax({
-						url:"<?php echo base_url('user/login/do_login')?>",
-						type:'post',
-						data:{'username':username, 'password':password}
-					}).success(function(result){
-						result = JSON.parse(result);
-						console.log(result);
-						//location.reload();
-						
-						
-						if(result == true){
-							$('#acc_info').removeClass('hide');
-							$('#login_form').addClass('hide');
-							//$('div#billingInformation').addClass('in');
-							
-							var user_id = "<?php echo isset($this->session->userdata['user_id']) ? $this->session->userdata['user_id'] : NULL ; ?>";
-							console.log(user_id);
-							$.ajax({
-								url:"<?php echo base_url()?>user/account/detail_js/"+user_id
-							}).success(function(result){
-								result=JSON.parse(result);
-								console.log(result);
-								
-								$.ajax({
-									url: "<?php echo base_url()?>index.php/admin/custommer/get_prov/"	
-								}).success(function(resultProv){
-									resultProv = JSON.parse(resultProv);
-									console.log(resultProv);
-									$("#reciver_provinsi_id").append('<option value="">--PILIH--</option>');
-									for(i=0; i<resultProv.length; i++){
-										//console.log(result['provinsi']['province_id']);
-										console.log(resultProv[i]['province_id']);
-										if(result['provinsi']['province_id'] == resultProv[i]['province_id']){
-											var select = 'selected';
-										}else{
-											select = '';
-										}
-										console.log(select);
-										$("#reciver_provinsi_id").append('<option '+select+' value='+resultProv[i]['province_id']+'>'+resultProv[i]['province']+'</option>');
-									}									
-									$.ajax({
-									url: "<?php echo base_url()?>index.php/admin/custommer/get_kab/"+result['provinsi']['province_id']		
-									}).success(function(resultKab){
-										resultKab = JSON.parse(resultKab);
-										console.log(resultKab);
-										$("#reciver_kabupaten_id").append('<option value="">--PILIH--</option>');
-										for(i=0; i<resultKab.length; i++){
-											//console.log(result['provinsi']['city_id']);
-											console.log(resultKab[i]['city_id']);
-											if(result['kabupaten']['city'] == resultKab[i]['city']){
-												var select = 'selected';
-											}else{
-												select = '';
-											}
-											console.log(select);
-											$("#reciver_kabupaten_id").append('<option '+select+' value='+resultKab[i]['city_id']+'>'+resultKab[i]['city']+'</option>');
-										}								
-									});
-
-									
-									
-								});
-								
-								
-								
-								
-								$('td#buyer_name').text(result['account']['custommer_name']);
-								$('td#buyer_address').text(result['account']['custommer_address']);
-								$('td#buyer_province').text(result['provinsi']['province']);
-								$('td#buyer_distric').text(result['kabupaten']['city']);
-								//$('td#buyer_districs').text(result['kecamatan']['Nama']);
-								$('td#buyer_poscode').text(result['account']['custommer_pos_code']);
-								$('td#buyer_phone').text(result['account']['custommer_phone']);								
-								
-								$('#reciver_name').val(result['account']['custommer_name']);
-								$('#reciver_address').val(result['account']['custommer_address']);
-								$('#reciver_provinsi_id').val(result['provinsi']['province']);
-								$('#reciver_kabupaten_id').val(result['kabupaten']['city']);
-								//$('#reciver_kecamatan_id').val(result['kecamatan']['IDKecamatan']);
-								$('#reciver_poscode').val(result['account']['custommer_pos_code']);
-								$('#reciver_phone').val(result['account']['custommer_phone']);
-								
-							});
-							
-							
-						}
-						
-					});
-					
-					
-					
-				});
+				getKab();
 				
 				$('a#confirm').click(function(){
 					var name = $('#reciver_name').val();
@@ -659,8 +538,7 @@
 						$("#jenis_jasa_paket").append('<option value="">--PILIH--</option>');
 						for(i=0; i<result.length; i++){
 							$("#jenis_jasa_paket").append('<option value='+result[i]['cost'][0]['value']+'>'+result[i]['service']+'-'+result[i]['description']+'</option>');
-						}
-						
+						}						
 					});
 					
 					$('#jenis_jasa_paket').change(function(){
@@ -681,8 +559,7 @@
 					
 				});
 				
-			});
-			
+			});	
 			
 			function getKab(){
 				$("#reciver_kabupaten_id").empty().append('<option value="">--SELECT--</option>');
@@ -696,9 +573,15 @@
 					url: url			
 				}).success(function(result){
 					result = JSON.parse(result);
-					console.log(result);
+					console.log(<?php echo $customer->city_id?>);
 					for(i=0; i<result.length; i++){
-						$("#reciver_kabupaten_id").append('<option value='+result[i]['city_id']+'>'+result[i]['city']+'</option>');
+						console.log(result[i]['city_id']);
+						if(<?php echo $customer->city_id?> == result[i]['city_id']){
+							selected = 'selected';
+						}else{
+							selected = '';
+						}
+						$("#reciver_kabupaten_id").append('<option value='+result[i]['city_id']+' '+selected+'>'+result[i]['city']+'</option>');
 					}
 					
 				});

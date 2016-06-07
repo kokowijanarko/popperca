@@ -15,10 +15,11 @@ class M_userlogin extends CI_Model
 	public function doAdd($params){	
 		$result = false;
 		if(!empty($params)){
-			$this->db->trans_start();
+			//$this->db->trans_start();
 			$execute = $this->db->insert('dev_custommer', $params);	
+			var_dump($this->db->last_query());die;
+			//$this->db->trans_complete($execute);
 			$result = true;
-			$this->db->trans_complete();
 		}
 		return $result;
 	}  

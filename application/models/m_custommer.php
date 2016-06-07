@@ -43,6 +43,18 @@ class M_custommer extends CI_Model
 		");
 		$result = $query->row();
 		return $result;
+	}	
+	
+	public function getCustomerdetailById($id){
+		$query = $this->db->query('
+			SELECT	*
+			FROM dev_custommer a
+			JOIN ref_province b ON b.`province_id` = a.`custommer_province_id`
+			JOIN ref_city c ON c.`city_id`= a.`custommer_city_id` 
+			WHERE a.`custommer_id` = "'.$id.'"
+		');
+		$result = $query->row();
+		return $result;
 	}
 	
 	public function doAdd($params){		

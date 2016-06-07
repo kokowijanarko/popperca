@@ -46,7 +46,7 @@ class Login extends CI_Controller {
 	}
 	
 	public function do_register(){
-		//var_dump($_POST);
+		var_dump($_POST);
 		
 		
 		if($_POST['custommer_password_confirm'] == $_POST['custommer_password']){
@@ -56,13 +56,11 @@ class Login extends CI_Controller {
 			unset($_POST['custommer_password_confirm']);
 			unset($_POST['custommer_provinsi_id']);
 			unset($_POST['custommer_kabupaten_id']);
-			$register = $this->m_userlogin->doAdd($_POST);
-			//var_dump($register);die;
-			$data['message'] = "Registrasi Berhasil, Silakan Login untuk melajutkan";
-			$data['type'] = $this->m_custommer->getCustommerType();
-			$data['provinsi'] = $this->m_custommer->getProvinsi();
+			$register = $this->m_userlogin->doAdd($_POST);			
 			if($register == true){
-				$this->load->view('user/pages/login', $data);
+				redirect(site_url('user/login?msg=REG1'));
+			}else{
+				redirect(site_url('user/login?msg=REG2'));
 			}			
 		}		
 		
