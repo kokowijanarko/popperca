@@ -7,10 +7,10 @@ class Detail_product extends CI_Controller {
         parent::__construct();
         $this->load->database();
         $this->load->helper('url');
-		$this->load->model('m_userlogin');
-		$this->load->model('m_useraccount');
-		$this->load->model('m_custommer');
-		$this->load->model('m_product');
+		$this->load->model('M_userlogin');
+		$this->load->model('M_useraccount');
+		$this->load->model('M_custommer');
+		$this->load->model('M_product');
 		$this->load->library('authex');
 		
 		/*
@@ -23,12 +23,12 @@ class Detail_product extends CI_Controller {
     }
 	
 	public function detail($id){		
-		$data['detail'] = $this->m_product->getDetailProduct($id);
-		$data['img'] = $this->m_product->getImg($id);
-		//$data['sex'] = $this->m_product->list_sex();
-		//$data['genre'] = $this->m_product->list_genre();
-		$data['size'] = $this->m_product->sizeProductByIdProduct($id);
-		//$data['size'] = $this->m_product->size($id);
+		$data['detail'] = $this->M_product->getDetailProduct($id);
+		$data['img'] = $this->M_product->getImg($id);
+		//$data['sex'] = $this->M_product->list_sex();
+		//$data['genre'] = $this->M_product->list_genre();
+		$data['size'] = $this->M_product->sizeProductByIdProduct($id);
+		//$data['size'] = $this->M_product->size($id);
 		
 		$this->load->view('user/pages/detail_product', $data);
 	}	

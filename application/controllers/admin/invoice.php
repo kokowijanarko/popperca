@@ -20,6 +20,7 @@ class Invoice extends CI_Controller {
 	}
 	public function list_detail($id){
 		$data['invoice_detail'] = $this->m_invoice->invoiceDetail($id);
+		//var_dump($data['invoice_detail']);
 		$data['status'] = $this->m_invoice->getStatus();
 		$data['product_detail'] = $this->m_invoice->productDetail($data['invoice_detail']->invoice_id);
 		

@@ -66,7 +66,7 @@
 								<tr>
 									<td></td>
 									<td></td>
-									<td><?php echo $invoice_detail->cus_kecamatan.' | '.$invoice_detail->custommer_pos_code?></td>
+									<td><?php echo $invoice_detail->custommer_pos_code?></td>
 								</tr>
 								<tr>
 									<td></td>
@@ -91,7 +91,7 @@
 								<tr>
 									<td></td>
 									<td></td>
-									<td><?php echo $invoice_detail->inv_kecamatan .' | '.$invoice_detail->invoice_pos_code?></td>
+									<td><?php echo $invoice_detail->invoice_pos_code?></td>
 								</tr>
 								<tr>
 									<td></td>
@@ -163,6 +163,10 @@
 									$no++;
 								}
 							?>
+							<tr>
+								<th colspan="6"><?php echo $invoice_detail->invoice_courier_pakage?></th>
+								<td align="right"><b><div style="float:left">Rp.</div><?php echo number_format($invoice_detail->invoice_courier_amount, 2, ',', '.');?></b></td>
+							</tr>
 							<tr>
 								<th colspan="6">Total</th>
 								<td align="right"><b><div style="float:left">Rp.</div><?php echo number_format(array_sum($price), 2, ',', '.');?></b></td>

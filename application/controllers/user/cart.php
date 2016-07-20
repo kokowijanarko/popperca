@@ -42,7 +42,7 @@ class Cart extends CI_Controller {
 			'cart_size_id'=>$size_id
 		);
 		//var_dump($params);die;
-		$addCart  = $this->M_cart->doAdd($params);
+		$addCart  = $this->m_cart->doAdd($params);
 		//var_dump($this->db->last_query());die;
 		//var_dump($addCart);die;
 		echo json_encode($addCart);
@@ -80,10 +80,14 @@ class Cart extends CI_Controller {
 	
 	public function genInvNumber(){
 		
-		$product_id = $this->session->userdata['product_id'];
-		$product_count = $this->session->userdata['product_count'];
-		$custommer_id  = $this->session->userdata['user_id'];		
+		// $product_id = $this->session->userdata['product_id'];
+		// $product_count = $this->session->userdata['product_count'];
+		//$cart_id = $_SESSION['cart_id'];
+		$custommer_id  = $this->session->userdata['user_id'];
 		$InvNumb = $this->invoicenumberGenerator();
+		//var_dump($InvNumb);die();
+		$cart_detail = $this->m_cart->getUserCart($custommer_id);
+		//var_dump($_POST, $cart_detail);die;
 		$params = array(
 			'invoice_number'=>$InvNumb,
 			'invoice_customer_id'=>$custommer_id,
@@ -102,18 +106,19 @@ class Cart extends CI_Controller {
 		
 		$this->db->trans_start();
 		$createInvoice = $this->m_invoice->addInvoice($params);		
-			$inv_id = $this->db->insert_id();
-			foreach($product_id as $prod_id){
-				$product_detail = $this->m_product->getdetailProduct($prod_id);
-				$product=array(				
-					'invoicedetail_invoice_id'=>$inv_id,
-					'invoicedetail_product'=>$prod_id,
-					'invoicedetail_count'=>$product_count[$prod_id],
-					'invoicedetail_price'=>$product_detail->product_price,
-					'invoicedetail_price_total'=>$product_detail->product_price * $product_count[$prod_id]
-				); 
-				$inv_detail =  $this->m_invoice->addInvoiceDetail($product);
-			}
+		$inv_id = $this->db->insert_id();
+		$cart_detail = $this->m_cart->getUserCart($custommer_id);
+		foreach($cart_detail as $cd){
+			$product=array(
+				'invoicedetail_invoice_id'=>$inv_id,
+				'invoicedetail_product'=>$cd->cart_product_id,
+				'invoicedetail_count'=>$cd->cart_product_count,
+				'invoicedetail_price'=>$cd->product_price,
+				'invoicedetail_size_id'=>$cd->cart_size_id,
+				'invoicedetail_price_total'=>$cd->product_price * $cd->cart_product_count
+			); 
+			$inv_detail =  $this->m_invoice->addInvoiceDetail($product);
+		}
 		
 		$this->db->trans_complete();
 		
@@ -124,12 +129,14 @@ class Cart extends CI_Controller {
 	
 	private function invoicenumberGenerator(){
 		$lastInvNumber  = $this->m_invoice->getLastInvNumber();
-		//var_dump($lastInvNumber->invoice_number);
-		if(count($lastInvNumber) == 0){
+		//var_dump($lastInvNumber->invoice_number);die();
+		if(empty($lastInvNumber->invoice_number) || is_null($lastInvNumber->invoice_number)){
 			$InvnumberStr = "0001";
 		}else{
-			$lastInvNumber_parsing = explode('/', $lastInvNumber->invoice_number, 2);				
+			$lastInvNumber_parsing = explode('/', $lastInvNumber->invoice_number, 2);	
+			//var_dump($lastInvNumber_parsing);
 			$invNumber_date = explode('/', $lastInvNumber_parsing[1], 3);
+			//var_dump($invNumber_date);
 			$invNumber_date = date('d/m/Y', mktime(0, 0, 0, $invNumber_date[1], $invNumber_date[0], $invNumber_date[2]));
 			$now_date = date('d/m/Y');
 			

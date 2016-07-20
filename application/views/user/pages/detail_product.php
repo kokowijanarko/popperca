@@ -201,7 +201,7 @@
 													<option value="0">PILIH--</option>
 													<?php 
 														foreach($size as $val){
-															echo '<option value="'.$val->productsize_id.'">'.$val->size_code.'</option>';
+															echo '<option value="'.$val->productsize_size_id.'">'.$val->size_code.'</option>';
 														}
 													?>
 												</select>

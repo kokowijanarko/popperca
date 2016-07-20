@@ -84,24 +84,7 @@
 										-->
 									</li>
 									
-									<li class="expand"><a href="#">Pages</a>
-										<ul class="restrain sub-menu">
-											<li><a href="about-us.html">About Us</a></li>
-											<li><a href="contact-us.html">Contact Us</a></li>
-											<li><a href="checkout.html">Checkout</a></li>
-											<?php
-														
-														if(isset($this->session->userdata['user_id'])){
-															echo '<li><a href="'.base_url('index.php/user/login/logout').'">Logout</a></li>';
-														}else{
-															echo '<li><a href="'.base_url('index.php/user/login').'">Login</a></li>';
-														}
-													?>
-											
-										</ul>									
-									</li>
-									<li class="expand"><a href="about-us.html">About</a></li>
-									<li class="expand"><a href="contact-us.html">Contact</a></li>
+									
 								</ul>
 							</nav>
 						</div>
@@ -193,21 +176,7 @@
 												</ul>
 											-->
 											</li>
-											</li>
-											<li><a href="#">Pages</a>
-												<ul>
-													<?php
-														
-														if(isset($this->session->userdata['user_id'])){
-															echo '<li><a href="'.base_url('index.php/user/login/logout').'">Logout</a></li>';
-														}else{
-															echo '<li><a href="'.base_url('index.php/user/login').'">Login</a></li>';
-														}
-													?>
-												</ul>													
-											</li>
-											<li><a href="about-us.html">About Us</a></li>
-											<li><a href="contact-us.html">Contact Us</a></li>
+											</li>											
 										</ul>
 									</nav>
 								</div>						

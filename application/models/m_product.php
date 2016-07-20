@@ -21,7 +21,8 @@ class M_product extends CI_Model
 				c.`productgenre_id`,				
 				d.`gender_name`,
 				a.`product_stock`,
-				a.`product_description`				
+				a.`product_description`,			
+				a.`product_is_show`			
 			 FROM pop_product a
 			 JOIN `pop_genre` c ON c.`productgenre_id` = a.`product_genre_id`
 			 JOIN `dev_sex` d ON d.`gender_id` = a.`product_gender_id`
@@ -168,7 +169,8 @@ class M_product extends CI_Model
 			'product_description' => $params['description'],
 			'product_gender_id' => $params['sex'],
 			'product_price' => $params['price'],
-			'product_is_show' => $params['show']
+			'product_is_show' => $params['show'],
+			'product_brand' => $params['brand']
 		);
 		//var_dump($data);die;
 		if(!empty($data)){

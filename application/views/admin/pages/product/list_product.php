@@ -159,9 +159,7 @@
 
 						<div class="row">
 							<div class="col-xs-12">
-								<!-- PAGE CONTENT BEGINS -->
-																
-								
+								<!-- PAGE CONTENT BEGINS -->							
 								<div class="row">
 									<div class="col-xs-12">
 										<div class="clearfix">
@@ -175,20 +173,15 @@
 											<table id="dynamic-table" class="table table-striped table-bordered table-hover">
 												<thead>
 													<tr>
-														<th class="center">
-															<label class="pos-rel">
-																<input type="checkbox" class="ace" />
-																<span class="lbl"></span>
-															</label>
-														</th>
-														<th>NO</th>
-														<th>Product Name</th>
-														<th>Size</th>
-														<th>Genre</th>
-														<th>Sex</th>													
-														<th>Stock</th>
+														<th width="50px">NO</th>
+														<th width="200px">Product Name</th>
+														<th width="80px">Size</th>
+														<th width="80px">Genre</th>
+														<th width="80px">Sex</th>													
+														<th width="60px">Stock</th>
+														<th width="60px">Tampil</th>
 														<th>Description</th>
-														<th>Action</th>
+														<th width="90px">Action</th>
 													</tr>
 												</thead>
 												<tbody>							
@@ -197,15 +190,14 @@
 															$i=0;
 															$no=1;
 															foreach($product as $prod){
-																
+																if($prod->product_is_show == 0){
+																	$isShow = 'Tidak';
+																}else{
+																	$isShow = 'Ya';
+																}
 																echo '
 																<tr>
-																<td class="center">
-																	<label class="pos-rel">
-																		<input type="checkbox" class="ace" />
-																		<span class="lbl"></span>
-																	</label>
-																</td>
+																
 																<td>'.$no.'</td>
 																<td>'. $product[$i]->product_name .'</td><td>';
 																//var_dump($size);															
@@ -223,6 +215,7 @@
 																<td>'. $product[$i]->productgenre_name .'</td>
 																<td>'. $product[$i]->gender_name .'</td>
 																<td>'. $stoks .'</td>
+																<td>'. $isShow .'</td>
 																<td>'. $product[$i]->product_description .'</td>
 																<td>
 																	<div class="hidden-sm hidden-xs btn-group">
@@ -243,6 +236,7 @@
 																';
 																$i++;
 																$no++;
+																unset($stok);
 															}
 														?>
 														

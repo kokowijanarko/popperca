@@ -7,7 +7,7 @@ class Login extends CI_Controller {
         parent::__construct();
         $this->load->database();
         $this->load->helper('url');
-		$this->load->model('m_userlogin');
+		$this->load->model('M_userlogin');
 		$this->load->model('m_useraccount');
 		$this->load->model('m_custommer');
 		$this->load->library('authex');
@@ -46,7 +46,7 @@ class Login extends CI_Controller {
 	}
 	
 	public function do_register(){
-		var_dump($_POST);
+		//var_dump($_POST);
 		
 		
 		if($_POST['custommer_password_confirm'] == $_POST['custommer_password']){
@@ -56,7 +56,7 @@ class Login extends CI_Controller {
 			unset($_POST['custommer_password_confirm']);
 			unset($_POST['custommer_provinsi_id']);
 			unset($_POST['custommer_kabupaten_id']);
-			$register = $this->m_userlogin->doAdd($_POST);			
+			$register = $this->M_userlogin->doAdd($_POST);			
 			if($register == true){
 				redirect(site_url('user/login?msg=REG1'));
 			}else{

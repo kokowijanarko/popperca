@@ -125,7 +125,7 @@
 						<div class="checkout-content">	
 							<div class="col-md-9 check-out-blok">
 								<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-									<div class="panel checkout-accordion">
+									<div id="cart_information" class="panel checkout-accordion">
 										<div class="panel-heading" role="tab" id="headingTwo">
 											<h4 class="panel-title">
 												<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#billingInformation" aria-expanded="false" aria-controls="billingInformation">
@@ -272,7 +272,8 @@
 															foreach($cart as $crt){
 																$subtot = $crt->product_price  * $crt->cart_product_count;
 																$sbttl[] =  $subtot;
-																
+																echo '<input type="hidden" id="cart_id[]" name="cart_id[]" value="'.$crt->cart_id.'">';
+																$_SESSION['cart_id'][]=$crt->cart_id;
 																echo '
 																	<tr>
 																		<td>'.$no.'</td>
@@ -288,28 +289,7 @@
 																$no++;	
 															}
 															
-															// foreach($ as $prod){
-																// $subtot = $prod->product_price * $_SESSION['product_count'][$prod->product_id] ;
-																// $sbttl[] =  $subtot;
-																// echo '
-																	// <tr class="prod_row">
-																		// <td>'.$no.'</td>
-																		// <td>'.$prod->product_name.'</td>
-																		// <td><img width="200px" src="'.base_url('file/product_img/'.$image[$i]->productimage_name).'" /></td>
-																		// <td class="td_input">
-																			// '.$ukuran[$i]->size_code.'																			
-																		// </td>
-																		// <td class="td_input">
-																			// '.$_SESSION['product_count'][$prod->product_id].'																			
-																		// </td>
-																		// <td class="price" id="'.$prod->product_price.'">'.$prod->product_price.'</td>
-																		// <td class="subtot">'.$subtot.'</td>
-																		
-																	// </tr>
-																// ';											
-																// $no++;											
-																// $i++;											
-															// }
+															
 															$amount = array_sum($sbttl);
 															
 															echo'
@@ -332,53 +312,27 @@
 											</div>
 										</div>
 									</div>
-									<div class="panel checkout-accordion">
-										<div class="panel-heading" role="tab" id="headingThree">
-											<h4 class="panel-title">
-												<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#shippingMethod" aria-expanded="false" aria-controls="shippingMethod">
-													<span>3</span> Shipping Method
-												</a>
-											</h4>
-										</div>
-										<div id="shippingMethod" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-											<div class="content-info">
-												<div class="col-md-12">
-													<div>Sample Content</div>
-													<p>Nunc Facilisis Sagittis Ullamcorper. Proin Lectus Ipsum, Gravida Et Mattis Vulputate, Tristique Ut Lectus. Sed Et Lorem Nunc.</p>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="panel checkout-accordion">
-										<div class="panel-heading" role="tab" id="headingFour">
-											<h4 class="panel-title">
-												<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#paymentInformation" aria-expanded="false" aria-controls="paymentInformation">
-													<span>4</span> Payment Information
-												</a>
-											</h4>
-										</div>
-										<div id="paymentInformation" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
-											<div class="content-info">
-												<div class="col-md-12">
-													<div>Sample Content</div>
-													<p>Nunc Facilisis Sagittis Ullamcorper. Proin Lectus Ipsum, Gravida Et Mattis Vulputate, Tristique Ut Lectus. Sed Et Lorem Nunc.</p>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="panel checkout-accordion">
+									<div id="invoice" class="panel checkout-accordion hide">
 										<div class="panel-heading" role="tab" id="headingFive">
 											<h4 class="panel-title">
 												<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#orderReview" aria-expanded="false" aria-controls="orderReview">
-													<span>5</span> Order Review
+													<span> </span> INVOICE
 												</a>
 											</h4>
 										</div>
 										<div id="orderReview" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
 											<div class="content-info">
 												<div class="col-md-12">
-													<div id=orderReviewContent></div>
-													<p></p>
+													<div id="orderReviewContent"></div>
+													<p>
+														Silakan Upload Foto Bukti Transfer Untuk Pemrosesan Lebih Lanjut.
+													</p>
+													<p>
+														<a href="<?php echo site_url('user/invoice/list_invoice')?>">
+														<button class="button">Upload</button>
+														</a>
+													</p>
+													
 												</div>
 											</div>
 										</div>
@@ -467,6 +421,8 @@
 				$('td.total').number(true, 2);		
 				getKab();
 				
+				var cart_id = [];
+				
 				$('a#confirm').click(function(){
 					var name = $('#reciver_name').val();
 					var address = $('#reciver_address').val();
@@ -480,14 +436,7 @@
 					var jasa_paket  = $('#jasa_paket option:selected').text();
 					var amount  = parseInt('<?php echo $amount?>');
 					var amount_total  = amount + parseInt(harga);
-					
-					console.log(name);
-					console.log(address);
-					console.log(province);
-					console.log(distric);
-					//console.log(districs);
-					console.log(poscode);
-					console.log(phone);
+										
 					
 					data = {
 						'name': name,
@@ -500,15 +449,18 @@
 						'amount_total':amount_total,
 						'jenis_paket':jenis,
 						'jasa_paket':jasa_paket,
-						'harga':harga
+						'harga':harga,
+						'cart':cart_id
 					};
 					$.ajax({
 						url:"<?php echo base_url('user/cart/genInvNumber')?>",
 						method:'post',
 						data:data
-					}).success(function(result){
+					}).success(function(result){						
 						console.log(result);
 						result = JSON.parse(result);
+						$('#invoice').removeClass('hide');
+						$('#cart_information').addClass('hide');
 						$('#orderReview').addClass('in');
 						$('#orderReviewContent').text('Nomor Ivoice Anda:'+result);
 					});
@@ -516,14 +468,13 @@
 				});
 				
 				$('#jasa_paket').change(function(){
+					$("#jenis_jasa_paket").empty();
 					console.log('jasa paket');
 					var courier = $('#jasa_paket').val();
 					var province_id = $("#reciver_provinsi_id").val();
 					var city_id = $("#reciver_kabupaten_id").val();
 					var weight = 2;
-					console.log(courier);
-					console.log(province_id);
-					console.log(city_id);
+					
 					$.ajax({
 						url:'<?php echo base_url('courier_cost/ongkir')?>',
 						method: 'post',
@@ -552,9 +503,7 @@
 						$('#jenis_paket').text(jenis);
 						$('.ongkir').text(harga);
 						$('.total').text(amount_total);
-						console.log('asd');
-						console.log(jenis);
-						console.log(harga);
+						
 					});
 					
 				});
@@ -573,7 +522,7 @@
 					url: url			
 				}).success(function(result){
 					result = JSON.parse(result);
-					console.log(<?php echo $customer->city_id?>);
+					
 					for(i=0; i<result.length; i++){
 						console.log(result[i]['city_id']);
 						if(<?php echo $customer->city_id?> == result[i]['city_id']){

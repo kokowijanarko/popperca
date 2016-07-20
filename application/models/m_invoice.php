@@ -12,8 +12,8 @@ class M_invoice extends CI_Model
         $this->load->library('session');
     }
 
-	function invoice(){        
-		$query = $this->db->query("
+	function invoice($custommer_id=null){  
+		$sql_string = "
 		SELECT 
 			a.`invoice_id`,
 			a.`invoice_customer_id`,
@@ -22,22 +22,40 @@ class M_invoice extends CI_Model
 			c.`status_name`,
 			c.`status_class`,
 			a.`invoice_amount`,
-			a.`invoice_number`
+			a.`invoice_number`,
+			a.`invoice_conf_img`,
+			a.`invoice_status`
+			
 		FROM `dev_invoice` a 
 		JOIN `dev_custommer` b ON b.`custommer_id` = a.`invoice_customer_id`
 		JOIN `dev_status` c ON c.`status_id` = a.`invoice_status`
-		");
+		
+		WHERE 1 = 1
+			--whr--
+		";
+		
+		$where = '';
+		if(!is_null($custommer_id) && !empty($custommer_id)){
+			$where = 'AND b.`custommer_id` ='.$custommer_id;			
+		}
+		
+		$sql = str_replace("--whr--", $where, $sql_string);
+		//var_dump($sql, $where);
+		$query = $this->db->query($sql);
 		$result = $query->result();
 		return $result;		
 		
     }
 	
-	function invoiceDetail($id){        
+	function invoiceDetail($id, $custommer_id=null){
+		
 		$query = $this->db->query("
 		SELECT 
 			a.`invoice_id`,
 			a.`invoice_number`,
 			a.`invoice_customer_id`,
+			a.`invoice_courier_pakage`,
+			a.`invoice_courier_amount`,
 			b.`custommer_name`,
 			b.`custommer_phone`,
 			b.`custommer_pos_code`,
@@ -69,6 +87,7 @@ class M_invoice extends CI_Model
     }
 	
 	function productDetail($id){
+		
 		$query = $this->db->query("
 			SELECT
 				a.`invoicedetail_invoice_id`,
@@ -84,6 +103,7 @@ class M_invoice extends CI_Model
 			JOIN `dev_invoice` d ON d.`invoice_id` = a.`invoicedetail_invoice_id`
 			JOIN `dev_sex` e ON e.`gender_id` = b.`product_genre_id`
 			WHERE a.`invoicedetail_invoice_id`='".$id."'
+			
 		");
 		$execute = $query->result();
 		return $execute;	
@@ -128,6 +148,10 @@ class M_invoice extends CI_Model
 	function deleteInvoiceDetail($id){
 		$result = $this->db->query("DELETE FROM dev_invoice_detail WHERE invoicedetail_invoice_id ='".$id."'");
 		return $result;
+	}
+	
+	function updateConfInv($param, $id){
+		return $this->db->update('dev_invoice', $param, "invoice_id = $id");
 	}
    
 }
