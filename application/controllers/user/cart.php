@@ -105,22 +105,55 @@ class Cart extends CI_Controller {
 		);
 		
 		$this->db->trans_start();
-		$createInvoice = $this->m_invoice->addInvoice($params);		
-		$inv_id = $this->db->insert_id();
-		$cart_detail = $this->m_cart->getUserCart($custommer_id);
-		foreach($cart_detail as $cd){
-			$product=array(
-				'invoicedetail_invoice_id'=>$inv_id,
-				'invoicedetail_product'=>$cd->cart_product_id,
-				'invoicedetail_count'=>$cd->cart_product_count,
-				'invoicedetail_price'=>$cd->product_price,
-				'invoicedetail_size_id'=>$cd->cart_size_id,
-				'invoicedetail_price_total'=>$cd->product_price * $cd->cart_product_count
-			); 
-			$inv_detail =  $this->m_invoice->addInvoiceDetail($product);
+		$result = $this->m_invoice->addInvoice($params);
+		//var_dump($result, $this->db->last_query());die;
+		if($result){
+			$inv_id = $this->db->insert_id();
+			$cart_detail = $this->m_cart->getUserCart($custommer_id);
+			foreach($cart_detail as $cd){
+				$product=array(
+					'invoicedetail_invoice_id'=>$inv_id,
+					'invoicedetail_product'=>$cd->cart_product_id,
+					'invoicedetail_count'=>$cd->cart_product_count,
+					'invoicedetail_price'=>$cd->product_price,
+					'invoicedetail_size_id'=>$cd->cart_size_id,
+					'invoicedetail_price_total'=>$cd->product_price * $cd->cart_product_count
+				); 
+				$result =  $result && $this->m_invoice->addInvoiceDetail($product);
+				//var_dump($result, $this->db->last_query());die;
+				if($result){
+					$where = array(
+						'productsize_product_id'=>$cd->cart_product_id,
+						'productsize_size_id'=>$cd->cart_size_id						
+					);
+					
+					$stock_ready = $this->m_invoice->getProductSizeStock($where);
+					
+					$stock_update = $stock_ready->stock - $cd->cart_product_count;
+					
+					$param = array(
+						'productsize_stock'=>$stock_update
+					);
+					
+					$result =  $result && $this->m_invoice->updateproductSizeStock($param, $where);
+					//var_dump($result, $this->db->last_query());
+				}	
+			}			
+		}
+		//die;
+		//var_dump($result, $this->db->last_query());die;
+		
+		if($result){
+			$param = array(
+				'cart_status' => 0
+			);			
+			
+			$result =  $result && $this->m_invoice->updateCartStatus($param, $custommer_id);		
+			//var_dump($result, $this->db->last_query());die;
 		}
 		
-		$this->db->trans_complete();
+		
+		$this->db->trans_complete($result);
 		
 		echo json_encode($InvNumb);
 		exit;
