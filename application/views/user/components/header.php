@@ -84,6 +84,14 @@
 										-->
 									</li>
 									
+									<?php
+										if(isset($this->session->userdata['user_id'])){
+											echo '<li class="expand"><a href="'.base_url('index.php/user/login/logout').'">Logout</a></li>';
+										}else{
+											echo '<li class="expand"><a href="'.base_url('index.php/user/login').'">Login</a></li>';
+										
+										}
+									?>
 									
 								</ul>
 							</nav>
@@ -312,11 +320,12 @@
 									<ul class="restrain language">
 										<?php
 											if(isset($this->session->userdata['user_id'])){
-												echo '<li><a href="'.base_url('index.php/user/login/logout').'">Logout</a></li>';
-												echo '<li><a href="'.base_url('index.php/user/login').'">My Account</a></li>';
-												echo '<li><a href="#">My Cart</a></li>';
-												echo '<li><a href="#">Checkout</a></li>';
-											}else{
+												echo '<li><a href="'.base_url('index.php/user/invoice/list_invoice').'">Invoice / Confirm</a></li>';
+												echo '<a href="'.base_url('user/cart/checkout/'.$this->session->userdata('user_id')).'" class="button">Checkout</a>';
+												echo '<li><a href="'.base_url('index.php/user/login/logout').'">Logout</a></li>';												
+												//echo '<li><a href="'.base_url('index.php/user/login').'">My Account</a></li>';
+												//echo '<li><a href="#">My Cart</a></li>';
+												}else{
 												echo '<li><a href="'.base_url('index.php/user/login').'">Login</a></li>';
 											}
 										?>

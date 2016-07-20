@@ -469,7 +469,7 @@
 				
 				$('#jasa_paket').change(function(){
 					$("#jenis_jasa_paket").empty();
-					console.log('jasa paket');
+					//console.log('jasa paket');
 					var courier = $('#jasa_paket').val();
 					var province_id = $("#reciver_provinsi_id").val();
 					var city_id = $("#reciver_kabupaten_id").val();
@@ -485,7 +485,7 @@
 						}
 					}).success(function(result){
 						result = JSON.parse(result);
-						console.log(result);
+						//console.log(result);
 						$("#jenis_jasa_paket").append('<option value="">--PILIH--</option>');
 						for(i=0; i<result.length; i++){
 							$("#jenis_jasa_paket").append('<option value='+result[i]['cost'][0]['value']+'>'+result[i]['service']+'-'+result[i]['description']+'</option>');
@@ -514,9 +514,9 @@
 				$("#reciver_kabupaten_id").empty().append('<option value="">--SELECT--</option>');
 				$("#reciver_kecamatan_id").empty().append('<option value="">--SELECT--</option>');
 				var province_id = $('#reciver_provinsi_id option:selected').val();		
-				console.log(province_id);
+				//console.log(province_id);
 				var data = {'province_id':province_id};
-				console.log(data);
+				//console.log(data);
 				var url = "<?php echo base_url()?>index.php/admin/custommer/get_kab/"+province_id;
 				$.ajax({
 					url: url			
@@ -524,7 +524,7 @@
 					result = JSON.parse(result);
 					
 					for(i=0; i<result.length; i++){
-						console.log(result[i]['city_id']);
+						//console.log(result[i]['city_id']);
 						if(<?php echo $customer->city_id?> == result[i]['city_id']){
 							selected = 'selected';
 						}else{
@@ -543,7 +543,7 @@
 					url: "<?php echo base_url()?>index.php/admin/custommer/get_kec/"+IDKabupaten			
 				}).success(function(result){
 					result = JSON.parse(result);
-					console.log(result);
+					//console.log(result);
 					for(i=0; i<result.length; i++){
 						$("#reciver_kecamatan_id").append('<option value='+result[i]['IDKecamatan']+'>'+result[i]['Nama']+'</option>');
 					}

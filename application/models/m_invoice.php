@@ -135,10 +135,10 @@ class M_invoice extends CI_Model
 	}
 	
 	function addInvoice($params){
-		$this->db->insert('dev_invoice', $params);
+		return $this->db->insert('dev_invoice', $params);
 	}
 	function addInvoiceDetail($params){
-		$this->db->insert('dev_invoice_detail', $params);
+		return $this->db->insert('dev_invoice_detail', $params);
 	}
    
 	function deleteInvoice($id){
@@ -152,6 +152,23 @@ class M_invoice extends CI_Model
 	
 	function updateConfInv($param, $id){
 		return $this->db->update('dev_invoice', $param, "invoice_id = $id");
+	}
+	
+	function updateCartStatus($param, $id){
+		return $this->db->update('pop_cart', $param, "cart_custommer_id = $id");
+	}
+   function updateproductSizeStock($param, $where){
+		return $this->db->update('pop_product_size', $param, $where);
+		
+	}
+	
+	function getProductSizeStock($param){
+		$result = $this->db->query('
+			SELECT productsize_stock AS stock
+			FROM pop_product_size 
+			WHERE productsize_product_id = '.$param['productsize_product_id'].'
+				AND productsize_size_id ='. $param['productsize_size_id']);
+		return $result->row();
 	}
    
 }
