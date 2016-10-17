@@ -14,7 +14,7 @@ MySQL - 5.5.5-10.1.9-MariaDB : Database - popperca
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 /*Table structure for table `dev_admin` */
 
-USE u1100374_wp1508;
+USE u1100374_popperca;
 
 DROP TABLE IF EXISTS `dev_admin`;
 
