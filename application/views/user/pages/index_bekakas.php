@@ -87,17 +87,18 @@
         
         <!-- Add your site or application content here -->
 		<!-- header area start -->
-		<?php
-			include('components/header.php');
-		?>
+			<?php $this->load->view('user/components/header')?>
+		
 		<!-- header area end -->
 		<!-- start home slider -->
         <div class="slider-area an-1 hm-1 clr">
-             <!-- slider -->
+            <!-- slider -->
 			<div class="bend niceties preview-2">
 				<div id="ensign-nivoslider" class="slides">	
-					<img src="<?php echo base_url()?>file/header/alamat copy.jpg" alt="" title="#slider-direction-1"  />
-					<img src="<?php echo base_url()?>file/header/alamatlkomplit copy.jpg" alt="" title="#slider-direction-2"  />
+					<img src="<?php echo base_url()?>file/header/header1.jpg" alt=""   />
+					<img src="<?php echo base_url()?>file/header/header2.jpg" alt=""  />
+					<img src="<?php echo base_url()?>file/header/header3.jpg" alt=""  />
+					<img src="<?php echo base_url()?>file/header/header4.jpg" alt=""   />
 					
 				</div>
 				<!-- direction 1 -->
@@ -131,7 +132,7 @@
 			<div class="container">
 				<!-- area title start -->
 				<div class="area-title">
-					<h2>Popperca</h2>
+					<h2>Bekakas</h2>
 				</div>
 				<!-- area title end -->
 				<!-- our-product area start -->
@@ -140,14 +141,12 @@
 						<div class="features-tab">
 							<!-- Nav tabs -->
 							<ul class="nav nav-tabs">
-								<li role="presentation" class="active"><a href="#pakaian_pop" data-toggle="tab">Pakaian</a></li>
-								<li role="presentation"><a href="#asesoris_pop" data-toggle="tab">Asesoris</a></li>
-								<li role="presentation"><a href="#bekakas_pop" data-toggle="tab">Bekakas</a></li>
+								<li role="presentation" class="active"><a href="#bekakas" data-toggle="tab">Bekakas</a></li>
 							</ul>
 							<!-- Tab panes -->
 							<!-- Tab panes -->
 							<div class="tab-content">
-								<div role="tabpanel" class="tab-pane fade in active" id="pakaian_pop">
+								<div role="tabpanel" class="tab-pane fade in active" id="bekakas">
 									<div class="row">
 										<div class="features-curosel">
 										
@@ -156,106 +155,8 @@
 											//var_dump(count($_SESSION['product_id']));
 											//var_dump($_COOKIE);
 											foreach ($product as $prod){
-												if($prod->product_brand == 1){
-												if($prod->product_genre_id == 1){
-												echo '
-												<div class="col-lg-3 col-md-3">
-												<!-- single-product start -->												
-												<div class="single-product first-sale">
-													<div class="product-img">
-														<a href="'.base_url('user/detail_product/detail/'.$prod->product_id).'">
-														';
-														
-														foreach ($image as $key=>$val) {															
-															foreach ($val as $index=>$value){
-																//var_dump($value->productimage_product_id); die;
-															if ($prod->product_id == $value->productimage_product_id){
-																		echo '<img class="primary-image" src="'.base_url("file/product_img/".$value->productimage_name).'" alt="" />';
-															}
-															}
-														}
-														echo '</a>
-														
-													</div>
-													<div class="product-content">
-														<span class="new-price">Rp. '.number_format($prod->product_price, 2, ',', '.').'</span>
-														<h2 class="product-name"><a href="#">'.$prod->product_name.'</a></h2>
-														<p> </p>
-													</div>
-												</div>
-												<!-- single-product end -->
-											</div>
-												';
-											
-												}
-												}
-											}
-											?>
-											
-										
-										</div>
-									</div>
-								</div>						
-														
-								<div role="tabpanel" class="tab-pane fade" id="asesoris_pop">
-									<div class="row">
-										<div >
-											<?php 
-											//var_dump($this->session->userdata);
-											//var_dump(count($_SESSION['product_id']));
-											//var_dump($_COOKIE);
-											foreach ($product as $prod){
-												if($prod->product_brand == 1){
-												if($prod->product_genre_id == 2){
-												echo '
-												<div class="col-lg-3 col-md-3">
-												<!-- single-product start -->												
-												<div class="single-product first-sale">
-													<div class="product-img">
-														<a href="'.base_url('user/detail_product/detail/'.$prod->product_id).'">
-														';
-														
-														foreach ($image as $key=>$val) {															
-															foreach ($val as $index=>$value){
-																//var_dump($value->productimage_product_id); die;
-															if ($prod->product_id == $value->productimage_product_id){
-																		echo '<img class="primary-image" src="'.base_url("file/product_img/".$value->productimage_name).'" alt="" />';
-															}
-															}
-														}
-														echo '</a>
-														
-													</div>
-													<div class="product-content">
-														<span class="new-price">Rp. '.number_format($prod->product_price, 2, ',', '.').'</span>
-														<h2 class="product-name"><a href="#">'.$prod->product_name.'</a></h2>
-														<p> </p>
-													</div>
-												</div>
-												<!-- single-product end -->
-											</div>
-												';
-											}
-												}
-											}
-											?>
-											
-											
-												
-										</div>
-									</div>
-								</div>							
-								
-								<div role="tabpanel" class="tab-pane fade" id="bekakas_pop">
-									<div class="row">
-										<div>
-											<?php 
-											//var_dump($this->session->userdata);
-											//var_dump(count($_SESSION['product_id']));
-											//var_dump($_COOKIE);
-											foreach ($product as $prod){
-												if($prod->product_brand == 1){
-													if($prod->product_genre_id == 4 ){
+												if($prod->product_brand == 4){
+												//if($prod->product_genre_id == 1){
 													echo '
 													<div class="col-lg-3 col-md-3">
 													<!-- single-product start -->												
@@ -272,9 +173,9 @@
 																}
 																}
 															}
-															echo '</a>
-															
-																	</div>
+															echo '
+																</a>
+																</div>
 																	<div class="product-content">
 																		<span class="new-price">Rp. '.number_format($prod->product_price, 2, ',', '.').'</span>
 																		<h2 class="product-name"><a href="#">'.$prod->product_name.'</a></h2>
@@ -283,199 +184,21 @@
 																</div>
 																<!-- single-product end -->
 															</div>
-													';
-													}
+												';
+											
+												//}
 												}
 											}
-											?>											
+											?>
 										</div>
-										
 									</div>
-								</div>							
-							
-							
-							
+								</div>						
 							</div>
-							
 						</div>				
 					</div>
 				</div>
 				<!-- our-product area end -->	
 			</div>
-			<div class="container">
-				<!-- area title start -->
-				<div class="area-title">
-					<h2>Latulitu</h2>
-				</div>
-				<!-- area title end -->
-				<!-- our-product area start -->
-				<div class="row">
-					<div class="col-md-12">
-						<div class="features-tab">
-							<!-- Nav tabs -->
-							<ul class="nav nav-tabs">
-								<li role="presentation" class="active"><a href="#pakaian_lat" data-toggle="tab">Pakaian</a></li>
-								<li role="presentation"><a href="#asesoris_lat" data-toggle="tab">Asesoris</a></li>
-								<li role="presentation"><a href="#bekakas_lat" data-toggle="tab">Bekakas</a></li>
-							</ul>
-							<!-- Tab panes -->
-							<!-- Tab panes -->
-							<div class="tab-content">
-								<div role="tabpanel" class="tab-pane fade in active" id="pakaian_lat">
-									<div class="row">
-										<div >
-											<?php 
-											//var_dump($this->session->userdata);
-											//var_dump(count($_SESSION['product_id']));
-											//var_dump($_COOKIE);
-											foreach ($product as $prod){
-												if($prod->product_brand == 2){
-													if($prod->product_genre_id == 1 ){
-													echo '
-													<div class="col-lg-3 col-md-3">
-													<!-- single-product start -->												
-													<div class="single-product first-sale">
-														<div class="product-img">
-															<a href="'.base_url('user/detail_product/detail/'.$prod->product_id).'">
-															';
-															
-															foreach ($image as $key=>$val) {															
-																foreach ($val as $index=>$value){
-																	//var_dump($value->productimage_product_id); die;
-																if ($prod->product_id == $value->productimage_product_id){
-																			echo '<img class="primary-image" src="'.base_url("file/product_img/".$value->productimage_name).'" alt="" />';
-																}
-																}
-															}
-															echo '</a>
-															
-																	</div>
-																	<div class="product-content">
-																		<span class="new-price">Rp. '.number_format($prod->product_price, 2, ',', '.').'</span>
-																		<h2 class="product-name"><a href="#">'.$prod->product_name.'</a></h2>
-																		<p> </p>
-																	</div>
-																</div>
-																<!-- single-product end -->
-															</div>
-													';
-													}
-												}
-											}
-											?>
-											
-											
-												
-										</div>
-									</div>
-								</div>						
-														
-								<div role="tabpanel" class="tab-pane fade" id="asesoris_lat">
-									<div class="row">
-										<div >
-											<?php 
-											//var_dump($this->session->userdata);
-											//var_dump(count($_SESSION['product_id']));
-											//var_dump($_COOKIE);
-											foreach ($product as $prod){
-												if($prod->product_brand == 2){
-													if($prod->product_genre_id == 2 ){
-													echo '
-													<div class="col-lg-3 col-md-3">
-													<!-- single-product start -->												
-													<div class="single-product first-sale">
-														<div class="product-img">
-															<a href="'.base_url('user/detail_product/detail/'.$prod->product_id).'">
-															';
-															
-															foreach ($image as $key=>$val) {															
-																foreach ($val as $index=>$value){
-																	//var_dump($value->productimage_product_id); die;
-																if ($prod->product_id == $value->productimage_product_id){
-																			echo '<img class="primary-image" src="'.base_url("file/product_img/".$value->productimage_name).'" alt="" />';
-																}
-																}
-															}
-															echo '</a>
-															
-																	</div>
-																	<div class="product-content">
-																		<span class="new-price">Rp. '.number_format($prod->product_price, 2, ',', '.').'</span>
-																		<h2 class="product-name"><a href="#">'.$prod->product_name.'</a></h2>
-																		<p> </p>
-																	</div>
-																</div>
-																<!-- single-product end -->
-															</div>
-													';
-													}
-												}
-											}
-											?>
-											
-											
-												
-										</div>
-									</div>
-								</div>							
-								
-								<div role="tabpanel" class="tab-pane fade" id="bekakas_lat">
-									<div class="row">
-										<div>
-											<?php 
-											//var_dump($this->session->userdata);
-											//var_dump(count($_SESSION['product_id']));
-											//var_dump($_COOKIE);
-											foreach ($product as $prod){
-												if($prod->product_brand == 2){
-													if($prod->product_genre_id == 4 ){
-													echo '
-													<div class="col-lg-3 col-md-3">
-													<!-- single-product start -->												
-													<div class="single-product first-sale">
-														<div class="product-img">
-															<a href="'.base_url('user/detail_product/detail/'.$prod->product_id).'">
-															';
-															
-															foreach ($image as $key=>$val) {															
-																foreach ($val as $index=>$value){
-																	//var_dump($value->productimage_product_id); die;
-																if ($prod->product_id == $value->productimage_product_id){
-																			echo '<img class="primary-image" src="'.base_url("file/product_img/".$value->productimage_name).'" alt="" />';
-																}
-																}
-															}
-															echo '</a>
-															
-																	</div>
-																	<div class="product-content">
-																		<span class="new-price">Rp. '.number_format($prod->product_price, 2, ',', '.').'</span>
-																		<h2 class="product-name"><a href="#">'.$prod->product_name.'</a></h2>
-																		<p> </p>
-																	</div>
-																</div>
-																<!-- single-product end -->
-															</div>
-													';
-													}
-												}
-											}
-											?>											
-										</div>
-										
-									</div>
-								</div>							
-							
-							
-							
-							</div>
-							
-						</div>				
-					</div>
-				</div>
-				<!-- our-product area end -->	
-			</div>
-		
 		</div>
 		<!-- product section end -->
 		<!-- FOOTER START -->

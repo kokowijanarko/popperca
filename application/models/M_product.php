@@ -111,10 +111,10 @@ class M_product extends CI_Model
 			//$this->db->trans_start();
 			$execute = $this->db->insert('pop_product', $data);	
 		//$this->db->trans_complete();
-			$last_id  = $this->db->insert_id();
-			$result = $last_id;
+			// $last_id  = $this->db->insert_id();
+			// $result = $last_id;
 		}
-		return $result;
+		return $execute;
 	}
 	
 	
@@ -126,6 +126,7 @@ class M_product extends CI_Model
 			'productsize_stock'=>$params['stock']
 		);
 		$execute = $this->db->insert('pop_product_size', $data);
+		return $execute;
 	}
 	
 	public function doEditSize($params){
@@ -133,15 +134,15 @@ class M_product extends CI_Model
 			'productsize_size_id' => $params['size_id'],
 			'productsize_stock' => $params['stock']
 		);
-		//var_dump($data);die;
-		//$this->db->update('pop_product_size', $data, array('productsize_id' => $params['id']));
-		$this->db->query("
+		
+		$result = $this->db->query("
 			UPDATE `pop_product_size` 
 			SET 
 			`productsize_size_id` = '".$params['size_id']."', 
 			`productsize_stock` = '".$params['stock']."' 
 			WHERE `productsize_id` = '".$params['id']."'
 		");
+		return $result;
 	}
 	
 	
@@ -172,7 +173,6 @@ class M_product extends CI_Model
 			'product_is_show' => $params['show'],
 			'product_brand' => $params['brand']
 		);
-		//var_dump($data);die;
 		if(!empty($data)){
 			$this->db->update('pop_product', $data, array('product_id' => $params['id']));
 			$result = true;

@@ -115,6 +115,12 @@ class Home extends CI_Controller {
 		//var_dump($data['product']);die;
 		$this->load->view('user/pages/cart', $data);
 	}
+	
+	public function logout(){
+		//unset($this->session->userdata());
+		$this->session->unset_userdata('data');
+		redirect(site_url('admin/home/login'));
+	}
         
    
 }

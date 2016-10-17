@@ -34,7 +34,7 @@
 												<a class="mega-menu-title" href="#l"> Lain - lain </a>
 												<a href="<?php echo site_url('home/about')?>">Tentang Kami</a>
 												<a href="#">Even</a>
-												<a href="<?php echo site_url('home/articel')?>">Artikel </a>
+												<a href="<?php echo site_url('home/article')?>">Artikel </a>
 												<a href="<?php echo site_url('home/counterparty')?>">Rekanan & Konsumen</a>											
 											</span>
 											

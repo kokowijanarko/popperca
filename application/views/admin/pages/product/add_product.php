@@ -416,6 +416,14 @@
 						</div><!-- /.page-header -->
 
 						<div class="row">
+							<div>
+								<?php
+									$msg = $this->session->flashdata('msg');
+									if($msg){										
+										echo $this->session->flashdata('msg');
+									}
+								?>
+							</div>
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
 								<form class="form-horizontal" action="<?php echo base_url('index.php/admin/product/do_add')?>" method="POST" enctype="multipart/form-data">
@@ -467,8 +475,7 @@
 															<tr>
 																<td width="100px">'.$ukuran->size_code ." - ".$ukuran->size_name.'</td>
 																<td>
-																	<input name="stock[]" type="number" min="0" id="size" size="15px">																
-																	<input name="size[]" type="hidden" min="0" id="size" value="'.$ukuran->size_id.'" size="15px">																
+																	<input name="stock['.$ukuran->size_id.']" type="number" min="0" id="size" size="15px">																
 																</td>
 															</tr>														
 														';
@@ -477,9 +484,6 @@
 													}
 												?>
 											</table>
-											
-											
-											
 										</div>
 									</div>
 									<!---
@@ -530,6 +534,7 @@
 
 										<div class="col-sm-9">
 											<input type="file" multiple name="gambar[]"/>
+											<i>you can upload 1 or more image and file(s) must in *.jpg format</i>
 										</div>
 									</div>
 									<div class="form-group">

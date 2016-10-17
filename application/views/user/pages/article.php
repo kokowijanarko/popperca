@@ -144,7 +144,7 @@
 							<!-- single-product start -->												
 							<div class="single-product first-sale">
 								<div class="product-img">
-									<img class="primary-image display-image" src="<?php echo base_url("file/article/batik_1.JPG")?>" alt="" />
+									<img class="primary-image display-image" src="<?php echo base_url("file/article/batik_1.jpg")?>" alt="" />
 								</div>																				
 							</div>
 							<!-- single-product end -->
@@ -160,7 +160,7 @@
 							<!-- single-product start -->												
 							<div class="single-product first-sale">
 								<div class="product-img">
-									<img class="primary-image display-image" src="<?php echo base_url("file/article/batik_2.JPG")?>" alt="" />
+									<img class="primary-image display-image" src="<?php echo base_url("file/article/batik_2.jpg")?>" alt="" />
 								</div>																				
 							</div>
 							<!-- single-product end -->

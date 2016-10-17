@@ -91,11 +91,13 @@
 		<!-- header area end -->
 		<!-- start home slider -->
         <div class="slider-area an-1 hm-1 clr">
-             <!-- slider -->
+            <!-- slider -->
 			<div class="bend niceties preview-2">
 				<div id="ensign-nivoslider" class="slides">	
-					<img src="<?php echo base_url()?>file/header/alamat copy.jpg" alt="" title="#slider-direction-1"  />
-					<img src="<?php echo base_url()?>file/header/alamatlkomplit copy.jpg" alt="" title="#slider-direction-2"  />
+					<img src="<?php echo base_url()?>file/header/header1.jpg" alt=""   />
+					<img src="<?php echo base_url()?>file/header/header2.jpg" alt=""  />
+					<img src="<?php echo base_url()?>file/header/header3.jpg" alt=""  />
+					<img src="<?php echo base_url()?>file/header/header4.jpg" alt=""   />
 					
 				</div>
 				<!-- direction 1 -->

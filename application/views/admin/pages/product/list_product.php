@@ -158,9 +158,17 @@
 						</div><!-- /.page-header -->
 
 						<div class="row">
+							<div>
+								<?php
+									$msg = $this->session->flashdata('msg');
+									if($msg){										
+										echo $this->session->flashdata('msg');
+									}
+								?>
+							</div>
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->							
-								<div class="row">
+								<div class="row">								
 									<div class="col-xs-12">
 										<div class="clearfix">
 											<div class="pull-right tableTools-container"></div>
@@ -181,6 +189,7 @@
 														<th width="60px">Stock</th>
 														<th width="60px">Tampil</th>
 														<th>Description</th>
+														<th>Image(s)</th>
 														<th width="90px">Action</th>
 													</tr>
 												</thead>
@@ -194,6 +203,10 @@
 																	$isShow = 'Tidak';
 																}else{
 																	$isShow = 'Ya';
+																}
+																$img = '';
+																foreach($product[$i]->images as $image){
+																	$img .= '<img width="90px" src="'. base_url('file/product_img/'. $image->productimage_name) .'" /><br/><br/>';
 																}
 																echo '
 																<tr>
@@ -217,6 +230,7 @@
 																<td>'. $stoks .'</td>
 																<td>'. $isShow .'</td>
 																<td>'. $product[$i]->product_description .'</td>
+																<td>'.$img.'</td>
 																<td>
 																	<div class="hidden-sm hidden-xs btn-group">
 																		<a href="'.base_url("index.php/admin/product/edit/".$product[$i]->product_id).'">
@@ -308,7 +322,7 @@
 					bAutoWidth: false,
 					"aoColumns": [
 					  { "bSortable": false },
-					  null, null,null, null, null,null,null,
+					  null, null,null, null, null,null,null,null,
 					  { "bSortable": false }
 					],
 					"aaSorting": [],

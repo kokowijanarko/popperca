@@ -14,14 +14,14 @@ class Product extends CI_Controller {
 	
 	function list_product(){
 		$product = $this->m_product->list_product();
-		foreach($product as $prod){
+		$data['product'] = $product;
+		foreach($product as $key=>$prod){
 			//$data['img'][$prod->product_id] = $this->m_product->getImg($prod->product_id);
 			$data['size'][$prod->product_id] = $this->m_product->prodSize($prod->product_id);
-		}
-		
-		
-		$data['product'] = $product;
-		//var_dump($data);
+			$data['product'][$key]->images= $this->m_product->getImg($prod->product_id);
+			
+		}		
+		// var_dump($data);
 		//$data['view']="admin/pages/product/list_product";
 		$this->load->view("admin/pages/product/list_product", $data);
 	}
@@ -35,71 +35,103 @@ class Product extends CI_Controller {
 	}
 	
 	public function do_add(){
+		$msg = '';
 		$params=$_POST;		
-		//var_dump($params);die;
-		$id = $this->m_product->do_add($params);	
-		$i=0;
-		foreach($params['size'] as $size){
-			$size_par = array(
-				'product_id'=>$id,
-				'size_id'=>$size,
-				'stock'=>$params['stock'][$i]
-			);
-			$this->m_product->addSizeStock($size_par);
-			$i++;
-		}
-		foreach($_FILES['gambar'] as $key=>$val){
-            $i = 1;			
-            foreach($val as $v){
-			    $field_name = 'gambar'.$i;
-                $_FILES[$field_name][$key] = $v;               		
-				$i++;
+		$this->db->trans_start();
+		$result = $this->m_product->do_add($params);	
+		if($result){
+			$id = $this->db->insert_id();
+			foreach($_FILES['gambar'] as $key=>$val){
+				$i = 0;	
+				foreach($val as $v){
+					$file[$i][$key] = $v;               		
+					$i++;
+				}
 			}
-		}
-		unset($_FILES['gambar']);
-		$i=1;	
-		$image_index = 0;
-		foreach($_FILES as $key=>$val){
-			$image_data  = array(
-				'productimage_name' => $id.'_'.$i.'.jpg',
-				'productimage_product_id' => $id				
-			);
-			$source =$val['tmp_name']; 
-			$name = $id.'_'.$i.'.jpg';
-			$this->process_image($source, $name);
-			$this->m_product->do_addImage($image_data);
+			unset($_FILES['gambar']);
 			
-			//$this->upload->do_upload($key);			
-			//$data[] = array('upload_data' => $this->upload->data());
-			$i++;
-		//var_dump($source, $name);die;
+			foreach($file as $idx=>$val){
+				if($val['type'] != 'image/jpeg'){
+					$msg .= '
+						<div class="alert alert-danger alert-dismissible">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+							<h4><i class="icon fa fa-check"></i>one or more image(s) file type is not in jpg format!</h4>
+						</div>
+					';
+					$this->session->set_flashdata('msg', $msg);
+					redirect(site_url('admin/product/add_baju'));
+					break;
+				}
+			}			
+			$i=1;
+			$image_index = 0;
+			
+			foreach($params['stock'] as $key => $val){
+				if($val == '' || is_null($val)){
+					$val = 0;
+				}
+				$size_par = array(
+					'product_id'=>$id,
+					'size_id'=>$key,
+					'stock'=>$val
+				);
+				$result = $result && $this->m_product->addSizeStock($size_par);
+			}
+			if($result){
+				foreach($file as $key=>$val){
+					$image_data  = array(
+						'productimage_name' => $id.'_'.$i.'.jpg',
+						'productimage_product_id' => $id				
+					);					
+					$source =$val['tmp_name']; 
+					$name = $id.'_'.$i.'.jpg';
+					$this->process_image($source, $name);
+					$result = $result && $this->m_product->do_addImage($image_data);
+					$i++;
+				}
+			}			
 		}
-		
-		if($id !== null){
-			redirect(base_url('index.php/admin/product/list_product'));
+		// var_dump($result);die;
+		$this->db->trans_complete($result);
+		if($result){
+			$msg .= '
+				<div class="alert alert-success alert-dismissible">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					<h4><i class="icon fa fa-check"></i>Add Product success</h4>
+				</div>
+			';
+			$this->session->set_flashdata('msg', $msg);
+			redirect(site_url('admin/product/list_product'));
 		}else{
-			$msg = 'Add new product failed';
+			$msg .= '
+				<div class="alert alert-danger alert-dismissible">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					<h4><i class="icon fa fa-check"></i>Add Product Fail</h4>
+				</div>
+			';
+			$this->session->set_flashdata('msg', $msg);
+			redirect(site_url('admin/product/add_baju'));
 		}
 		
 	}
 	
 	function do_edit(){
-		//var_dump($_POST);
-		$return = $this->m_product->doEdit($_POST);
-		$i=0;
-		foreach($_POST['size_id'] as $size){
-			$par = array(
-				'size_id'=>$_POST['size'][$i],
-				'stock'=>$_POST['stock'][$i],
-				'id'=>$size
-			);
-			//var_dump($par);die;
-			$return = $this->m_product->doEditSize($par);
-			$i++;
+		$result = $this->m_product->doEdit($_POST);
+		$this->db->trans_start();
+		if($result){
+			foreach($_POST['stock'] as $key=>$val){			
+				foreach($val as $idx=>$value){
+					$par = array(
+						'size_id'=>$idx,
+						'stock'=>$value,
+						'id'=>$key
+					);			
+				}
+				$result = $result && $this->m_product->doEditSize($par);
+			}			
 		}
-		$return = $this->m_product->doEditSize($_POST);
 		
-		if($_FILES['gambar']['error'] == 0 OR $_FILES['gambar']['error'][0] == 0){
+		if($_FILES['gambar']['error'] == 0 || $_FILES['gambar']['error'][0] == 0){
 			//var_dump('xxx');die;
 			foreach($_FILES['gambar'] as $key=>$val){
 				$i = 1;			
@@ -110,6 +142,19 @@ class Product extends CI_Controller {
 				}
 			}
 			unset($_FILES['gambar']);
+			foreach($_FILES as $idx=>$val){
+				if($val['type'] != 'image/jpeg'){
+					$msg .= '
+						<div class="alert alert-danger alert-dismissible">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+							<h4><i class="icon fa fa-check"></i>one or more image(s) file type is not in jpg format!</h4>
+						</div>
+					';
+					$this->session->set_flashdata('msg', $msg);
+					redirect(site_url('admin/product/edit/'. $_POST['id']));
+					break;
+				}
+			}
 			$id=$_POST['id'];
 			$result_img = $this->m_product->getImgLast($_POST['id']);
 			if($result_img){
@@ -129,7 +174,7 @@ class Product extends CI_Controller {
 				$source =$val['tmp_name']; 
 				$name = $id.'_'.$i.'.jpg';
 				$this->process_image($source, $name);
-				$this->m_product->do_addImage($image_data);
+				$result = $this->m_product->do_addImage($image_data);
 				
 				//$this->upload->do_upload($key);			
 				//$data[] = array('upload_data' => $this->upload->data());
@@ -137,8 +182,26 @@ class Product extends CI_Controller {
 			//var_dump($source, $name);die;
 			}
 		}
-		redirect(base_url('admin/product/list_product'));
-		
+		$this->db->trans_complete($result);
+		if($result){
+			$msg .= '
+				<div class="alert alert-success alert-dismissible">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					<h4><i class="icon fa fa-check"></i>Edit Product Success</h4>
+				</div>
+			';
+			$this->session->set_flashdata('msg', $msg);
+			redirect(base_url('admin/product/list_product'));
+		}else{
+			$msg .= '
+				<div class="alert alert-danger alert-dismissible">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					<h4><i class="icon fa fa-check"></i>Edit Product Fail, Please Check your entry data!</h4>
+				</div>
+			';
+			$this->session->set_flashdata('msg', $msg);
+			redirect(base_url('admin/product/edit/'. $_POST['id']));
+		}
 	}
 	
 	function deleteImg($id){
@@ -168,7 +231,8 @@ class Product extends CI_Controller {
 		$data['sex'] = $this->m_product->list_sex();
 		$data['genre'] = $this->m_product->list_genre();
 		$data['size'] = $this->m_product->sizeProductByIdProduct($id);
-		//var_dump($data['detail']);die;
+		$data['size_list'] = $this->m_product->list_size();
+		// var_dump($data);
 		//$data['view'] = "admin/pages/product/edit_product";
 		//$this->load->view('admin/index', $data);
 		$this->load->view('admin/pages/product/edit_product', $data);

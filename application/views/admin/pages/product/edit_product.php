@@ -149,7 +149,7 @@
 
 						<div class="page-header">
 							<h1>
-								Input
+								Edit
 								<small>
 									<i class="ace-icon fa fa-angle-double-right"></i>
 									Product
@@ -158,6 +158,14 @@
 						</div><!-- /.page-header -->
 
 						<div class="row">
+							<div>
+								<?php
+									$msg = $this->session->flashdata('msg');
+									if($msg){										
+										echo $this->session->flashdata('msg');
+									}
+								?>
+							</div>
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
 								<form class="form-horizontal" role="form" action="<?php echo base_url('index.php/admin/product/do_edit')?>" method="POST" enctype="multipart/form-data">
@@ -182,6 +190,7 @@
 													array('id'=>1, 'brand'=>'Popperca'),
 													array('id'=>2, 'brand'=>'latulitu'),
 													array('id'=>3, 'brand'=>'Obbie'),
+													array('id'=>4, 'brand'=>'Bekakas'),
 													);
 													//var_dump($pilihan);
 													
@@ -225,18 +234,19 @@
 											<table>
 												<?php
 													$no=1;
-													foreach($size as $ukuran){
-														echo '
-															<tr>
-																<td width="100px">'.$ukuran->size_code ." - ".$ukuran->size_name.'</td>
-																<td>
-																	<input name="stock[]" type="number" min="0" id="size" value="'.$ukuran->productsize_stock.'" size="15px">																
-																	<input name="size[]" type="hidden" min="0" id="size" value="'.$ukuran->productsize_size_id.'" size="15px">																
-																	<input name="size_id[]" type="hidden" min="0" id="size" value="'.$ukuran->productsize_id.'" size="15px">																
-																</td>
-															</tr>														
-														';
-														
+													foreach($size_list as $ukuran){
+														foreach($size as $val){
+															if($ukuran->size_id == $val->productsize_size_id){
+																echo '
+																	<tr>
+																		<td width="100px">'.$ukuran->size_code ." - ".$ukuran->size_name.'</td>
+																		<td>
+																			<input name="stock['.$val->productsize_id.']['.$val->productsize_size_id.']" type="number" min="0" id="size" value="'.$val->productsize_stock.'" size="15px">													
+																		</td>
+																	</tr>														
+																';																
+															}															
+														}													
 														$no++;
 													}
 												?>
@@ -319,6 +329,7 @@
 
 										<div class="col-sm-9">
 											<input type="file" multiple name="gambar[]"/>
+											<i>you can upload 1 or more image and file(s) must in *.jpg format</i>
 										</div>
 									</div>
 									
