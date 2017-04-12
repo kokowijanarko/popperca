@@ -3,7 +3,7 @@
 			<div class="container-fluid">
 				<div class="row">
 					<!-- logo start -->
-					<div class="col-md-3 text-center">
+					<div class="col-md-11 text-right">
 						<div class="top-logo">
 							<!--
 							<a href="index.html"><img src="<?php echo base_url()?>assets/theme/lavoro/img//logo-2.gif" alt="" /></a>
@@ -12,7 +12,15 @@
 					</div>
 					<!-- logo end -->
 					<!-- mainmenu area start -->
-					<div class="col-md-6 text-center">
+					<div class="col-md-1">
+						<div class="mainmenu">
+							<ul>
+								<a href="<?php echo base_url()?>" style="color:black"><i class="fa fa-home fa-2x"></i></a>
+							</ul>
+						</div>
+					</div>
+					
+					<div class="col-md-6 text-center hide">
 						<div class="mainmenu">
 							<nav>
 								<ul>
@@ -58,7 +66,7 @@
 							</nav>
 						</div>
 						<!-- mobile menu start -->
-						<div class="row">
+						<div class="row hide">
 							<div class="col-sm-12 mobile-menu-area">
 								<div class="mobile-menu hidden-md hidden-lg" id="mob-menu">
 									<span class="mobile-menu-title">Menu</span>
@@ -116,7 +124,7 @@
 					</div>
 					<!-- mainmenu area end -->
 					<!-- top details area start -->
-					<div class="col-md-3 nopadding-left">
+					<div class="col-md-3 nopadding-left hide">
 						<div class="top-detail">							
 							<!-- addcart top start -->
 							<div class="disflow">

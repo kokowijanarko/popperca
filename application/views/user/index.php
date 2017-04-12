@@ -95,13 +95,7 @@
         <div class="slider-area an-1 hm-1 clr">
              <!-- slider -->
 			<div class="bend niceties preview-2">
-				<div id="ensign-nivoslider" class="slides">	
-					<img src="<?php echo base_url()?>file/header/header1.jpg" alt=""   />
-					<img src="<?php echo base_url()?>file/header/header2.jpg" alt=""  />
-					<img src="<?php echo base_url()?>file/header/header3.jpg" alt=""  />
-					<img src="<?php echo base_url()?>file/header/header4.jpg" alt=""   />
-					
-				</div>
+				<?php $this->load->view('user/components/banner')?>
 				<!-- direction 1 -->
 				<div id="slider-direction-1" class="t-cn slider-direction">
 					<div class="slider-progress"></div>
@@ -171,10 +165,41 @@
 									<!-- single-product start -->												
 									<div class="single-product first-sale">
 										<div class="product-img">
-												<a href="<?php echo base_url('home/bekakas')?>">
-													<img class="primary-image" src="<?php echo base_url("file/main_menu_img/bekakas.jpg")?>" alt="" />
+												<a href="<?php echo base_url('home/latulitu_signature')?>">
+													<img class="primary-image" src="<?php echo base_url("file/main_menu_img/latulitu.jpg")?>" alt="" />
 												</a>
 												
+										</div>
+										<div class="price-box">
+											<span class="new-price">LATULITU SIGNATURE</span>
+										</div>											
+									</div>
+									<!-- single-product end -->
+								</div>
+								
+								<div class="col-lg-3 col-md-3">
+									<!-- single-product start -->												
+									<div class="single-product first-sale">
+										<div class="product-img">
+												<a href="<?php echo base_url('home/latulitu_custom')?>">
+													<img class="primary-image" src="<?php echo base_url("file/main_menu_img/latulitu.jpg")?>" alt="" />
+												</a>
+												
+										</div>
+										<div class="price-box">
+											<span class="new-price">LATULITU CUSTOM</span>
+										</div>											
+									</div>
+									<!-- single-product end -->
+								</div>
+								
+								<div class="col-lg-3 col-md-3">
+									<!-- single-product start -->												
+									<div class="single-product first-sale">
+										<div class="product-img">
+												<a href="<?php echo base_url('home/bekakas')?>">
+													<img class="primary-image" src="<?php echo base_url("file/main_menu_img/bekakas.jpg")?>" alt="" />
+												</a>												
 										</div>
 										<div class="price-box">
 											<span class="new-price">BEKAKAS</span>
@@ -183,7 +208,7 @@
 									<!-- single-product end -->
 								</div>
 								
-								<div class="col-lg-3 col-md-3">
+								<div class="col-lg-3 col-md-3 hide">
 									<!-- single-product start -->												
 									<div class="single-product first-sale">
 										<div class="product-img">
@@ -221,11 +246,10 @@
 										<div class="product-img">
 												<a href="#">
 													<img class="primary-image" src="<?php echo base_url("file/main_menu_img/event.jpg")?>" alt="" />
-												</a>
-												
+												</a>												
 										</div>
 										<div class="price-box">
-											<span class="new-price">EVEN</span>
+											<span class="new-price">EVENT</span>
 										</div>											
 									</div>
 									<!-- single-product end -->

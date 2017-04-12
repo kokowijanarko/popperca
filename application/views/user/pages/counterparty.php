@@ -95,13 +95,7 @@
         <div class="slider-area an-1 hm-1 clr">
              <!-- slider -->
 			<div class="bend niceties preview-2">
-				<div id="ensign-nivoslider" class="slides">	
-					<img src="<?php echo base_url()?>file/header/header1.jpg" alt=""   />
-					<img src="<?php echo base_url()?>file/header/header2.jpg" alt=""  />
-					<img src="<?php echo base_url()?>file/header/header3.jpg" alt=""  />
-					<img src="<?php echo base_url()?>file/header/header4.jpg" alt=""   />
-					
-				</div>
+				<?php $this->load->view('user/components/banner')?>
 				<!-- direction 1 -->
 				<div id="slider-direction-1" class="t-cn slider-direction">
 					<div class="slider-progress"></div>

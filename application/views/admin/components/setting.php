@@ -27,10 +27,7 @@
 										<label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
 									</div>
 
-									<div class="ace-settings-item">
-										<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs" />
-										<label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
-									</div>
+									
 
 									<div class="ace-settings-item">
 										<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" />

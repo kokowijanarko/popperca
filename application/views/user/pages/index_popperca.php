@@ -95,13 +95,8 @@
         <div class="slider-area an-1 hm-1 clr">
 			<!-- slider -->
 			<div class="bend niceties preview-2">
-				<div id="ensign-nivoslider" class="slides">	
-					<img src="<?php echo base_url()?>file/header/header1.jpg" alt=""   />
-					<img src="<?php echo base_url()?>file/header/header2.jpg" alt=""  />
-					<img src="<?php echo base_url()?>file/header/header3.jpg" alt=""  />
-					<img src="<?php echo base_url()?>file/header/header4.jpg" alt=""   />
-					
-				</div>
+				<?php $this->load->view('user/components/banner')?>
+				
 				<!-- direction 1 -->
 				<div id="slider-direction-1" class="t-cn slider-direction">
 					<div class="slider-progress"></div>
@@ -150,7 +145,19 @@
 							<!-- Tab panes -->
 							<div class="tab-content">
 								<div role="tabpanel" class="tab-pane fade in active" id="pakaian_pop">
-									<div class="row">																		
+									<div class="row">	
+											<div class="col-lg-3 col-md-3">
+												<!-- single-product start -->												
+												<div class="single-product first-sale">
+													<div class="product-img">
+														<a href="'.base_url('user/detail_product/detail/'.$prod->product_id).'">
+														<img class="primary-image" src="<?php echo base_url("file/desc/popperca_desc.jpg")?>" alt="">
+														</a>
+															
+													</div>
+												</div>
+												<!-- single-product end -->
+											</div>
 											<?php 
 											//var_dump($this->session->userdata);
 											//var_dump(count($_SESSION['product_id']));

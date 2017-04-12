@@ -95,11 +95,7 @@
         <div class="slider-area an-1 hm-1 clr">
              <!-- slider -->
 			<div class="bend niceties preview-2">
-				<div id="ensign-nivoslider" class="slides">	
-					<img src="<?php echo base_url()?>file/header/alamat copy.jpg" alt="" title="#slider-direction-1"  />
-					<img src="<?php echo base_url()?>file/header/alamatlkomplit copy.jpg" alt="" title="#slider-direction-2"  />
-					
-				</div>
+				<?php $this->load->view('user/components/banner')?>
 				<!-- direction 1 -->
 				<div id="slider-direction-1" class="t-cn slider-direction">
 					<div class="slider-progress"></div>

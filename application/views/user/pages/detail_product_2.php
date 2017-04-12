@@ -166,11 +166,77 @@
 									<div class="product-desc">
 										<p><?php echo $detail->product_description?></p>
 									</div>
-									</ br>
-									</ br>
-									<p>
-										For Order Pleace Contact <a href="http://mail.google.com" >popperca@gmail.com </a>
-									</p>									
+									<p class="availability in-stock">
+										<span><?php //var_dump($size); ?>
+										<table>
+											<tr>
+												<th width="75px">size</th>
+												<th>stock</th>
+											</tr>
+											<?php foreach($size as $ukuran){
+												if($ukuran->productsize_stock > 0){
+													$avail = 'Available';
+												}else{
+													$avail = 'Out Of Stock';
+												}
+											?>											
+											<tr>
+												<td><?php echo $ukuran->size_code?></td>
+												<td><?php echo $avail?></td>
+												
+											</tr>
+											<?php } ?>
+										</table>
+										</span>
+									</p>
+									<div class="actions-e">
+										<div class="action-buttons-single">
+											<div class="inputx-content">
+												<label for="qty">Jumlah:</label>
+												<input type="number" min="1" name="qty" id="qty" maxlength="12" value="1" title="Qty" class="input-text qty">
+											</div>
+											<div class="inputx-content">
+												<label for="qty">Ukuran:</label>
+												<select style="width:75px" class="input qty" id="ukuran">
+													<option value="0">PILIH--</option>
+													<?php 
+														foreach($size as $val){
+															echo '<option value="'.$val->productsize_size_id.'">'.$val->size_code.'</option>';
+														}
+													?>
+												</select>
+											</div>
+											<?php
+												if(!is_null($this->session->userdata('user_id'))){
+													echo '
+														<div class="add-to-cart" id="add-to-cart">
+															<a >Add to cart</a>
+														</div>
+													';
+												}else{
+													echo'
+														<div class="add-to-cart">
+															<a href="'.site_url('user/login').'">Login to Shoping</a>
+														</div>
+													';
+												}
+											?>
+											
+											<!--
+											<div class="add-to-links">
+												<div class="add-to-wishlist">
+													<a  data-toggle="tooltip" title="" data-original-title="Add to Wishlist"><i class="fa fa-heart"></i></a>
+												</div>
+												<div class="compare-button">
+													<a  data-toggle="tooltip" title="" data-original-title="Compare"><i class="fa fa-refresh"></i></a>
+												</div>									
+											</div>
+											-->
+										</div>
+									</div>
+									<div class="singl-share">
+                                        <a ><img src="img/single-share.png" alt=""></a>
+                                    </div>
 								</div>
 							</div>
 						</div>

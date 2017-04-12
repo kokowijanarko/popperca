@@ -231,8 +231,7 @@ class Product extends CI_Controller {
 		$data['sex'] = $this->m_product->list_sex();
 		$data['genre'] = $this->m_product->list_genre();
 		$data['size'] = $this->m_product->sizeProductByIdProduct($id);
-		$data['size_list'] = $this->m_product->list_size();
-		// var_dump($data);
+		//var_dump($data['detail']);die;
 		//$data['view'] = "admin/pages/product/edit_product";
 		//$this->load->view('admin/index', $data);
 		$this->load->view('admin/pages/product/edit_product', $data);

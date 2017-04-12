@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
-		<title>Tables - Ace Admin</title>
+		<title>popperca</title>
 
 		<meta name="description" content="Static &amp; Dynamic Tables" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
@@ -124,7 +124,7 @@
 
 						<div class="page-header">
 							<h1>
-								Genre
+								Poduct
 								<small>
 									<i class="ace-icon fa fa-angle-double-right"></i>
 									List
@@ -133,24 +133,18 @@
 						</div><!-- /.page-header -->
 
 						<div class="row">
+							<div>
+								<?php
+									$msg = $this->session->flashdata('msg');
+									if($msg){										
+										echo $this->session->flashdata('msg');
+									}
+								?>
+							</div>
 							<div class="col-xs-12">
-								<!-- PAGE CONTENT BEGINS -->
-																
-								
-								<div class="row">
-									
-									
+								<!-- PAGE CONTENT BEGINS -->							
+								<div class="row">								
 									<div class="col-xs-12">
-										<div style="float:left">
-											<button class="btn btn-xs btn-success " id="add">
-												<i class="ace-icon fa fa-plus bigger-130"></i>
-											</button>
-											<button class="btn btn-xs btn-danger hidden" id="delete">
-												<i class="ace-icon fa fa-ban bigger-130"></i>												
-											</button>
-										</div>
-										
-										<div id="xxx">
 										<div class="clearfix">
 											<div class="pull-right tableTools-container"></div>
 										</div>
@@ -162,115 +156,62 @@
 											<table id="dynamic-table" class="table table-striped table-bordered table-hover">
 												<thead>
 													<tr>
-														<th class="center">
-															<label class="pos-rel">
-																<input type="checkbox" class="ace" />
-																<span class="lbl"></span>
-															</label>
-														</th>
-														<th>NO</th>
-														<th>gen Name</th>								
-														<th>Description</th>
-														<th>Action</th>
+														<th width="50px">NO</th>
+														<th width="200px">Profile Name</th>
+														<th width="80px">Description</th>
+														<th width="80px">Image(s)</th>
+														<th width="80px">action</th>
 													</tr>
 												</thead>
-												<tbody>
-													
+												<tbody>							
 														<?php
+															//var_dump($size);
 															$i=0;
 															$no=1;
-															foreach($genre as $gen){
+															
+															foreach($banner as $ban){
+																$isActive = 'Active';
+																if($ban->banner_status == 0){
+																	$isActive = 'Not Active';
+																}
+																
+																$img = '';
+																foreach($ban->images as $image){
+																	$img .= '<img width="90px" src="'. base_url('file/banner/'. $image->bandet_file_name) .'" /><br/><br/>';
+																}
 																echo '
-																<tr><td class="center">
-																	<label class="pos-rel">
-																		<input type="checkbox" class="ace" />
-																		<span class="lbl"></span>
-																	</label>
-																</td>
-																<td>'.$no.'</td>
-																<td>'. $gen ->productgenre_name .'</td>
-																<td>'. $gen ->productgenre_description .'</td>
-																<td>
+																	<td>'.$no.'</td>
+																	<td>'.$ban->banner_name.'</td>
+																	<td>'.$ban->banner_desc.'</td>
+																	<td>'.$img.'</td>
+																	<td>
 																	<div class="hidden-sm hidden-xs btn-group">
-																		<a href="'.base_url("index.php/admin/genre/edit/".$gen ->productgenre_id).'">
+																		<a href="'.base_url("index.php/admin/banner/edit/".$ban->banner_id).'">
 																		<button class="btn btn-xs btn-info">
 																			<i class="ace-icon fa fa-pencil bigger-120"></i>
 																		</button>
 																		</a>
-																		<a href="'.base_url("index.php/admin/genre/do_delete/".$gen ->productgenre_id).'">
-																		<button class="btn btn-xs btn-danger" id="reset">
+																		<a href="'.base_url("index.php/admin/banner/do_delete/".$ban->banner_name).'">
+																		<button class="btn btn-xs btn-danger">
 																			<i class="ace-icon fa fa-trash-o bigger-120"></i>
 																		</button>
 																		</a>
 																	</div>
 																</td>
-																		
-																</tr>										
+																	
 																';
-																$i++;
-																$no++;
 															}
 														?>
 														
 													
-												</tbody>
+												</tbody>					
 											</table>
 										</div>
-										</div>
-										
 									</div>
 								</div>
 
 							</div><!-- /.col -->
 						</div><!-- /.row -->
-						
-						<div class="col-xs-5">
-							<div class="row">
-								<?php
-									if(!isset($detail)){
-										
-										//$detail = array('productgenre_id' => NULL, 'productgenre_name' => NULL, 'productgenre_description'=> NULL);
-										$detail = new stdclass();
-										$detail->productgenre_id = NULL;
-										$detail->productgenre_name = NULL;
-										$detail->productgenre_description = NULL;
-									}
-									//var_dump($detail);
-								?>
-										<form class="form-horizontal hidden" role="form" method="POST" action="<?php echo base_url('index.php/admin/genre/do_add'); ?>">
-											<input type="hidden" name="gen_id" id="gen_id" value = "<?php echo $detail->productgenre_id?>"/>
-											<div class="form-group">
-												<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Genre Name </label>
-												<div class="col-sm-9">
-													<input type="text" name="gen_name" id="gen_name" value = "<?php echo $detail->productgenre_name?>" placeholder="Input Your New Genre Here" class="col-xs-10" />
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Description </label>
-												<div class="col-sm-9">
-												<textarea class="col-xs-10" id="genre_desc"  name="gen_desc" placeholder="Input Genre description"><?php echo $detail->productgenre_description?></textarea>
-												</div>
-											</div>
-											
-											<div class="form-group">
-												<div class="col-md-offset-3 col-md-9">
-													<button class="btn btn-success" type="submit">
-														<i class="ace-icon fa fa-check bigger-110"></i>
-														Submit
-													</button>	
-													&nbsp; &nbsp; &nbsp;
-																<button class="btn" type="reset" id="reset">
-																	<i class="ace-icon fa fa-undo bigger-110"></i>
-																	Reset
-																</button>
-												</div>
-											</div>			
-										<form>
-									
-								
-							</div>
-						</div>
-						
 					</div><!-- /.page-content -->
 				</div>
 			</div><!-- /.main-content -->
@@ -536,21 +477,6 @@
 					if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
 					return 'left';
 				}
-				
-				$('#add').click(function(){
-					console.log('cok');
-					$('.form-horizontal').removeClass('hidden');
-					$('#xxx').addClass('hidden');
-					$('#delete').removeClass('hidden');
-					$('#add').addClass('hidden');
-				});
-				$('#delete').click(function(){
-					console.log('cok');
-					$('.form-horizontal').addClass('hidden');
-					$('#xxx').removeClass('hidden');
-					$('#delete').addClass('hidden');
-					$('#add').removeClass('hidden');
-				});
 			
 			})
 		</script>

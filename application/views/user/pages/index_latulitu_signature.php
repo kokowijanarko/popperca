@@ -87,8 +87,7 @@
         
         <!-- Add your site or application content here -->
 		<!-- header area start -->
-			<?php $this->load->view('user/components/header')?>
-		
+		<?php $this->load->view('user/components/header')?>
 		<!-- header area end -->
 		<!-- start home slider -->
         <div class="slider-area an-1 hm-1 clr">
@@ -126,7 +125,7 @@
 			<div class="container">
 				<!-- area title start -->
 				<div class="area-title">
-					<h2>Obbie</h2>
+					<h2>Latulitu Signature</h2>
 				</div>
 				<!-- area title end -->
 				<!-- our-product area start -->
@@ -135,22 +134,79 @@
 						<div class="features-tab">
 							<!-- Nav tabs -->
 							<ul class="nav nav-tabs">
-								<li role="presentation" class="active"><a href="#Obbie" data-toggle="tab">Obbie</a></li>
+								<li role="presentation" class="active"><a href="#pakaian_lat" data-toggle="tab">Pakaian</a></li>
+								
 							</ul>
 							<!-- Tab panes -->
 							<!-- Tab panes -->
 							<div class="tab-content">
-								<div role="tabpanel" class="tab-pane fade in active" id="Obbie">
+								<div role="tabpanel" class="tab-pane fade in active" id="pakaian_lat">
 									<div class="row">
-										<div class="features-curosel">
-										
+										<div >
+											<div class="col-lg-3 col-md-3">
+												<!-- single-product start -->												
+												<div class="single-product first-sale">
+													<div class="product-img">
+														<a href="'.base_url('user/detail_product/detail/'.$prod->product_id).'">
+														<img class="primary-image" src="<?php echo base_url("file/desc/latulitu_signature_desc.jpg")?>" alt="">
+														</a>
+															
+													</div>
+												</div>
+												<!-- single-product end -->
+											</div>
+											<?php 
+											// foreach ($product as $prod){
+												// if($prod->product_brand == 2){
+													// if($prod->product_genre_id == 1 ){
+													// echo '
+													// <div class="col-lg-3 col-md-3">
+													// <!-- single-product start -->												
+													// <div class="single-product first-sale">
+														// <div class="product-img">
+															// <a href="'.base_url('user/detail_product/detail/'.$prod->product_id).'">
+															// ';
+															
+															// foreach ($image as $key=>$val) {															
+																// foreach ($val as $index=>$value){
+																// if ($prod->product_id == $value->productimage_product_id){
+																			// echo '<img class="primary-image" src="'.base_url("file/product_img/".$value->productimage_name).'" alt="" />';
+																// }
+																// }
+															// }
+															// echo '</a>
+															
+																	// </div>
+																	// <div class="product-content">
+																		// <span class="new-price">Rp. '.number_format($prod->product_price, 2, ',', '.').'</span>
+																		// <h2 class="product-name"><a href="#">'.$prod->product_name.'</a></h2>
+																		// <p> </p>
+																	// </div>
+																// </div>
+																// <!-- single-product end -->
+															// </div>
+													// ';
+													// }
+												// }
+											// }
+											?>
+											
+											
+												
+										</div>
+									</div>
+								</div>						
+														
+								<div role="tabpanel" class="tab-pane fade" id="asesoris_lat">
+									<div class="row">
+										<div >
 											<?php 
 											//var_dump($this->session->userdata);
 											//var_dump(count($_SESSION['product_id']));
 											//var_dump($_COOKIE);
 											foreach ($product as $prod){
-												if($prod->product_brand == 3){
-												//if($prod->product_genre_id == 1){
+												if($prod->product_brand == 2){
+													if($prod->product_genre_id == 2 ){
 													echo '
 													<div class="col-lg-3 col-md-3">
 													<!-- single-product start -->												
@@ -167,9 +223,9 @@
 																}
 																}
 															}
-															echo '
-																</a>
-																</div>
+															echo '</a>
+															
+																	</div>
 																	<div class="product-content">
 																		<span class="new-price">Rp. '.number_format($prod->product_price, 2, ',', '.').'</span>
 																		<h2 class="product-name"><a href="#">'.$prod->product_name.'</a></h2>
@@ -178,21 +234,30 @@
 																</div>
 																<!-- single-product end -->
 															</div>
-												';
-											
-												//}
+													';
+													}
 												}
 											}
 											?>
+											
+											
+												
 										</div>
 									</div>
-								</div>						
+								</div>							
+								
+														
+							
+							
+							
 							</div>
+							
 						</div>				
 					</div>
 				</div>
 				<!-- our-product area end -->	
 			</div>
+		
 		</div>
 		<!-- product section end -->
 		<!-- FOOTER START -->
