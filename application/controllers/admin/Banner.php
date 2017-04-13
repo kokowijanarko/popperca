@@ -166,13 +166,38 @@ class Banner extends CI_Controller {
 		redirect(site_url('admin/banner/show'));
 	}
 	
-	public function do_delete($id){
-		$return = $this->m_banner->doDelete($id);
-		if($return == true){
-			redirect(base_url('index.php/admin/size/list_size'));
-		}else{
-			$msg = 'Add new size failed';
+	public function do_delete($id){		
+		$this->db->trans_start();
+		$result = $this->m_banner->deleteBanner($id);
+		if($result){
+			$old_files = $this->m_banner->getImgName($id);
+			foreach($old_files as $idx=>$val){
+				unlink('file/banner/'. $val->bandet_file_name);
+			}
 		}
+		if($result){
+			$result = $result && $this->m_banner->deleteImg($id);
+		}
+		
+		$this->db->trans_complete($result);
+		
+		if($result){
+			$msg .= '
+				<div class="alert alert-success alert-dismissible">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					<h4><i class="icon fa fa-check"></i>Delete Banner Profile success</h4>
+				</div>
+			';
+			$this->session->set_flashdata('msg', $msg);		
+		}else{
+			$msg .= '
+				<div class="alert alert-danger alert-dismissible">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					<h4><i class="icon fa fa-check"></i>Delete Banner Profile Fail</h4>
+				</div>
+			';
+		}
+		redirect(site_url('admin/banner/show'));		
 	}
 	
 	public function delete_img($id){

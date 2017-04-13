@@ -44,6 +44,10 @@ class M_banner extends CI_Model
 		return $execute;		
 	}
 	
+	public function deleteBanner($id){
+		$result = $this->db->delete('dev_banner', array('banner_id' => $id));
+		return $result;
+	}
 	public function deleteImg($id){
 		$result = $this->db->delete('dev_banner_images', array('bandet_id' => $id));
 		return $result;

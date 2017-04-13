@@ -155,7 +155,8 @@
 											<table id="dynamic-table" class="table table-striped table-bordered table-hover">
 												<thead>
 													<tr>
-														<th width="5px">NO</th>														<th width="80px">Profile Name</th>
+														<th width="5px">NO</th>														
+														<th width="80px">Profile Name</th>
 														<th width="50px">Status</th>
 														<th width="100px">Description</th>
 														<th width="100px">Image(s)</th>
@@ -190,7 +191,7 @@
 																			<button class="btn btn-xs btn-info edit" value="'. $ban->banner_id .'">
 																				<i class="ace-icon fa fa-pencil bigger-120"></i>
 																			</button>
-																			<a href="'.base_url("index.php/admin/banner/do_delete/".$ban->banner_name).'">
+																			<a href="'.base_url("index.php/admin/banner/do_delete/".$ban->banner_id).'">
 																			<button class="btn btn-xs btn-danger">
 																				<i class="ace-icon fa fa-trash-o bigger-120"></i>
 																			</button>
@@ -227,7 +228,7 @@
 												<label class="col-sm-3 control-label no-padding-right" for="form-field-1"></label>
 
 												<div class="col-sm-9">
-													<input type="text" id="banner_id" name="banner_id" class="col-xs-10 col-sm-5" />
+													<input type="hidden" id="banner_id" name="banner_id" class="col-xs-10 col-sm-5" />
 												</div>
 											</div>
 											<div class="form-group">
