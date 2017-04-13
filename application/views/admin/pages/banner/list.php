@@ -52,8 +52,6 @@
 			
 			<div class="main-content">
 				<div class="main-content-inner">
-					
-
 					<div class="page-content">
 						<div class="ace-settings-container" id="ace-settings-container">
 							<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
@@ -143,12 +141,13 @@
 							</div>
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->							
-								<div class="row">								
+								<div class="row">	
 									<div class="col-xs-12">
-										<div class="clearfix">
-											<div class="pull-right tableTools-container"></div>
-										</div>
-
+										<a id="add" class="btn btn-app btn-purple btn-xs" onClick="add()">Add</a>
+										<a id="cancel" class="btn btn-app btn-danger btn-xs hidden" onClick="cancel()">cancel</a>
+									</div>
+									<div class="col-xs-12">
+										
 										<!-- div.table-responsive -->
 
 										<!-- div.dataTables_borderWrap -->
@@ -156,11 +155,11 @@
 											<table id="dynamic-table" class="table table-striped table-bordered table-hover">
 												<thead>
 													<tr>
-														<th width="50px">NO</th>
-														<th width="200px">Profile Name</th>
-														<th width="80px">Description</th>
-														<th width="80px">Image(s)</th>
-														<th width="80px">action</th>
+														<th width="5px">NO</th>														<th width="80px">Profile Name</th>
+														<th width="50px">Status</th>
+														<th width="100px">Description</th>
+														<th width="100px">Image(s)</th>
+														<th width="15px">action</th>
 													</tr>
 												</thead>
 												<tbody>							
@@ -177,33 +176,32 @@
 																
 																$img = '';
 																foreach($ban->images as $image){
-																	$img .= '<img width="90px" src="'. base_url('file/banner/'. $image->bandet_file_name) .'" /><br/><br/>';
+																	$img .= '<img width="90px" src="'. base_url('file/banner/'. $image->bandet_file_name) .'" />';
 																}
 																echo '
+																<tr>
 																	<td>'.$no.'</td>
 																	<td>'.$ban->banner_name.'</td>
+																	<td>'.$isActive.'</td>
 																	<td>'.$ban->banner_desc.'</td>
 																	<td>'.$img.'</td>
 																	<td>
-																	<div class="hidden-sm hidden-xs btn-group">
-																		<a href="'.base_url("index.php/admin/banner/edit/".$ban->banner_id).'">
-																		<button class="btn btn-xs btn-info">
-																			<i class="ace-icon fa fa-pencil bigger-120"></i>
-																		</button>
-																		</a>
-																		<a href="'.base_url("index.php/admin/banner/do_delete/".$ban->banner_name).'">
-																		<button class="btn btn-xs btn-danger">
-																			<i class="ace-icon fa fa-trash-o bigger-120"></i>
-																		</button>
-																		</a>
-																	</div>
-																</td>
-																	
+																		<div class="hidden-sm hidden-xs btn-group">
+																			<button class="btn btn-xs btn-info edit" value="'. $ban->banner_id .'">
+																				<i class="ace-icon fa fa-pencil bigger-120"></i>
+																			</button>
+																			<a href="'.base_url("index.php/admin/banner/do_delete/".$ban->banner_name).'">
+																			<button class="btn btn-xs btn-danger">
+																				<i class="ace-icon fa fa-trash-o bigger-120"></i>
+																			</button>
+																			</a>
+																		</div>
+																	</td>
+																</tr>																	
 																';
+																$no++;
 															}
 														?>
-														
-													
 												</tbody>					
 											</table>
 										</div>
@@ -211,7 +209,86 @@
 								</div>
 
 							</div><!-- /.col -->
-						</div><!-- /.row -->
+							
+							<div id="input-form" class="col-xs-12 hidden">
+								<div class="row">
+									<div>
+										<?php
+											$msg = $this->session->flashdata('msg');
+											if($msg){										
+												echo $this->session->flashdata('msg');
+											}
+										?>
+									</div>
+									<div class="col-xs-12">
+										<!-- PAGE CONTENT BEGINS -->
+										<form class="form-horizontal" action="<?php echo base_url('index.php/admin/banner/insert')?>" method="POST" enctype="multipart/form-data">
+											<div class="form-group">
+												<label class="col-sm-3 control-label no-padding-right" for="form-field-1"></label>
+
+												<div class="col-sm-9">
+													<input type="text" id="banner_id" name="banner_id" class="col-xs-10 col-sm-5" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Profile Name </label>
+
+												<div class="col-sm-9">
+													<input type="text" id="banner_name" name="banner_name" placeholder="Banner Profil Name" class="col-xs-10 col-sm-5" />
+												</div>
+											</div>
+											
+											<div class="form-group">
+												<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Status </label>
+
+												<div class="col-sm-9">
+													<select class="chosen-select ol-xs-10 col-sm-5" id="banner_status" name="banner_status" data-placeholder="Choose a State...">
+														<option value="0">Not Active</option>
+														<option value="1">Active</option>
+													</select>
+												</div>
+											</div>
+											
+											<div class="form-group">
+												<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Image </label>
+
+												<div class="col-sm-9">
+													<input type="file" multiple name="gambar[]"/>
+													<i>you can upload 1 or more image and file(s) must in *.jpg format</i>
+												</div>
+											</div>
+											<div class="form-group">	
+												<div class="col-sm-3">
+												</div>
+												<div class="col-sm-6" >														
+														<div class="banner_images"></div>													
+												</div>
+											</div>	
+											<div class="form-group">
+												<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Description </label>
+
+												<div class="col-sm-9">											
+													<textarea class="col-xs-10 col-sm-5" name="banner_desc" id="banner_desc" placeholder="Description"></textarea>
+												</div>
+											</div>		
+											<div class="clearfix form-actions">
+												<div class="col-md-offset-3 col-md-9">
+													<button class="btn btn-info" type="submit">
+														<i class="ace-icon fa fa-check bigger-110"></i>
+														Submit
+													</button>
+													&nbsp; &nbsp; &nbsp;
+													<button class="btn" type="reset">
+														<i class="ace-icon fa fa-undo bigger-110"></i>
+														Reset
+													</button>
+												</div>
+											</div>
+										</form>
+									</div><!-- /.col -->
+								</div><!-- /.row -->
+							</div>
+						</div><!-- /.row -->						
 					</div><!-- /.page-content -->
 				</div>
 			</div><!-- /.main-content -->
@@ -262,7 +339,59 @@
 
 		<!-- inline scripts related to this page -->
 		<script type="text/javascript">
+			function add(){
+				$('#cancel').removeClass('hidden');
+				$('#input-form').removeClass('hidden');
+				$('#add').addClass('hidden');
+			}
+				
+			function cancel(){
+				$('#add').removeClass('hidden');
+				$('#cancel').addClass('hidden');
+				$('#input-form').addClass('hidden');
+			}
+			
 			jQuery(function($) {
+				
+				//get data for edit
+				$('.edit').click(function(){
+					
+					var id = $(this).val();
+					
+					$.ajax({
+						data:{'id':id},
+						method:'post',
+						url:'<?php echo site_url('admin/banner/edit')?>'
+					}).success(function(result){
+						result = JSON.parse(result);
+						
+						$('#banner_id').val(result['banner'][0]['banner_id']);
+						$('#banner_name').val(result['banner'][0]['banner_name']);
+						$('#banner_desc').text(result['banner'][0]['banner_desc']);
+						
+						$('#banner_status').empty();
+						
+						if(result['banner'][0]['banner_status'] == 0){
+							$('#banner_status').append('<option value="0" selected >Not Active</option><option value="1">Active</option>');							
+						}else{
+							$('#banner_status').append('<option value="0">Not Active</option><option value="1" selected>Active</option>');
+						}
+						
+						$('.banner_images').empty();
+						$.each(result['banner'][0]['images'], function(idx){
+							// console.log(result['banner'][0]['images'][idx]['bandet_file_name']);
+							var img_url = "<?php echo base_url('file/banner'); ?>" + "/" + result['banner'][0]['images'][idx]['bandet_file_name'];
+							// console.log(img_url);
+							$('.banner_images').append('<div class="col-sm-2 no-padding-center"><a class="delete" id="'+result['banner'][0]['images'][idx]['bandet_id']+'"></a><img width="90px" src="'+ img_url + '" /></ br></div>');
+						})
+						
+					})
+					
+					$('#cancel').removeClass('hidden');
+					$('#input-form').removeClass('hidden');
+					$('#add').addClass('hidden');
+				});
+				
 				//initiate dataTables plugin
 				var oTable1 = 
 				$('#dynamic-table')
@@ -274,210 +403,27 @@
 					  null, null,null, 
 					  { "bSortable": false }
 					],
-					"aaSorting": [],
+					"aaSorting": []
 			
-					//,
-					//"sScrollY": "200px",
-					//"bPaginate": false,
-			
-					//"sScrollX": "100%",
-					//"sScrollXInner": "120%",
-					//"bScrollCollapse": true,
-					//Note: if you are applying horizontal scrolling (sScrollX) on a ".table-bordered"
-					//you may want to wrap the table inside a "div.dataTables_borderWrap" element
-			
-					//"iDisplayLength": 50
 			    } );
-				//oTable1.fnAdjustColumnSizing();
-			
-			
-				//TableTools settings
-				TableTools.classes.container = "btn-group btn-overlap";
-				TableTools.classes.print = {
-					"body": "DTTT_Print",
-					"info": "tableTools-alert gritter-item-wrapper gritter-info gritter-center white",
-					"message": "tableTools-print-navbar"
-				}
-			
-				//initiate TableTools extension
-				var tableTools_obj = new $.fn.dataTable.TableTools( oTable1, {
-					"sSwfPath": "<?php echo base_url()?>assets/theme/ac_master/swf/copy_csv_xls_pdf.swf",
-					
-					"sRowSelector": "td:not(:last-child)",
-					"sRowSelect": "multi",
-					"fnRowSelected": function(row) {
-						//check checkbox when row is selected
-						try { $(row).find('input[type=checkbox]').get(0).checked = true }
-						catch(e) {}
-					},
-					"fnRowDeselected": function(row) {
-						//uncheck checkbox
-						try { $(row).find('input[type=checkbox]').get(0).checked = false }
-						catch(e) {}
-					},
-			
-					"sSelectedClass": "success",
-			        "aButtons": [
-						{
-							"sExtends": "copy",
-							"sToolTip": "Copy to clipboard",
-							"sButtonClass": "btn btn-white btn-primary btn-bold",
-							"sButtonText": "<i class='fa fa-copy bigger-110 pink'></i>",
-							"fnComplete": function() {
-								this.fnInfo( '<h3 class="no-margin-top smaller">Table copied</h3>\
-									<p>Copied '+(oTable1.fnSettings().fnRecordsTotal())+' row(s) to the clipboard.</p>',
-									1500
-								);
-							}
-						},
-						
-						{
-							"sExtends": "csv",
-							"sToolTip": "Export to CSV",
-							"sButtonClass": "btn btn-white btn-primary  btn-bold",
-							"sButtonText": "<i class='fa fa-file-excel-o bigger-110 green'></i>"
-						},
-						
-						{
-							"sExtends": "pdf",
-							"sToolTip": "Export to PDF",
-							"sButtonClass": "btn btn-white btn-primary  btn-bold",
-							"sButtonText": "<i class='fa fa-file-pdf-o bigger-110 red'></i>"
-						},
-						
-						{
-							"sExtends": "print",
-							"sToolTip": "Print view",
-							"sButtonClass": "btn btn-white btn-primary  btn-bold",
-							"sButtonText": "<i class='fa fa-print bigger-110 grey'></i>",
-							
-							"sMessage": "<div class='navbar navbar-default'><div class='navbar-header pull-left'><a class='navbar-brand' href='#'><small>Optional Navbar &amp; Text</small></a></div></div>",
-							
-							"sInfo": "<h3 class='no-margin-top'>Print view</h3>\
-									  <p>Please use your browser's print function to\
-									  print this table.\
-									  <br />Press <b>escape</b> when finished.</p>",
-						}
-			        ]
-			    } );
-				//we put a container before our table and append TableTools element to it
-			    $(tableTools_obj.fnContainer()).appendTo($('.tableTools-container'));
 				
-				//also add tooltips to table tools buttons
-				//addding tooltips directly to "A" buttons results in buttons disappearing (weired! don't know why!)
-				//so we add tooltips to the "DIV" child after it becomes inserted
-				//flash objects inside table tools buttons are inserted with some delay (100ms) (for some reason)
-				setTimeout(function() {
-					$(tableTools_obj.fnContainer()).find('a.DTTT_button').each(function() {
-						var div = $(this).find('> div');
-						if(div.length > 0) div.tooltip({container: 'body'});
-						else $(this).tooltip({container: 'body'});
+				$(".delete").click(function() {
+					var commentContainer = $(this).parent();
+					var id = $(this).attr("id");
+					console.log(id);
+					var url = '<?php echo site_url("admin/banner/deleteImg/'+id+'");?>';					
+					$.ajax({
+						url:url,
+						method:'post'
+					}).success(function(result){
+						result = JSON.parse(result);
+						console.log(result);
+						if(result == true){
+							commentContainer.slideUp('slow', function() {$(this).remove();});
+						}					
 					});
-				}, 200);
-				
-				
-				
-				//ColVis extension
-				var colvis = new $.fn.dataTable.ColVis( oTable1, {
-					"buttonText": "<i class='fa fa-search'></i>",
-					"aiExclude": [0, 6],
-					"bShowAll": true,
-					//"bRestore": true,
-					"sAlign": "right",
-					"fnLabel": function(i, title, th) {
-						return $(th).text();//remove icons, etc
-					}
-					
-				}); 
-				
-				//style it
-				$(colvis.button()).addClass('btn-group').find('button').addClass('btn btn-white btn-info btn-bold')
-				
-				//and append it to our table tools btn-group, also add tooltip
-				$(colvis.button())
-				.prependTo('.tableTools-container .btn-group')
-				.attr('title', 'Show/hide columns').tooltip({container: 'body'});
-				
-				//and make the list, buttons and checkboxed Ace-like
-				$(colvis.dom.collection)
-				.addClass('dropdown-menu dropdown-light dropdown-caret dropdown-caret-right')
-				.find('li').wrapInner('<a href="javascript:void(0)" />') //'A' tag is required for better styling
-				.find('input[type=checkbox]').addClass('ace').next().addClass('lbl padding-8');
-			
-			
-				
-				/////////////////////////////////
-				//table checkboxes
-				$('th input[type=checkbox], td input[type=checkbox]').prop('checked', false);
-				
-				//select/deselect all rows according to table header checkbox
-				$('#dynamic-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function(){
-					var th_checked = this.checked;//checkbox inside "TH" table header
-					
-					$(this).closest('table').find('tbody > tr').each(function(){
-						var row = this;
-						if(th_checked) tableTools_obj.fnSelect(row);
-						else tableTools_obj.fnDeselect(row);
-					});
+
 				});
-				
-				//select/deselect a row when the checkbox is checked/unchecked
-				$('#dynamic-table').on('click', 'td input[type=checkbox]' , function(){
-					var row = $(this).closest('tr').get(0);
-					if(!this.checked) tableTools_obj.fnSelect(row);
-					else tableTools_obj.fnDeselect($(this).closest('tr').get(0));
-				});
-				
-			
-				
-				
-					$(document).on('click', '#dynamic-table .dropdown-toggle', function(e) {
-					e.stopImmediatePropagation();
-					e.stopPropagation();
-					e.preventDefault();
-				});
-				
-				
-				//And for the first simple table, which doesn't have TableTools or dataTables
-				//select/deselect all rows according to table header checkbox
-				var active_class = 'active';
-				$('#simple-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function(){
-					var th_checked = this.checked;//checkbox inside "TH" table header
-					
-					$(this).closest('table').find('tbody > tr').each(function(){
-						var row = this;
-						if(th_checked) $(row).addClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', true);
-						else $(row).removeClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', false);
-					});
-				});
-				
-				//select/deselect a row when the checkbox is checked/unchecked
-				$('#simple-table').on('click', 'td input[type=checkbox]' , function(){
-					var $row = $(this).closest('tr');
-					if(this.checked) $row.addClass(active_class);
-					else $row.removeClass(active_class);
-				});
-			
-				
-			
-				/********************************/
-				//add tooltip for small view action buttons in dropdown menu
-				$('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
-				
-				//tooltip placement on right or left
-				function tooltip_placement(context, source) {
-					var $source = $(source);
-					var $parent = $source.closest('table')
-					var off1 = $parent.offset();
-					var w1 = $parent.width();
-			
-					var off2 = $source.offset();
-					//var w2 = $source.width();
-			
-					if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
-					return 'left';
-				}
-			
 			})
 		</script>
 	</body>

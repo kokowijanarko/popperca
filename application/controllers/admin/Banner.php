@@ -24,92 +24,146 @@ class Banner extends CI_Controller {
 		$this->load->view('admin/pages/banner/list', $data);
 	}
 	
-	public function add(){	
-		$data['size'] = $this->m_banner->list_size();
-		$data['view'] = "pages/admin/size/add_size";
-		//var_dump($data);die;
-		$this->load->view('index', $data);
-	}
-	
-	public function do_add(){
+	public function insert(){
 		$msg = '';
-		$params=$_POST;		
-		$this->db->trans_start();
-		$result = $this->m_product->do_add($params);	
-		if($result){
-			$id = $this->db->insert_id();
-			foreach($_FILES['gambar'] as $key=>$val){
-				$i = 0;	
-				foreach($val as $v){
-					$file[$i][$key] = $v;               		
-					$i++;
-				}
-			}
-			unset($_FILES['gambar']);
-			
-			foreach($file as $idx=>$val){
-				if($val['type'] != 'image/jpeg'){
-					$msg .= '
-						<div class="alert alert-danger alert-dismissible">
-							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-							<h4><i class="icon fa fa-check"></i>one or more image(s) file type is not in jpg format!</h4>
-						</div>
-					';
-					$this->session->set_flashdata('msg', $msg);
-					redirect(site_url('admin/product/add_baju'));
-					break;
-				}
-			}			
-			$i=1;
-			$image_index = 0;
-			
-			foreach($params['stock'] as $key => $val){
-				if($val == '' || is_null($val)){
-					$val = 0;
-				}
-				$size_par = array(
-					'product_id'=>$id,
-					'size_id'=>$key,
-					'stock'=>$val
-				);
-				$result = $result && $this->m_product->addSizeStock($size_par);
-			}
+		$params=$_POST;	
+		// var_dump($params, $_FILES);die;
+		
+		if(empty($params['banner_id'])){
+			$this->db->trans_start();
+			$result = $this->m_banner->do_add($params);	
 			if($result){
+				$id = $this->db->insert_id();
+				foreach($_FILES['gambar'] as $key=>$val){
+					$i = 0;	
+					foreach($val as $v){
+						$file[$i][$key] = $v;               		
+						$i++;
+					}
+				}
+				unset($_FILES['gambar']);
+				
+				foreach($file as $idx=>$val){
+					if($val['type'] != 'image/jpeg'){
+						$msg .= '
+							<div class="alert alert-danger alert-dismissible">
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+								<h4><i class="icon fa fa-check"></i>one or more image(s) file type is not in jpg format!</h4>
+							</div>
+						';
+						$this->session->set_flashdata('msg', $msg);
+						redirect(site_url('admin/banner/show'));
+						break;
+					}
+				}	
+				
+				$i=1;
 				foreach($file as $key=>$val){
 					$image_data  = array(
-						'bandet_name' => $id.'_'.$i.'.jpg',
+						'bandet_file_name' => $id.'_'.$i.'.jpg',
 						'bandet_banner_id' => $id				
 					);					
 					$source =$val['tmp_name']; 
 					$name = $id.'_'.$i.'.jpg';
 					$this->process_image($source, $name);
-					$result = $result && $this->m_product->do_addImage($image_data);
+					$result = $result && $this->m_banner->do_addImage($image_data);
 					$i++;
-				}
-			}			
-		}
-		// var_dump($result);die;
-		$this->db->trans_complete($result);
-		if($result){
-			$msg .= '
-				<div class="alert alert-success alert-dismissible">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-					<h4><i class="icon fa fa-check"></i>Add Product success</h4>
-				</div>
-			';
-			$this->session->set_flashdata('msg', $msg);
-			redirect(site_url('admin/product/list_product'));
+				}		
+			}
+			// var_dump($result);die;
+			$this->db->trans_complete($result);
+			if($result){
+				$msg .= '
+					<div class="alert alert-success alert-dismissible">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<h4><i class="icon fa fa-check"></i>Add Banner Profile success</h4>
+					</div>
+				';
+				$this->session->set_flashdata('msg', $msg);			
+			}else{
+				$msg .= '
+					<div class="alert alert-danger alert-dismissible">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<h4><i class="icon fa fa-check"></i>Add Banner Profile Fail</h4>
+					</div>
+				';
+				$this->session->set_flashdata('msg', $msg);
+			}
+			
 		}else{
-			$msg .= '
-				<div class="alert alert-danger alert-dismissible">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-					<h4><i class="icon fa fa-check"></i>Add Product Fail</h4>
-				</div>
-			';
-			$this->session->set_flashdata('msg', $msg);
-			redirect(site_url('admin/product/add_baju'));
-		}
-		
+			$this->db->trans_start();
+			$result = $this->m_banner->doEdit($params);
+			
+			if($result){
+				if($_FILES['gambar']['error'][0] == 0){
+					$id = $params['banner_id'];
+
+					$old_files = $this->m_banner->getImgName($id);
+					foreach($old_files as $idx=>$val){
+						unlink('file/banner/'. $val->bandet_file_name);
+					}
+					
+					$result = $result && $this->m_banner->delImg($params['banner_id']);
+					
+					
+					foreach($_FILES['gambar'] as $key=>$val){
+						$i = 0;	
+						foreach($val as $v){
+							$file[$i][$key] = $v;               		
+							$i++;
+						}
+					}
+					unset($_FILES['gambar']);
+					
+					foreach($file as $idx=>$val){
+						if($val['type'] != 'image/jpeg'){
+							$msg .= '
+								<div class="alert alert-danger alert-dismissible">
+									<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+									<h4><i class="icon fa fa-check"></i>one or more image(s) file type is not in jpg format!</h4>
+								</div>
+							';
+							$this->session->set_flashdata('msg', $msg);
+							redirect(site_url('admin/banner/show'));
+							break;
+						}
+					}	
+					
+					$i=1;
+					foreach($file as $key=>$val){
+						$image_data  = array(
+							'bandet_file_name' => $id.'_'.$i.'.jpg',
+							'bandet_banner_id' => $id				
+						);					
+						$source =$val['tmp_name']; 
+						$name = $id.'_'.$i.'.jpg';
+						$this->process_image($source, $name);
+						$result = $result && $this->m_banner->do_addImage($image_data);
+						$i++;
+					}
+				}
+			}
+			
+			$this->db->trans_complete($result);
+			if($result){
+				$msg .= '
+					<div class="alert alert-success alert-dismissible">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<h4><i class="icon fa fa-check"></i>Edit Banner Profile success</h4>
+					</div>
+				';
+				$this->session->set_flashdata('msg', $msg);			
+			}else{
+				$msg .= '
+					<div class="alert alert-danger alert-dismissible">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<h4><i class="icon fa fa-check"></i>Edit Banner Profile Fail</h4>
+					</div>
+				';
+				$this->session->set_flashdata('msg', $msg);
+			}
+		}		
+		redirect(site_url('admin/banner/show'));
 	}
 	
 	public function do_delete($id){
@@ -121,12 +175,21 @@ class Banner extends CI_Controller {
 		}
 	}
 	
-	public function edit($id){
-		$size = $this->m_banner->listSize();
-		$data['list'] = $size;
-		$data['detail'] = $this->m_banner->getDetailsize($id);		
-		$data['view'] = "pages/admin/size/list_size";
-		$this->load->view('index', $data);
+	public function delete_img($id){
+		$result = $this->m_banner->deleteImg($id);
+		echo json_encode($result);
+		exit;
+	}
+	
+	
+	public function edit(){
+		$data['banner'] = $this->m_banner->getBannerById($_POST['id']);		
+		foreach($data['banner'] as $key=>$banner){
+			$data['banner'][$key]->images = $this->m_banner->getImgName($banner->banner_id);
+		}
+		
+		echo json_encode($data);
+		exit;
 	}
 	
 	function process_image($source, $name){

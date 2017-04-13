@@ -41,7 +41,7 @@
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Profile Name </label>
 
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" name="name" placeholder="Nama" class="col-xs-10 col-sm-5" />
+											<input type="text" id="form-field-1" name="banner_name" placeholder="Nama" class="col-xs-10 col-sm-5" />
 										</div>
 									</div>
 									
@@ -49,7 +49,7 @@
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Status </label>
 
 										<div class="col-sm-9">
-											<select class="chosen-select ol-xs-10 col-sm-5" id="form-field-select-3" name="Status" data-placeholder="Choose a State...">
+											<select class="chosen-select ol-xs-10 col-sm-5" id="form-field-select-3" name="banner_status" data-placeholder="Choose a State...">
 												<option value="0">Not Active</option>
 												<option value="1">Active</option>
 											</select>
@@ -68,7 +68,7 @@
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Description </label>
 
 										<div class="col-sm-9">											
-											<textarea class="col-xs-10 col-sm-5" name="description" id="textarea" placeholder="Description"></textarea>
+											<textarea class="col-xs-10 col-sm-5" name="banner_desc" id="textarea" placeholder="Description"></textarea>
 										</div>
 									</div>		
 									<div class="clearfix form-actions">
