@@ -129,6 +129,13 @@
 								</a>
 								<b class="arrow"></b>
 							</li>
+							<li class="">
+								<a href="<?php echo base_url('index.php/admin/partner/show')?>">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Partner
+								</a>
+								<b class="arrow"></b>
+							</li>
 						</ul>
 					</li>
 					

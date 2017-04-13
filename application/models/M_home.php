@@ -26,6 +26,13 @@ class M_home extends CI_Model
 		}		
 		
     }
+	
+	public function getPartner(){
+		$query = $this->db->get('dev_partner');
+		$result = $query->result();
+		return $result;
+	}
+   
    
    function from_date($date){
        $data = explode("-", $date);

@@ -113,7 +113,9 @@ class Home extends CI_Controller {
 	}
 	
 	public function counterparty(){
-		$this->load->view('user/pages/counterparty');
+		$data['partner'] = $this->m_home->getPartner();
+		// var_dump($data);die;
+		$this->load->view('user/pages/counterparty', $data);
 	}
 	
 	public function login(){

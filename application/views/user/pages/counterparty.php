@@ -95,87 +95,26 @@
         <div class="slider-area an-1 hm-1 clr">
              <!-- slider -->
 			<div class="bend niceties preview-2">
-				<?php $this->load->view('user/components/banner')?>
-				<!-- direction 1 -->
-				<div id="slider-direction-1" class="t-cn slider-direction">
-					<div class="slider-progress"></div>
-					<div class="slider-content t-lfl lft-pr s-tb slider-1">
-						<div class="title-container s-tb-c title-compress">
-							<!--<h3 class="title2 low-f" >Collection 2016</h3>-->
-							<h4 class="title2" >POPPERCA</h4>
-							<!--<a class="btn-title" href="#">View collection</a>-->
-						</div>
-					</div>	
-				</div>
-				<!-- direction 2 -->
-				<div id="slider-direction-2" class="slider-direction">
-					<div class="slider-progress"></div>
-					<div class="slider-content t-cn s-tb slider-2">
-						<div class="title-container s-tb-c">
-							<!--<h3 class="title2" >Collection 2016</h3>-->
-							<h4 class="title2" >LATULITU</h4>
-							<!--<a class="btn-title" href="#">View collection</a>-->
-						</div>
-					</div>	
-				</div>
-			</div>
-			<!-- slider end-->
+				<?php $this->load->view('user/components/banner')?>				
 		</div>
         <!-- end home slider -->
 		<!-- product section start -->
 		<div class="our-product-area">
 			<div class="container">				
 				<div class="row">
-					<div class="col-md-12">
-						<div class="col-lg-3 col-md-3">
-							<!-- single-product start -->												
-							<div class="single-product first-sale">
-								<div class="product-img">
-									<img class="primary-image" src="<?php echo base_url("file/counterparty_img/counterparty_1.JPG")?>" alt="" />
-								</div>																				
-							</div>
-							<!-- single-product end -->
-						</div>
-						
-						<div class="col-lg-3 col-md-3">
-							<!-- single-product start -->												
-							<div class="single-product first-sale">
-								<div class="product-img">
-									<img class="primary-image" src="<?php echo base_url("file/counterparty_img/counterparty_2.JPG")?>" alt="" />
-								</div>																				
-							</div>
-							<!-- single-product end -->
-						</div>
-						
-						<div class="col-lg-3 col-md-3">
-							<!-- single-product start -->												
-							<div class="single-product first-sale">
-								<div class="product-img">
-									<img class="primary-image" src="<?php echo base_url("file/counterparty_img/counterparty_3.JPG")?>" alt="" />
-								</div>																				
-							</div>
-							<!-- single-product end -->
-						</div>
-						
-						<div class="col-lg-3 col-md-3">
-							<!-- single-product start -->												
-							<div class="single-product first-sale">
-								<div class="product-img">
-									<img class="primary-image" src="<?php echo base_url("file/counterparty_img/counterparty_4.JPG")?>" alt="" />
-								</div>																				
-							</div>
-							<!-- single-product end -->
-						</div>
-						
-						<div class="col-lg-3 col-md-3">
-							<!-- single-product start -->												
-							<div class="single-product first-sale">
-								<div class="product-img">
-									<img class="primary-image" src="<?php echo base_url("file/counterparty_img/counterparty_5.JPG")?>" alt="" />
-								</div>																				
-							</div>
-							<!-- single-product end -->
-						</div>
+					<div class="col-md-12">	
+					
+						<?php
+							$img = '';
+							foreach($partner as $val){
+								$img .= '
+									<div style ="padding:20px" class="col-md-12 col-lg-12 text-center">
+										<img width="40%" src="'. base_url('file/partner/') .'/'. $val->partner_img .'" alt="" />
+									</div>
+								';
+							}
+							echo $img;
+						?>
 					</div>
 				</div>
 				<!-- our-product area end -->	
